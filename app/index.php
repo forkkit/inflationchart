@@ -607,6 +607,12 @@
 		-ms-user-select: none;
 		user-select: none;
 	}
+	.legend .show_stock_legend:hover,
+	.legend .show_adjusted_legend:hover,
+	.legend .show_adjuster_legend:hover,
+	.legend .logarithmic_legend:hover {
+		opacity:0.75 !important;
+	}
 	.legend span {
 		cursor:pointer;
 	}
@@ -1339,6 +1345,34 @@
 				chart.options.scales.yAxes[0].display=false;
 			}
 
+
+			if(show_stock) {
+				$('.legend .show_stock_legend').css('opacity',1);
+			}
+			else {
+				$('.legend .show_stock_legend').css('opacity',0.5);
+			}
+			if(show_adjusted) {
+				$('.legend .show_adjusted_legend').css('opacity',1);
+			}
+			else {
+				$('.legend .show_adjusted_legend').css('opacity',0.5);
+			}
+			if(show_adjuster) {
+				$('.legend .show_adjuster_legend').css('opacity',1);
+			}
+			else {
+				$('.legend .show_adjuster_legend').css('opacity',0.5);
+			}
+			if(logarithmic) {
+				$('.legend .logarithmic_legend').css('opacity',1);
+			}
+			else {
+				$('.legend .logarithmic_legend').css('opacity',0.5);
+			}
+
+
+
 			if(show_stock && show_adjusted) {
 				// console.log('startTime = '+adjusted_selected+'_adj_'+stock_selected,date('Y-m-d',dataStartTimes[adjusted_selected+'_adj_'+stock_selected]));
 				var startTime=dataStartTimes[adjusted_selected+'_adj_'+stock_selected];
@@ -1542,19 +1576,39 @@
 	</div>
 
 	<div class="legend">
-		<input type="checkbox" class="show_stock" <?if($show_stock){?>checked<?}?>> <span data-type="stock" style="color:rgb(43,222,115)">🟢<span data-type="stock" class="stock"></span></span> <span class="mobile_line_break"></span>
+
+
+
+		<span class="show_stock_legend">
+			<input type="checkbox" class="show_stock" <?if($show_stock){?>checked<?}?>> <span data-type="stock" style="color:rgb(43,222,115)">🟢<span data-type="stock" class="stock"></span></span> <span class="mobile_line_break"></span>
+		</span>
+
+
 
 		<span class="hide_on_mobile">&nbsp;|&nbsp;</span>
 
-		<span class="mobile_line_break"></span> <input type="checkbox" class="show_adjusted" <?if($show_adjusted){?>checked<?}?>> <span style="color:rgb(255,71,66)" data-type="adjusted">🔴 <span class="stock" data-type="adjusted"></span> in <span class="adjusted" data-type="adjusted"></span></span> <span class="mobile_line_break"></span>
+		<span class="show_adjusted_legend">
+			<span class="mobile_line_break"></span> <input type="checkbox" class="show_adjusted" <?if($show_adjusted){?>checked<?}?>> <span style="color:rgb(255,71,66)" data-type="adjusted">🔴 <span class="stock" data-type="adjusted"></span> in <span class="adjusted" data-type="adjusted"></span></span> <span class="mobile_line_break"></span>
+		</span>
+
+
+
 
 		<span class="hide_on_mobile">&nbsp;|&nbsp;</span>
 
-		<span class="mobile_line_break"></span> <input type="checkbox" class="show_adjuster" <?if($show_adjuster){?>checked<?}?>> <span style="color:#42a5ff" data-type="adjuster">🔵<span class="adjuster" data-type="adjuster"></span></span> <span class="mobile_line_break"></span>
+		<span class="show_adjuster_legend">
+			<span class="mobile_line_break"></span> <input type="checkbox" class="show_adjuster" <?if($show_adjuster){?>checked<?}?>> <span style="color:#42a5ff" data-type="adjuster">🔵<span class="adjuster" data-type="adjuster"></span></span> <span class="mobile_line_break"></span>
+		</span>
+
+
+
 
 		<span class="hide_on_mobile">&nbsp;|&nbsp;</span>
 
-		<span class="mobile_line_break"></span> <input type="checkbox" class="logarithmic" <?if($logarithmic){?>checked<?}?>> <span data-type="logarithmic">📐Log</span>
+		<span class="logarithmic_legend">
+			<span class="mobile_line_break"></span> <input type="checkbox" class="logarithmic" <?if($logarithmic){?>checked<?}?>> <span data-type="logarithmic">📐Log</span>
+		</span>
+
 	</div>
 
 
@@ -1771,7 +1825,7 @@
 								}
 
 								if(label.indexOf('in ')>-1) {
-									label = t+' '+adjusted_selected_label+' ('+stock_selected_label+' / '+adjusted_selected_label+')';
+									label = t+' '+stock_selected_label+' / '+adjusted_selected_label;
 								}
 								else {
 									label = '$'+t;
