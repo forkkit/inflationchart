@@ -1,5 +1,6 @@
 app
 assets/*.psd
 data
+git.txt
 
 !app/index.php
