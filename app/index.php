@@ -1,6 +1,5 @@
 <?
 
-
 	// <config>
 		$stocks=array(
 			'sp500',
