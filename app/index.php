@@ -1,47 +1,5 @@
 <?
 
-	// <config>
-		$stocks=array(
-			'sp500',
-			'dji',
-			'nasdaq',
-			'asia',
-			'singapore',
-			'china',
-			'gold',
-			'silver',
-			'home',
-			'food',
-			'food_and_home',
-			'bigmac',
-			'gdp',
-			'income',
-			'btc',
-			'eth',
-			'tsla',
-		);
-
-		$m_adjusteds=array(
-			'm1',
-			'm2',
-			'm3',
-			'mb',
-			'cpi',
-			'gold',
-			'silver',
-			'food',
-			'food_and_home',
-			'bigmac',
-			'btc',
-			'eth',
-			'population',
-			'home',
-			'income',
-			'china',
-			'sp500'
-		);
-	// </config>
-
 	// <router>
 		if($_GET['url']) {
 			$query=explode('-',str_replace('/','',$_GET['url']));
@@ -53,6 +11,60 @@
 			}
 		}
 	// </router>
+
+
+	// <config>
+		// $stocks=array(
+		// 	'sp500',
+		// 	'dji',
+		// 	'nasdaq',
+		// 	'asia',
+		// 	'singapore',
+		// 	'china',
+		// 	'gold',
+		// 	'silver',
+		// 	'home',
+		// 	'food',
+		// 	'food_and_home',
+		// 	'bigmac',
+		// 	'gdp',
+		// 	'income',
+		// 	'btc',
+		// 	'eth',
+		// 	'tsla',
+		// );
+
+		// $m_adjusteds=array(
+		// 	'm1',
+		// 	'm2',
+		// 	'm3',
+		// 	'mb',
+		// 	'cpi',
+		// 	'gold',
+		// 	'silver',
+		// 	'food',
+		// 	'food_and_home',
+		// 	'bigmac',
+		// 	'btc',
+		// 	'eth',
+		// 	'population',
+		// 	'home',
+		// 	'income',
+		// 	'china',
+		// 	'sp500'
+		// );
+
+		/* 2021-03-07 this removes the need for the above, we only put the data in the page for the req'd
+		   stocks and adjusteds, but this also means every dropdown change we need to reload page */
+		if(empty($_GET['stock'])) {
+			$_GET['stock']='sp500';
+		}
+		if(empty($_GET['adjusted'])) {
+			$_GET['adjusted']='m1';
+		}
+		$stocks=array($_GET['stock']);
+		$m_adjusteds=array($_GET['adjusted']);
+	// </config>
 
 	// <get data>
 		$dbFile=__DIR__.'/../data/m1chart.db';
@@ -1148,10 +1160,16 @@
 
 			/* <events> */
 				$('select.adjustment_selector').bind('change',function() {
-					updateChart();
+					updateSelected();
+					updateUrl();
+					window.location.reload();
+					// updateChart();
 				});
 				$('select.stock_selector').bind('change',function() {
-					updateChart();
+					updateSelected();
+					updateUrl();
+					window.location.reload();
+					// updateChart();
 				});
 				// $('select.time_selector').bind('change',function() {
 				// 	updateSelected();
@@ -1273,6 +1291,7 @@
 			// </find currently visible dataset of adjusted data and animate it>
 
 			function animationStep() {
+
 				/* <do it N times so it's faster> */
 					if(animationWhatAreWeAnimating=='stock') {
 						var bufferToUse=animationDataStockBuffer;
@@ -1282,19 +1301,21 @@
 					}
 
 					var i=0;
-					while(i<80) {
+					while(i<25) {
 						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
 						animationDataBufferIterator++;
 						i++;
 					}
 				/* </do it N times so it's faster> */
 
+
 				chart.update();
+
 
 				/* <quit if data finished> */
 					if(animationWhatAreWeAnimating=='stock' && !show_stock) {
 						/* if stock not visible, skip straight to draw the line instantly then go animate adjusted line, otherwise we'd have wait for a line to be drawn that we cannot see anyway (stock) */
-						animateAdjustedLine();
+						window.requestAnimationFrame(animateAdjustedLine);
 						// console.log('animateAdjustedLine 1');
 					}
 					else if(animationDataBufferIterator<bufferToUse.length) {
@@ -1305,7 +1326,7 @@
 					else {
 						/* if we finished, see if we are animating the stock line, so we can animate the adjusted line next */
 						if(animationWhatAreWeAnimating=='stock') {
-							animateAdjustedLine();
+							window.requestAnimationFrame(animateAdjustedLine);
 							// console.log('animateAdjustedLine 2');
 						}
 					}
