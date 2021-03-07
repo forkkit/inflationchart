@@ -2107,7 +2107,7 @@
 			🧠 The database behind this is an open <a href="https://docs.google.com/spreadsheets/d/1xJGrHWj6uO6ykFPvht-RBG5qlLeO0axraxUJ9UzOhFo/edit?usp=sharing">Google Sheet</a> you can view. If you see any problems/bugs/errors with it, please let me know on Twitter below!
 		</p>
 		<p>
-			👨‍🎨 Made by <a href="https://twitter.com/levelsio">@levelsio</a> (if you like it, tweet me a fun msg 😊). Inspired by <a href="https://stonksinbtc.xyz?ref=m1chart.com">Stonks in BTC</a> by <a href="https://twitter.com/dannyaziz97">Danny Aziz</a>.
+			👨‍🎨 Made by <a href="https://twitter.com/levelsio">@levelsio</a> (if you like it, tweet me a fun msg 😊). Inspired by <a href="https://stonksinbtc.xyz?ref=m1chart.com">Stonks in BTC</a> by <a href="https://twitter.com/dannyaziz97">Danny Aziz</a>, and <a href="https://cryptowat.ch">Cryptowatch</a>'s layout.
 		</p>
 	</div>
 </div>
