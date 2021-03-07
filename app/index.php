@@ -503,7 +503,7 @@
 	select:hover {
 		opacity:0.75;
 	}
-	select.adjustment_selector {
+	/*select.adjustment_selector {
 		color:#ff4742;
 		border-color:#ff4742;
 		color:#42a5ff;
@@ -525,7 +525,7 @@
 	select.time_selector:hover {
 		background:#fff;
 		color:#060b16;
-	}
+	}*/
 	a {
 		color:#ff4742;
 	}
