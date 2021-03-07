@@ -493,6 +493,8 @@
 		/*border-radius:7px;*/
 		color:rgb(186,186,186);
 		border:1px solid rgb(186,186,186);
+		border-color:#fff;
+		color:#fff;
 		<?if($_GET['layout']=='screenshot'){?>
 			border-width:4px;
 			font-weight:800;
@@ -1580,7 +1582,7 @@
 
 
 		<span class="show_stock_legend">
-			<input type="checkbox" class="show_stock" <?if($show_stock){?>checked<?}?>> <span data-type="stock" style="color:rgb(43,222,115)">🟢<span data-type="stock" class="stock"></span></span> <span class="mobile_line_break"></span>
+			<input type="checkbox" class="show_stock" <?if($show_stock){?>checked<?}?>> <span data-type="stock" style="color:rgb(43,222,115)">🟢<span data-type="stock" class="stock"></span> in USD </span> <span class="mobile_line_break"></span>
 		</span>
 
 
