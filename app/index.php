@@ -779,7 +779,7 @@
 				<option value="btc" <?if($_GET['stock']=='btc'){?>selected<?}?>>🥇BTC</option>
 				<option value="eth" <?if($_GET['stock']=='eth'){?>selected<?}?>>🏅ETH</option>
 				<option value="tsla" <?if($_GET['stock']=='tsla'){?>selected<?}?>>🚗$TSLA</option>
-			</select><span style="color:#ff4742"> in </span><select class="adjustment_selector">
+			</select><span> in </span><select class="adjustment_selector">
 				<option value="mb" <?if($_GET['m']=='mb'){?>selected<?}?>>💸 Cash (M0)</option>
 				<option value="m1" <?if(empty($_GET['m']) /* default to mb */ || $_GET['m']=='m1'){?>selected<?}?>>💳 Cash + Bank (M1)</option>
 				<option value="m3" <?if($_GET['m']=='m3'){?>selected<?}?>>💰 All Money (M3)</option>
