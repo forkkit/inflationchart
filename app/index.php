@@ -482,6 +482,7 @@
 		font-family:"Iosevka Custom",monospace,sans-serif;
 		font-size:26px;
 		color:rgb(211,211,211);
+		color:#fff;
 		z-index:1;
 		position:relative;
 	}
