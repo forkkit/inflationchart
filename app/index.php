@@ -2108,6 +2108,7 @@
 		</p>
 		<p>
 			👨‍🎨 Made by <a href="https://twitter.com/levelsio">@levelsio</a> (if you like it, tweet me a fun msg 😊). Inspired by <a href="https://stonksinbtc.xyz?ref=m1chart.com">Stonks in BTC</a> by <a href="https://twitter.com/dannyaziz97">Danny Aziz</a>, and <a href="https://cryptowat.ch">Cryptowatch</a>'s layout.
+			
 		</p>
 	</div>
 </div>
