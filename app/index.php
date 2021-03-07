@@ -771,9 +771,9 @@
 				<option value="eth" <?if($_GET['stock']=='eth'){?>selected<?}?>>🏅ETH</option>
 				<option value="tsla" <?if($_GET['stock']=='tsla'){?>selected<?}?>>🚗$TSLA</option>
 			</select><span style="color:#ff4742"> in </span><select class="adjustment_selector">
-				<option value="mb" <?if($_GET['m']=='mb'){?>selected<?}?>>💸 US$ Cash (M0)</option>
-				<option value="m1" <?if(empty($_GET['m']) /* default to mb */ || $_GET['m']=='m1'){?>selected<?}?>>💳 US$ Cash + Bank (M1)</option>
-				<option value="m3" <?if($_GET['m']=='m3'){?>selected<?}?>>💰 US$ All Money (M3)</option>
+				<option value="mb" <?if($_GET['m']=='mb'){?>selected<?}?>>💸 Cash (M0)</option>
+				<option value="m1" <?if(empty($_GET['m']) /* default to mb */ || $_GET['m']=='m1'){?>selected<?}?>>💳 Cash + Bank (M1)</option>
+				<option value="m3" <?if($_GET['m']=='m3'){?>selected<?}?>>💰 All Money (M3)</option>
 				<option value="cpi" <?if($_GET['m']=='cpi'){?>selected<?}?>>🛒Consumer Price Index</option>
 				<option value="gold" <?if($_GET['m']=='gold'){?>selected<?}?>>🏆Gold</option>
 				<option value="silver" <?if($_GET['m']=='silver'){?>selected<?}?>>🥈Silver</option>
@@ -1838,7 +1838,7 @@
 									label = t+' '+adjusted_selected_label+' ('+stock_selected_label+' / '+adjusted_selected_label+')';
 								}
 								else {
-									label = 'US$'+t;
+									label = '$'+t;
 								}
 								return label;
 							}
@@ -1900,19 +1900,19 @@
 									fontSize: 12,
 									callback: function(t) {
 										if(t>=1000000000000) {
-											return 'US$' + number_format(t/1000000000000,1)+'T';
+											return '$' + number_format(t/1000000000000,1)+'T';
 										}
 										else if(t>=1000000000) {
-											return 'US$' + number_format(t/1000000000,1)+'B';
+											return '$' + number_format(t/1000000000,1)+'B';
 										}
 										else if(t>=1000000) {
-											return 'US$' + number_format(t/1000000,1)+'M';
+											return '$' + number_format(t/1000000,1)+'M';
 										}
 										else if(t<1){
-											return 'US$' + number_format(t,4);
+											return '$' + number_format(t,4);
 										}
 										else {
-											return 'US$' + number_format(t);
+											return '$' + number_format(t);
 										}
 									}
 								}
@@ -2001,16 +2001,16 @@
 									fontSize: 12,
 									callback: function(t) {
 										if(t>=1000000000000) {
-											return 'US$' + number_format(t/1000000000000,1)+'T';
+											return '$' + number_format(t/1000000000000,1)+'T';
 										}
 										else if(t>=1000000000) {
-											return 'US$' + number_format(t/1000000000,1)+'B';
+											return '$' + number_format(t/1000000000,1)+'B';
 										}
 										else if(t>=1000000) {
-											return 'US$' + number_format(t/1000000,1)+'M';
+											return '$' + number_format(t/1000000,1)+'M';
 										}
 										else {
-											return 'US$' + number_format(t);
+											return '$' + number_format(t);
 										}
 									}
 								}
@@ -2086,7 +2086,7 @@
 			</strong>
 		</p>
 		<p>
-			👶 Let's start: select [M1-adjusted] [S&P500] in [last 20 years] first on top. M1 is the money base, which means all US$ in circulation. S&P500 is the most important stock market index of 500 big American companies.
+			👶 Let's start: select [M1-adjusted] [S&P500] in [last 20 years] first on top. M1 is the money base, which means all $ in circulation. S&P500 is the most important stock market index of 500 big American companies.
 		</p>
 		<p>
 			The 🟢green line is the actual price of the S&P500 in history up to today. The 🔴red line converges to the same price the closer we get to the past (the left end of the chart). 
