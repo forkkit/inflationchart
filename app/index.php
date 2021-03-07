@@ -331,13 +331,13 @@
 
 
 
-	if(empty($_GET) && !$data[30]['sp500']) {
+	/*if(empty($_GET) && !$data[30]['sp500']) {
 		echo "<center><strong>🚨 Note: I detected that Google Finance historical data is down, so some indices like S&P500, DJI etc. are rekt and site may look broken, check back in a few hours</strong></center>";
 		echo '<hr>';
 		$logarithmic=0;
 		$_GET['m']='gold';
 		$_GET['stock']='income';
-	}
+	}*/
 
 
 	$page['title']='💰'."M1 Chart: The stock market adjusted for the US-dollar money supply M1 (and more) (by @levelsio)";
