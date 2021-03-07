@@ -759,7 +759,7 @@
 				<option value="dji" <?if($_GET['stock']=='dji'){?>selected<?}?>>🇺🇸DJI</option>
 				<option value="nasdaq" <?if($_GET['stock']=='nasdaq'){?>selected<?}?>>🤖NASDAQ</option>
 				<option value="gdp" <?if($_GET['stock']=='gdp'){?>selected<?}?>>💰US GDP</option>
-				<option value="income" <?if($_GET['stock']=='income'){?>selected<?}?>>💰US Income</option>
+				<option value="income" <?if($_GET['stock']=='income'){?>selected<?}?>>💰Avg US Income</option>
 				<option value="gold" <?if($_GET['stock']=='gold'){?>selected<?}?>>🏆Gold</option>
 				<option value="silver" <?if($_GET['stock']=='silver'){?>selected<?}?>>🥈Silver</option>
 				<option value="asia" <?if($_GET['stock']=='asia'){?>selected<?}?>>🌏Asia ex-JP</option>
@@ -784,7 +784,7 @@
 				<option value="btc" <?if($_GET['m']=='btc'){?>selected<?}?>>🥇BTC</option>
 				<option value="eth" <?if($_GET['m']=='eth'){?>selected<?}?>>🏅ETH</option>
 				<option value="population" <?if($_GET['m']=='population'){?>selected<?}?>>🌍Population</option>
-				<option value="income" <?if($_GET['m']=='income'){?>selected<?}?>>💰US Income</option>
+				<option value="income" <?if($_GET['m']=='income'){?>selected<?}?>>💰Avg US Income</option>
 			</select><?/* <span class="mobile_line_break"></span> <select class="time_selector">
 				<option value="1 year" <?if($_GET['time']=='1 year'){?>selected<?}?>>last 1 year</option>
 				<option value="5 years" <?if($_GET['time']=='5 years'){?>selected<?}?>>last 5 years</option>
@@ -1969,7 +1969,7 @@
 			<a href="/sp500-in-btc?logarithmic=1">S&P500 in BTC</a><br/>
 			<a href="/sp500-in-gold">S&P500 in Gold</a><br/>
 			<a href="/btc-in-m1">BTC in M1</a><br/>
-			<a href="/sp500-in-income">S&P500 in US Income</a><br/>
+			<a href="/sp500-in-income">S&P500 in Avg US Income</a><br/>
 			<a href="/china-in-btc?logarithmic=1">China SSE in BTC</a><br/>
 			<a href="/food-in-btc?logarithmic=1">Food in BTC</a><br/>
 			<a href="/bigmac-in-btc?logarithmic=1">Big Mac in BTC</a><br/>
@@ -1977,7 +1977,7 @@
 			<a href="/gold-in-btc?logarithmic=1">Gold in BTC</a><br/>
 			<a href="/btc-in-gold">BTC in Gold</a><br/>
 			<a href="/home-in-m1">US Home in M1</a><br/>
-			<a href="/income-in-btc?logarithmic=1">US Income in BTC</a><br/>
+			<a href="/income-in-btc?logarithmic=1">Avg US Income in BTC</a><br/>
 			<a href="/nasdaq-in-btc?logarithmic=1">NASDAQ in BTC</a><br/>
 			<a href="/tsla-in-btc?logarithmic=1">TLSA in BTC</a><br/>
 			<a href="/gdp-in-btc?logarithmic=1">GDP in BTC</a><br/>
@@ -1985,10 +1985,10 @@
 			<a href="/sp500-in-bigmac">S&P500 in Big Macs</a><br/>
 			<a href="/sp500-in-food">China SSE in Food</a><br/>
 			<a href="/china-in-food_and_home">S&P500 in Food + US Home</a><br/>
-			<a href="/income-in-food">US Income in Food</a><br/>
-			<a href="/income-in-food_and_home">US Income in Food + US Home</a><br/>
-			<a href="/income-in-bigmac">US Income in Big Macs</a><br/>
-			<a href="/income-in-home">US Income in US Homes</a><br/>
+			<a href="/income-in-food">Avg US Income in Food</a><br/>
+			<a href="/income-in-food_and_home">Avg US Income in Food + US Home</a><br/>
+			<a href="/income-in-bigmac">Avg US Income in Big Macs</a><br/>
+			<a href="/income-in-home">Avg US Income in US Homes</a><br/>
 			<a href="/home-in-food">US Home in Food</a><br/>
 			<a href="/home-in-bigmac">US Home in Big Macs</a><br/>
 			<a href="/bigmac-in-cpi">Big Mac in CPI</a><br/>
@@ -2053,7 +2053,7 @@
 			💰 US GDP is the <a href="https://fred.stlouisfed.org/series/GDP">gross domestic product of the U.S.</a>.
 		</p>
 		<p>
-			💰 US Income is the <a href="https://fred.stlouisfed.org/series/MEHOINUSA646N">annual median U.S. household income</a>.
+			💰 Avg US Income is the <a href="https://fred.stlouisfed.org/series/MEHOINUSA646N">annual median U.S. household income</a>.
 		</p>
 		<p>
 			🏆 Gold price (aka XAU) is from <a href="https://www.indexmundi.com/commodities/?commodity=gold&months=360">IndexMundi</a>. 
