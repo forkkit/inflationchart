@@ -1966,10 +1966,13 @@
 				Most popular pages (via <a href="https://simpleanalytics.com/m1chart.com">Simple Analytics</a>)
 			</strong><br/>
 			<a href="/sp500-in-m1">S&P500 in M1</a><br/>
+			<a href="/income-in-food">Avg US Income in Food</a><br/>
+			<a href="/income-in-home">Avg US Income in Avg US Home Price</a><br/>
+			<a href="/sp500-in-income">S&P500 in Avg US Income</a><br/>
+
 			<a href="/sp500-in-btc?logarithmic=1">S&P500 in BTC</a><br/>
 			<a href="/sp500-in-gold">S&P500 in Gold</a><br/>
 			<a href="/btc-in-m1">BTC in M1</a><br/>
-			<a href="/sp500-in-income">S&P500 in Avg US Income</a><br/>
 			<a href="/china-in-btc?logarithmic=1">China SSE in BTC</a><br/>
 			<a href="/food-in-btc?logarithmic=1">Food in BTC</a><br/>
 			<a href="/bigmac-in-btc?logarithmic=1">Big Mac in BTC</a><br/>
@@ -1977,10 +1980,8 @@
 			<a href="/gold-in-btc?logarithmic=1">Gold in BTC</a><br/>
 			<a href="/btc-in-gold">BTC in Gold</a><br/>
 
-			<a href="/income-in-food">Avg US Income in Food</a><br/>
-			<a href="/income-in-food_and_home">Avg US Income in Food + Avg US Home</a><br/>
+			<a href="/income-in-food_and_home">Avg US Income in Food + Avg US Home Price</a><br/>
 			<a href="/income-in-bigmac">Avg US Income in Big Macs</a><br/>
-			<a href="/income-in-home">Avg US Income in Avg US Home Price</a><br/>
 
 			<a href="/home-in-m1">Avg US Home in M1</a><br/>
 			<a href="/income-in-btc?logarithmic=1">Avg US Income in BTC</a><br/>
