@@ -1273,75 +1273,11 @@
 						var bufferToUse=animationDataAdjustedBuffer
 					}
 
-					if(time_selected=='all') {
+					var i=0;
+					while(i<80) {
 						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
 						animationDataBufferIterator++;
-
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-						
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-						
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-						
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-						
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-					}
-					if(time_selected=='10 years') {
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-						
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-					}
-					if(time_selected=='5 years') {
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
-					}
-					if(time_selected=='1 year') {
-						chart.data.datasets[animationDatasetIndex]['data'].push(bufferToUse[animationDataBufferIterator]);
-						animationDataBufferIterator++;
+						i++;
 					}
 				/* </do it N times so it's faster> */
 
