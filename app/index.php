@@ -779,10 +779,10 @@
 				<option value="btc" <?if($_GET['stock']=='btc'){?>selected<?}?>>🥇BTC</option>
 				<option value="eth" <?if($_GET['stock']=='eth'){?>selected<?}?>>🏅ETH</option>
 				<option value="tsla" <?if($_GET['stock']=='tsla'){?>selected<?}?>>🚗$TSLA</option>
-			</select><span> in </span><select class="adjustment_selector">
-				<option value="mb" <?if($_GET['m']=='mb'){?>selected<?}?>>💸 Cash (M0)</option>
-				<option value="m1" <?if(empty($_GET['m']) /* default to mb */ || $_GET['m']=='m1'){?>selected<?}?>>💳 Cash + Bank (M1)</option>
-				<option value="m3" <?if($_GET['m']=='m3'){?>selected<?}?>>💰 All Money (M3)</option>
+			</select><span> / </span><select class="adjustment_selector">
+				<option value="mb" <?if($_GET['m']=='mb'){?>selected<?}?>>💸 M0: Cash</option>
+				<option value="m1" <?if(empty($_GET['m']) /* default to mb */ || $_GET['m']=='m1'){?>selected<?}?>>💳 M1: Cash + Bank</option>
+				<option value="m3" <?if($_GET['m']=='m3'){?>selected<?}?>>💰 M3: All Money</option>
 				<option value="cpi" <?if($_GET['m']=='cpi'){?>selected<?}?>>🛒Consumer Price Index</option>
 				<option value="gold" <?if($_GET['m']=='gold'){?>selected<?}?>>🏆Gold</option>
 				<option value="silver" <?if($_GET['m']=='silver'){?>selected<?}?>>🥈Silver</option>
@@ -1521,6 +1521,40 @@
 			// time_selected=$('select.time_selector').children("option:selected").val();
 			time_selected='all';
 		}
+		function decimalify(t) {
+			/* by levelsio */
+			if(t==0) {
+				t=0;
+			}
+			else if(t>=1000000000000) {
+				t=number_format(t/1000000000000,1)+'T';
+			}
+			else if(t>=1000000000) {
+				t=number_format(t/1000000000,1)+'B';
+			}
+			else if(t>=1000000) {
+				t=number_format(t/1000000,1)+'M';
+			}
+			else if(t<=0.00000000001) {
+				t=number_format(t*1000000000000,1)+' Tth';
+			}
+			else if(t<=0.00000001) {
+				t=number_format(t*1000000000,1)+' Bth';
+			}
+			else if(t<=0.00001) {
+				t=number_format(t*1000000,1)+' Mth';
+			}
+			else if(t<=0.1) {
+				t=number_format(t,2);
+			}
+			else if(t<=1) {
+				t=number_format(t,2);
+			}
+			else {
+				t=number_format(t);
+			}
+			return t;
+		}
 		function updateChart() {
 			// console.log('updateChart');
 			updateSelected();
@@ -1797,35 +1831,7 @@
 							 label: function(tooltipItem, data) {
 								var label = data.datasets[tooltipItem.datasetIndex].label || '';
 
-
-								t=tooltipItem.yLabel;
-								if(t>=1000000000000) {
-									t=number_format(t/1000000000000,1)+'T';
-								}
-								else if(t>=1000000000) {
-									t=number_format(t/1000000000,1)+'B';
-								}
-								else if(t>=1000000) {
-									t=number_format(t/1000000,1)+'M';
-								}
-								else if(t<=0.00000000001) {
-									t=number_format(t*1000000000000,1)+' Tth';
-								}
-								else if(t<=0.00000001) {
-									t=number_format(t*1000000000,1)+' Bth';
-								}
-								else if(t<=0.00001) {
-									t=number_format(t*1000000,1)+' Mth';
-								}
-								else if(t<=0.1) {
-									t=number_format(t,2);
-								}
-								else if(t<=1) {
-									t=number_format(t,2);
-								}
-								else {
-									t=number_format(t);
-								}
+								t=decimalify(tooltipItem.yLabel);
 
 								if(label.indexOf('in ')>-1) {
 									label = t+' '+stock_selected_label+' / '+adjusted_selected_label;
@@ -1892,21 +1898,7 @@
 									fontColor:'#2bde73',
 									fontSize: 12,
 									callback: function(t) {
-										if(t>=1000000000000) {
-											return '$' + number_format(t/1000000000000,1)+'T';
-										}
-										else if(t>=1000000000) {
-											return '$' + number_format(t/1000000000,1)+'B';
-										}
-										else if(t>=1000000) {
-											return '$' + number_format(t/1000000,1)+'M';
-										}
-										else if(t<1){
-											return '$' + number_format(t,4);
-										}
-										else {
-											return '$' + number_format(t);
-										}
+										return '$'+decimalify(t);
 									}
 								}
 							},
@@ -1936,34 +1928,7 @@
 									fontColor:'#ff4742',
 									fontSize: 12,
 									callback: function(t) {
-										if(t>=1000000000000) {
-											t=number_format(t/1000000000000,1)+'T';
-										}
-										else if(t>=1000000000) {
-											t=number_format(t/1000000000,1)+'B';
-										}
-										else if(t>=1000000) {
-											t=number_format(t/1000000,1)+'M';
-										}
-										else if(t<=0.00000000001) {
-											t=number_format(t*1000000000000,1)+' Tth';
-										}
-										else if(t<=0.00000001) {
-											t=number_format(t*1000000000,1)+' Bth';
-										}
-										else if(t<=0.00001) {
-											t=number_format(t*1000000,1)+' Mth';
-										}
-										else if(t<=0.1) {
-											t=number_format(t,2);
-										}
-										else if(t<=1) {
-											t=number_format(t,2);
-										}
-										else {
-											t=number_format(t);
-										}
-										return t;
+										return decimalify(t);
 									}
 								}
 							},
@@ -1993,18 +1958,7 @@
 									fontColor:'#42a5ff',
 									fontSize: 12,
 									callback: function(t) {
-										if(t>=1000000000000) {
-											return '$' + number_format(t/1000000000000,1)+'T';
-										}
-										else if(t>=1000000000) {
-											return '$' + number_format(t/1000000000,1)+'B';
-										}
-										else if(t>=1000000) {
-											return '$' + number_format(t/1000000,1)+'M';
-										}
-										else {
-											return '$' + number_format(t);
-										}
+										return '$'+decimalify(t);
 									}
 								}
 							}
