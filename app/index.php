@@ -764,7 +764,7 @@
 				<option value="silver" <?if($_GET['stock']=='silver'){?>selected<?}?>>🥈Silver</option>
 				<option value="asia" <?if($_GET['stock']=='asia'){?>selected<?}?>>🌏Asia ex-JP</option>
 				<option value="china" <?if($_GET['stock']=='china'){?>selected<?}?>>🇨🇳China SSE</option>
-				<option value="home" <?if($_GET['stock']=='home'){?>selected<?}?>>🏡US Home</option>
+				<option value="home" <?if($_GET['stock']=='home'){?>selected<?}?>>🏡Avg US Home</option>
 				<option value="food" <?if($_GET['stock']=='food'){?>selected<?}?>>🥩Food Price</option>
 				<option value="bigmac" <?if($_GET['stock']=='bigmac'){?>selected<?}?>>🍔Big Mac</option>
 				<option value="btc" <?if($_GET['stock']=='btc'){?>selected<?}?>>🥇BTC</option>
@@ -777,9 +777,9 @@
 				<option value="cpi" <?if($_GET['m']=='cpi'){?>selected<?}?>>🛒Consumer Price Index</option>
 				<option value="gold" <?if($_GET['m']=='gold'){?>selected<?}?>>🏆Gold</option>
 				<option value="silver" <?if($_GET['m']=='silver'){?>selected<?}?>>🥈Silver</option>
-				<option value="home" <?if($_GET['m']=='home'){?>selected<?}?>>🏡US Home</option>
+				<option value="home" <?if($_GET['m']=='home'){?>selected<?}?>>🏡Avg US Home</option>
 				<option value="food" <?if($_GET['m']=='food'){?>selected<?}?>>🥩Food price</option>
-				<option value="food_and_home" <?if($_GET['m']=='food_and_home'){?>selected<?}?>>🥩Food + 🏡US Home</option>
+				<option value="food_and_home" <?if($_GET['m']=='food_and_home'){?>selected<?}?>>🥩Food + 🏡Avg US Home</option>
 				<option value="bigmac" <?if($_GET['m']=='bigmac'){?>selected<?}?>>🍔Big Macs</option>
 				<option value="btc" <?if($_GET['m']=='btc'){?>selected<?}?>>🥇BTC</option>
 				<option value="eth" <?if($_GET['m']=='eth'){?>selected<?}?>>🏅ETH</option>
@@ -1976,7 +1976,7 @@
 			<a href="/dji-in-btc?logarithmic=1">DJI in BTC</a><br/>
 			<a href="/gold-in-btc?logarithmic=1">Gold in BTC</a><br/>
 			<a href="/btc-in-gold">BTC in Gold</a><br/>
-			<a href="/home-in-m1">US Home in M1</a><br/>
+			<a href="/home-in-m1">Avg US Home in M1</a><br/>
 			<a href="/income-in-btc?logarithmic=1">Avg US Income in BTC</a><br/>
 			<a href="/nasdaq-in-btc?logarithmic=1">NASDAQ in BTC</a><br/>
 			<a href="/tsla-in-btc?logarithmic=1">TLSA in BTC</a><br/>
@@ -1984,13 +1984,13 @@
 
 			<a href="/sp500-in-bigmac">S&P500 in Big Macs</a><br/>
 			<a href="/sp500-in-food">China SSE in Food</a><br/>
-			<a href="/china-in-food_and_home">S&P500 in Food + US Home</a><br/>
+			<a href="/china-in-food_and_home">S&P500 in Food + Avg US Home</a><br/>
 			<a href="/income-in-food">Avg US Income in Food</a><br/>
-			<a href="/income-in-food_and_home">Avg US Income in Food + US Home</a><br/>
+			<a href="/income-in-food_and_home">Avg US Income in Food + Avg US Home</a><br/>
 			<a href="/income-in-bigmac">Avg US Income in Big Macs</a><br/>
-			<a href="/income-in-home">Avg US Income in US Homes</a><br/>
-			<a href="/home-in-food">US Home in Food</a><br/>
-			<a href="/home-in-bigmac">US Home in Big Macs</a><br/>
+			<a href="/income-in-home">Avg US Income in Avg US Homes</a><br/>
+			<a href="/home-in-food">Avg US Home in Food</a><br/>
+			<a href="/home-in-bigmac">Avg US Home in Big Macs</a><br/>
 			<a href="/bigmac-in-cpi">Big Mac in CPI</a><br/>
 			<a href="/bigmac-in-m1">Big Mac in M1</a><br/>
 			<a href="/silver-in-gold">Silver in Gold</a><br/>
@@ -2071,10 +2071,10 @@
 			🥩 Food represents the <a href="http://www.fao.org/worldfoodsituation/foodpricesindex/en/">Food Price Index (FPI)</a> by the United Nations, a measure of the international prices of a basket of 5 food commodities which are: sugar, cereals, vegetable oils, meat and dairy.
 		</p>
 		<p>
-			🏡 US Home is the <a href="https://www.nar.realtor/topics/existing-home-sales">median U.S. single-family home price</a>, with historical data from <a href="https://dqydj.com/historical-home-prices/">DQYDJ</a>.
+			🏡 Avg US Home is the <a href="https://www.nar.realtor/topics/existing-home-sales">median U.S. single-family home price</a>, with historical data from <a href="https://dqydj.com/historical-home-prices/">DQYDJ</a>.
 		</p>
 		<p>
-			🥩 Food + US Home is a combination I made of the (global) Food Price Index (FPI) and the median U.S. single-family home price. Used as a benchmark of how much it costs to live. Caveat here is that while the food prices are worldwide, the home price is U.S.
+			🥩 Food + Avg US Home is a combination I made of the (global) Food Price Index (FPI) and the median U.S. single-family home price. Used as a benchmark of how much it costs to live. Caveat here is that while the food prices are worldwide, the home price is U.S.
 		</p>
 		<p>
 			👩‍💻 Pop. is the world population from <a href="https://data.worldbank.org/indicator/SP.POP.TOTL">World Bank</a>. Population is in billions.
