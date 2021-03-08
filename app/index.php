@@ -249,12 +249,18 @@
 
 	$newData=array();
 	foreach($data as $row) {
+
 		foreach($m_adjusteds as $m) {
 			foreach($stocks as $stock) {
 				// $row[$m.'_adj_'.$stock]=$row[$stock]/$row[$m]*$latest[$m];
 				// $row[$m.'_adj_'.$stock]=($row[$stock]/$row[$m])*$first[$stock]/$first[$m];
 				// $row[$m.'_adj_'.$stock]=($row[$stock]/$row[$m])/($first[$stock]/$first[$m]);
 				// $row[$m.'_adj_'.$stock]=$row[$stock]/$row[$m];
+
+				// echo $m.'_adj_'.$stock.'='.$row[$stock].'['.$stock.']'.'/'.$row[$m].'['.$m.']';
+				// echo "<br/>\n";
+
+
 				$row[$m.'_adj_'.$stock]=$row[$stock]/$row[$m];
 				if(empty($row[$m.'_adj_'.$stock]) || is_nan($row[$m.'_adj_'.$stock]) || is_infinite($row[$m.'_adj_'.$stock])) {
 					unset($row[$m.'_adj_'.$stock]);
@@ -265,6 +271,7 @@
 	}
 	$data=$newData;
 
+// exit;
 
 
 
@@ -799,6 +806,7 @@
 				<option value="m1" <?if(empty($_GET['m']) /* default to mb */ || $_GET['m']=='m1'){?>selected<?}?>>💳 M1: Cash + Bank</option>
 				<option value="m3" <?if($_GET['m']=='m3'){?>selected<?}?>>💰 M3: All Money</option>
 				<option value="cpi" <?if($_GET['m']=='cpi'){?>selected<?}?>>🛒Consumer Price Index</option>
+				<option value="levels" <?if($_GET['m']=='levels'){?>selected<?}?>>🐩 Levels Inflation Index</option>
 				<option value="oil" <?if($_GET['m']=='oil'){?>selected<?}?>>🛢Oil</option>
 				<option value="gold" <?if($_GET['m']=='gold'){?>selected<?}?>>🏆Gold</option>
 				<option value="silver" <?if($_GET['m']=='silver'){?>selected<?}?>>🥈Silver</option>

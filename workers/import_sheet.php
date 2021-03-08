@@ -97,7 +97,7 @@
 				continue;
 			}
 
-			$query = $m1chartDb->prepare('REPLACE INTO m1chart(epoch,m1,m2,m3,mb,cpi,gdp,income,bigmac,sp500,dji,asia,singapore,china,nasdaq,btc,home,food,food_and_home,oil,gold,silver,eth,tsla,population,date,epoch_updated) values (:epoch,:m1,:m2,:m3,:mb,:cpi,:gdp,:income,:bigmac,:sp500,:dji,:asia,:singapore,:china,:nasdaq,:btc,:home,:food,:food_and_home,:oil,:gold,:silver,:eth,:tsla,:population,:date,:epoch_updated);');
+			$query = $m1chartDb->prepare('REPLACE INTO m1chart(epoch,m1,m2,m3,mb,cpi,gdp,income,bigmac,sp500,dji,asia,singapore,china,nasdaq,btc,home,food,food_and_home,levels,oil,gold,silver,eth,tsla,population,date,epoch_updated) values (:epoch,:m1,:m2,:m3,:mb,:cpi,:gdp,:income,:bigmac,:sp500,:dji,:asia,:singapore,:china,:nasdaq,:btc,:home,:food,:food_and_home,:levels,:oil,:gold,:silver,:eth,:tsla,:population,:date,:epoch_updated);');
 			$query->bindValue(':epoch',strtotime($row['date']));
 			$query->bindValue(':m1',$row['m1']);
 			$query->bindValue(':m2',$row['m2']);
@@ -117,6 +117,7 @@
 			$query->bindValue(':home',$row['home']);
 			$query->bindValue(':food',$row['food']);
 			$query->bindValue(':food_and_home',$row['food_and_home']);
+			$query->bindValue(':levels',$row['levels']);
 			$query->bindValue(':oil',$row['oil']);
 			$query->bindValue(':gold',$row['gold']);
 			$query->bindValue(':silver',$row['silver']);
