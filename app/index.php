@@ -60,7 +60,7 @@
 			$_GET['stock']='sp500';
 		}
 		if(empty($_GET['m'])) {
-			$_GET['adjusted']='m1';
+			$_GET['m']='m1';
 		}
 		$stocks=array($_GET['stock']);
 		$m_adjusteds=array($_GET['m']);
