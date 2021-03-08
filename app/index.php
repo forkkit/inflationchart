@@ -80,9 +80,11 @@
 		// 	// default 10 years back
 		// 	$query->bindValue(':epoch',0);
 		// }
+		// $query=$chartDb->prepare("SELECT * FROM m1chart ORDER BY epoch ASC");
 		$query=$chartDb->prepare("SELECT * FROM m1chart ORDER BY epoch ASC");
 		$query->execute();
 		$data=$query->fetchAll(PDO::FETCH_ASSOC);
+		echo json_encode($data);exit;
 	// </get data>
 
 
