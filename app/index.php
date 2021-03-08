@@ -622,10 +622,10 @@
 	.logo,
 	.by-levelsio {
 		border:1px solid #2a2a2a;
-		padding:9px;
-		font-size:14px;
+		padding:7px;
+		font-size:12px;
 		/*border-radius:7px;*/
-		background:#000;
+		background:#0a1325;
 		z-index:1;
 	}
 
