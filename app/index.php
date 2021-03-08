@@ -1584,8 +1584,6 @@
 			time_selected='all';
 		}
 		function decimalify(t) {
-			console.log('in',t);
-			return t;
 			/* by levelsio */
 			if(t==0) {
 				t=0;
@@ -1617,8 +1615,6 @@
 			else {
 				t=number_format(t);
 			}
-
-			console.log('out',t);
 			return t;
 		}
 		function updateChart() {
@@ -1961,8 +1957,8 @@
 									fontColor:'#2bde73',
 									fontSize: 12,
 									callback: function(t) {
-										return t;
-										// return '$'+decimalify(t);
+										// return t;
+										return '$'+decimalify(t);
 									}
 								}
 							},
@@ -1992,8 +1988,8 @@
 									fontColor:'#ff4742',
 									fontSize: 12,
 									callback: function(t) {
-										return t;
-										// return decimalify(t);
+										// return t;
+										return decimalify(t);
 									}
 								}
 							},
@@ -2023,8 +2019,8 @@
 									fontColor:'#42a5ff',
 									fontSize: 12,
 									callback: function(t) {
-										return t;
-										// return '$'+decimalify(t);
+										// return t;
+										return '$'+decimalify(t);
 									}
 								}
 							}
