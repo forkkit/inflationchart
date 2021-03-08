@@ -607,9 +607,9 @@
 		display:none;
 	}
 	.main {
-		width:calc(100% - 300px - 28px);
+		/*width:calc(100% - 300px - 28px);*/
 		height:100vh;
-		margin-left:calc(300px + 28px);
+		/*margin-right:calc(300px + 28px);*/
 		overflow-y:hidden;
 		background:none;
 	}
@@ -649,11 +649,13 @@
 
 	.legend {
 		color:rgb(211,211,211);
-		border-right:1px solid #2a2a2a;
-		top:0;
-		left:0;
+		left:120px;
+		top:140px;
+		/*background:linear-gradient(180deg,#0a1325 0,#0a1325);*/
+		background:#0a1325;
 		position:fixed;
-		height:100vh;
+		border:1px solid #2a2a2a;
+		z-index:1;
 		/*width:calc(100% - 300px - 1px - 7px - 7px);*/
 		width:300px;
 		padding:7px;
@@ -662,6 +664,7 @@
 		position:fixed;
 		/*background:#000;*/
 		text-align:center;
+		box-shadow:1px 2px 4px rgba(0,0,0,1);
 		/*border-top:1px solid #2a2a2a;*/
 		-webkit-touch-callout: none;
 		-webkit-user-select: none;
@@ -670,7 +673,6 @@
 		-ms-user-select: none;
 		user-select: none;
 		text-align:left;
-		padding:14px;
 		font-size:16px;
 	}
 	.legend .show_stock_legend:hover,
@@ -717,7 +719,7 @@
 		/*display:inline;*/
 	}
 
-	@media (max-width:1500px) {
+	@media (max-width:600px) {
 		.by-levelsio {
 			position:relative;
 			margin:14px auto;
@@ -2004,7 +2006,7 @@
 
 
 		<span class="show_stock_legend">
-			<input type="checkbox" class="show_stock" <?if($show_stock){?>checked<?}?>> <span data-type="stock" style="color:rgb(43,222,115)">🟢<span data-type="stock" class="stock"></span> in USD </span> <span class="mobile_line_break"></span>
+			<input type="checkbox" class="show_stock" <?if($show_stock){?>checked<?}?>> <span data-type="stock" style="color:rgb(43,222,115)"><!-- 🟢 --><span data-type="stock" class="stock"></span> in USD </span> <span class="mobile_line_break"></span>
 		</span>
 		<br/>
 
@@ -2013,7 +2015,7 @@
 		<!-- <span class="hide_on_mobile">&nbsp;|&nbsp;</span> -->
 
 		<span class="show_adjusted_legend">
-			<span class="mobile_line_break"></span> <input type="checkbox" class="show_adjusted" <?if($show_adjusted){?>checked<?}?>> <span style="color:rgb(255,71,66)" data-type="adjusted">🔴 <span class="stock" data-type="adjusted"></span> / <span class="adjusted" data-type="adjusted"></span></span> <span class="mobile_line_break"></span>
+			<span class="mobile_line_break"></span> <input type="checkbox" class="show_adjusted" <?if($show_adjusted){?>checked<?}?>> <span style="color:rgb(255,71,66)" data-type="adjusted"><!-- 🔴  --><span class="stock" data-type="adjusted"></span> / <span class="adjusted" data-type="adjusted"></span></span> <span class="mobile_line_break"></span>
 		</span>
 		<br/>
 
@@ -2023,7 +2025,7 @@
 		<!-- <span class="hide_on_mobile">&nbsp;|&nbsp;</span> -->
 
 		<span class="show_adjuster_legend">
-			<span class="mobile_line_break"></span> <input type="checkbox" class="show_adjuster" <?if($show_adjuster){?>checked<?}?>> <span style="color:#42a5ff" data-type="adjuster">🔵<span class="adjuster" data-type="adjuster"></span></span> <span class="mobile_line_break"></span>
+			<span class="mobile_line_break"></span> <input type="checkbox" class="show_adjuster" <?if($show_adjuster){?>checked<?}?>> <span style="color:#42a5ff" data-type="adjuster"><!-- 🔵 --><span class="adjuster" data-type="adjuster"></span></span> <span class="mobile_line_break"></span>
 		</span>
 		<br/>
 
