@@ -1659,7 +1659,7 @@
 		<span class="hide_on_mobile">&nbsp;|&nbsp;</span>
 
 		<span class="show_adjusted_legend">
-			<span class="mobile_line_break"></span> <input type="checkbox" class="show_adjusted" <?if($show_adjusted){?>checked<?}?>> <span style="color:rgb(255,71,66)" data-type="adjusted">🔴 <span class="stock" data-type="adjusted"></span> in <span class="adjusted" data-type="adjusted"></span></span> <span class="mobile_line_break"></span>
+			<span class="mobile_line_break"></span> <input type="checkbox" class="show_adjusted" <?if($show_adjusted){?>checked<?}?>> <span style="color:rgb(255,71,66)" data-type="adjusted">🔴 <span class="stock" data-type="adjusted"></span> / <span class="adjusted" data-type="adjusted"></span></span> <span class="mobile_line_break"></span>
 		</span>
 
 
