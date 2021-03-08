@@ -1403,13 +1403,6 @@
 			}
 
 
-			if(show_stock) {
-				chart.options.scales.yAxes[0].display=true;
-			}
-			else {
-				chart.options.scales.yAxes[0].display=false;
-			}
-
 
 			if(show_stock) {
 				$('.legend .show_stock_legend').css('opacity',1);
@@ -1469,6 +1462,12 @@
 
 
 
+			if(show_stock) {
+				chart.options.scales.yAxes[0].display=true;
+			}
+			else {
+				chart.options.scales.yAxes[0].display=false;
+			}
 
 			if(show_adjusted) {
 				chart.options.scales.yAxes[1].display=true;
@@ -1484,29 +1483,12 @@
 				chart.options.scales.yAxes[2].display=false;
 			}
 
-			// <always set adjuster max (blue line)>
-				chart.options.scales.yAxes[1].ticks.max=adjusted_max;
-				// console.log('chart.options.scales.yAxes[1].ticks.max',chart.options.scales.yAxes[1].ticks.max);
-				chart.options.scales.yAxes[2].ticks.max=adjuster_max;
-				// console.log('chart.options.scales.yAxes[2].ticks.max',chart.options.scales.yAxes[2].ticks.max);
-			// </always set adjuster max (blue line)>
-
-			if(show_stock && !show_adjusted) {
+			// <set maxes>
 				chart.options.scales.yAxes[0].ticks.max=stock_max;
-			}
-			else if(!show_stock && show_adjusted) {
-				chart.options.scales.yAxes[0].ticks.max=adjusted_max;
-			}
-			else {
-				if(stock_max>adjusted_max) {
-					chart.options.scales.yAxes[0].ticks.max=stock_max;
-				}
-				else {
-					chart.options.scales.yAxes[0].ticks.max=adjusted_max;
-				}
-			}
+				chart.options.scales.yAxes[1].ticks.max=adjusted_max;
+				chart.options.scales.yAxes[2].ticks.max=adjuster_max;
+			// </set maxes>
 
-			// console.log('chart.options.scales.yAxes[0].ticks.max',chart.options.scales.yAxes[0].ticks.max);
 
 			var iterator=0;
 			chart.data.datasets.forEach(function(dataset) {
