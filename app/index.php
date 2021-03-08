@@ -268,7 +268,12 @@
 
 
 				$row[$m.'_adj_'.$stock]=$row[$stock]/$row[$m];
-				if(empty($row[$m.'_adj_'.$stock]) || is_nan($row[$m.'_adj_'.$stock]) || is_infinite($row[$m.'_adj_'.$stock])) {
+				if(
+					empty($row[$m.'_adj_'.$stock]) || 
+					is_nan($row[$m.'_adj_'.$stock]) || 
+					is_infinite($row[$m.'_adj_'.$stock]) ||
+					!is_numeric($row[$m.'_adj_'.$stock])
+				) {
 					unset($row[$m.'_adj_'.$stock]);
 				}
 			}
@@ -590,7 +595,7 @@
 	}
 
 	.side {
-		width:350px;
+		width:300px;
 		border-left:1px solid #2a2a2a;
 		height:100%;
 		background:#000;
@@ -599,24 +604,19 @@
 		z-index:1;
 		position:fixed;
 		right:0;
+		display:none;
 	}
 	.main {
-		width:calc(100% - 350px - 1px);
-		height:100%;
-	}
-
-	.main,
-	.side {
-		display:inline-block;
-		vertical-align:top;
-		padding:0;
-		margin:0;
+		width:calc(100% - 300px - 28px);
 		height:100vh;
+		margin-left:calc(300px + 28px);
+		overflow-y:hidden;
+		background:none;
 	}
 
 	.main .chart {
-		margin:14px;
-		height:calc(100vh - 185px);
+		margin:28px;
+		height:calc(100vh - 160px);
 	}
 
 	.logo,
@@ -649,22 +649,29 @@
 
 	.legend {
 		color:rgb(211,211,211);
-		bottom:0;
+		border-right:1px solid #2a2a2a;
+		top:0;
 		left:0;
-		width:calc(100% - 300px - 1px - 7px - 7px);
+		position:fixed;
+		height:100vh;
+		/*width:calc(100% - 300px - 1px - 7px - 7px);*/
+		width:300px;
 		padding:7px;
 		padding-top:4px;
 		padding-bottom:10px;
 		position:fixed;
-		background:#000;
+		/*background:#000;*/
 		text-align:center;
-		border-top:1px solid #2a2a2a;
+		/*border-top:1px solid #2a2a2a;*/
 		-webkit-touch-callout: none;
 		-webkit-user-select: none;
 		-khtml-user-select: none;
 		-moz-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
+		text-align:left;
+		padding:14px;
+		font-size:16px;
 	}
 	.legend .show_stock_legend:hover,
 	.legend .show_adjusted_legend:hover,
@@ -757,6 +764,9 @@
 	@media (max-width:800px) {
 		.youtube-wrapper {
 			display:none;
+		}
+		.legend {
+			position:relative;
 		}
 		.main {
 			width:100%;
@@ -1661,42 +1671,6 @@
 		<canvas id="chart" width="500" height="600"></canvas>
 	</div>
 
-	<div class="legend">
-
-
-
-		<span class="show_stock_legend">
-			<input type="checkbox" class="show_stock" <?if($show_stock){?>checked<?}?>> <span data-type="stock" style="color:rgb(43,222,115)">🟢<span data-type="stock" class="stock"></span> in USD </span> <span class="mobile_line_break"></span>
-		</span>
-
-
-
-		<span class="hide_on_mobile">&nbsp;|&nbsp;</span>
-
-		<span class="show_adjusted_legend">
-			<span class="mobile_line_break"></span> <input type="checkbox" class="show_adjusted" <?if($show_adjusted){?>checked<?}?>> <span style="color:rgb(255,71,66)" data-type="adjusted">🔴 <span class="stock" data-type="adjusted"></span> / <span class="adjusted" data-type="adjusted"></span></span> <span class="mobile_line_break"></span>
-		</span>
-
-
-
-
-		<span class="hide_on_mobile">&nbsp;|&nbsp;</span>
-
-		<span class="show_adjuster_legend">
-			<span class="mobile_line_break"></span> <input type="checkbox" class="show_adjuster" <?if($show_adjuster){?>checked<?}?>> <span style="color:#42a5ff" data-type="adjuster">🔵<span class="adjuster" data-type="adjuster"></span></span> <span class="mobile_line_break"></span>
-		</span>
-
-
-
-
-		<span class="hide_on_mobile">&nbsp;|&nbsp;</span>
-
-		<span class="logarithmic_legend">
-			<span class="mobile_line_break"></span> <input type="checkbox" class="logarithmic" <?if($logarithmic){?>checked<?}?>> <span data-type="logarithmic">📐Log</span>
-		</span>
-
-	</div>
-
 
 	<script>
 		
@@ -2020,7 +1994,55 @@
 				}
 		});
 		</script>
-	</div><div class="side">
+	</div>
+
+
+
+
+	<div class="legend">
+
+
+
+		<span class="show_stock_legend">
+			<input type="checkbox" class="show_stock" <?if($show_stock){?>checked<?}?>> <span data-type="stock" style="color:rgb(43,222,115)">🟢<span data-type="stock" class="stock"></span> in USD </span> <span class="mobile_line_break"></span>
+		</span>
+		<br/>
+
+
+
+		<!-- <span class="hide_on_mobile">&nbsp;|&nbsp;</span> -->
+
+		<span class="show_adjusted_legend">
+			<span class="mobile_line_break"></span> <input type="checkbox" class="show_adjusted" <?if($show_adjusted){?>checked<?}?>> <span style="color:rgb(255,71,66)" data-type="adjusted">🔴 <span class="stock" data-type="adjusted"></span> / <span class="adjusted" data-type="adjusted"></span></span> <span class="mobile_line_break"></span>
+		</span>
+		<br/>
+
+
+
+
+		<!-- <span class="hide_on_mobile">&nbsp;|&nbsp;</span> -->
+
+		<span class="show_adjuster_legend">
+			<span class="mobile_line_break"></span> <input type="checkbox" class="show_adjuster" <?if($show_adjuster){?>checked<?}?>> <span style="color:#42a5ff" data-type="adjuster">🔵<span class="adjuster" data-type="adjuster"></span></span> <span class="mobile_line_break"></span>
+		</span>
+		<br/>
+
+
+
+
+		<!-- <span class="hide_on_mobile">&nbsp;|&nbsp;</span> -->
+
+		<span class="logarithmic_legend">
+			<span class="mobile_line_break"></span> <input type="checkbox" class="logarithmic" <?if($logarithmic){?>checked<?}?>> <span data-type="logarithmic">📐Logarithmic</span>
+		</span>
+		<br/>
+
+
+	</div>
+
+
+
+	<div class="side">
 		<!-- <div class="youtube-wrapper">
 			<iframe style="margin-bottom:-5px" width="100%" height="200" src="https://www.youtube.com/embed/W41vsTO2GHY?autoplay=1&controls=0&mute=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 		</div> -->
