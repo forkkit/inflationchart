@@ -2044,6 +2044,7 @@
 			<a href="/gold-in-btc?logarithmic=1">Gold in BTC</a><br/>
 			<a href="/btc-in-gold">BTC in Gold</a><br/>
 
+<?/*
 			<a href="/income-in-food_and_home">Avg US Income in Food + Avg US Home Price</a><br/>
 			<a href="/income-in-bigmac">Avg US Income in Big Macs</a><br/>
 
@@ -2063,6 +2064,7 @@
 			<a href="/bigmac-in-m1">Big Mac in M1</a><br/>
 			<a href="/silver-in-gold">Silver in Gold</a><br/>
 			
+			*/?>
 		</p>
 
 		<!-- <div class="fed-wrapper">
