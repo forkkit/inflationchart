@@ -1781,7 +1781,7 @@
 									borderWidth:2,
 								<?}?>
 								hidden:true,
-						 	 		id:'<?=$stock?>',
+					 	 		id:'<?=$stock?>',
 								label: '<?=strtoupper($stock)?>',
 								borderColor: '#2bde73',
 								backgroundColor: gradientGreen,
@@ -1823,7 +1823,7 @@
 									borderWidth:2,
 								<?}?>
 								hidden:true,
-						 	 		id:'<?=$adjusted?>_adjuster',
+					 	 		id:'<?=$adjusted?>_adjuster',
 								label: '<?=strtoupper($adjusted)?>',
 								borderColor: '#42a5ff',
 								backgroundColor: gradientBlue,
@@ -1923,6 +1923,7 @@
 								<?} else {?>
 									type: 'linear',
 								<?}?>
+								display:false;
 								stacked:false,
 								position:'left',
 								gridLines:{
@@ -1954,6 +1955,7 @@
 								<?} else {?>
 									type: 'linear',
 								<?}?>
+								display:false;
 								id:'adjusted',
 								stacked:false,
 								position:'right',
@@ -1985,6 +1987,7 @@
 								<?} else {?>
 									type: 'linear',
 								<?}?>
+								display:false;
 								id: 'adjuster',
 								stacked:false,
 								position:'right',
