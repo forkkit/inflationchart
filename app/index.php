@@ -84,7 +84,6 @@
 		$query=$chartDb->prepare("SELECT * FROM m1chart ORDER BY epoch ASC");
 		$query->execute();
 		$data=$query->fetchAll(PDO::FETCH_ASSOC);
-		echo json_encode($data);exit;
 	// </get data>
 
 
@@ -255,8 +254,8 @@
 				// $row[$m.'_adj_'.$stock]=$row[$stock]/$row[$m]*$latest[$m];
 				// $row[$m.'_adj_'.$stock]=($row[$stock]/$row[$m])*$first[$stock]/$first[$m];
 				// $row[$m.'_adj_'.$stock]=($row[$stock]/$row[$m])/($first[$stock]/$first[$m]);
+				// $row[$m.'_adj_'.$stock]=$row[$stock]/$row[$m];
 				$row[$m.'_adj_'.$stock]=$row[$stock]/$row[$m];
-
 				if(empty($row[$m.'_adj_'.$stock]) || is_nan($row[$m.'_adj_'.$stock]) || is_infinite($row[$m.'_adj_'.$stock])) {
 					unset($row[$m.'_adj_'.$stock]);
 				}
@@ -266,7 +265,8 @@
 	}
 	$data=$newData;
 
-// echo json_encode($data);exit;
+
+
 
 
 	// <make strings numbers>
@@ -1545,6 +1545,8 @@
 			time_selected='all';
 		}
 		function decimalify(t) {
+			return t;
+			
 			/* by levelsio */
 			if(t==0) {
 				t=0;
