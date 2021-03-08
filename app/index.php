@@ -447,7 +447,7 @@
 	}
 	.side span.quote,
 	.side a {
-		font-family:"Iosevka Custom",monospace,sans-serif;
+		/*font-family:"Iosevka Custom",monospace,sans-serif;*/
 	}
 	.side .fed {
 		width:100%;
@@ -503,7 +503,7 @@
 		font-family:"Iosevka Custom",monospace,sans-serif;
 		font-size:26px;
 		color:rgb(211,211,211);
-		color:#fff;
+		color:#ff4742;
 		z-index:1;
 		position:relative;
 	}
@@ -515,8 +515,8 @@
 		/*border-radius:7px;*/
 		color:rgb(186,186,186);
 		border:1px solid rgb(186,186,186);
-		border-color:#fff;
-		color:#fff;
+		border-color:#ff4742;
+		color:#ff4742;
 		<?if($_GET['layout']=='screenshot'){?>
 			border-width:4px;
 			font-weight:800;
@@ -551,7 +551,7 @@
 		color:#060b16;
 	}*/
 	a {
-		color:#ff4742;
+		color:rgb(211,211,211);
 	}
 
 	.side {
@@ -670,9 +670,9 @@
 	}
 
 	.side span.quote {
-		color:#fff;
-		line-height:1.25;
-		display:inline;
+		/*color:#fff;*/
+		/*line-height:1.25;*/
+		/*display:inline;*/
 	}
 
 	@media (max-width:1500px) {
