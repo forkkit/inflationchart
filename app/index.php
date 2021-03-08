@@ -261,7 +261,7 @@
 				// echo "<br/>\n";
 
 
-				$row[$m.'_adj_'.$stock]=$row[$stock]/$row[$m];
+				$row[$m.'_adj_'.$stock]=$row[$stock]/$row[$m]*10000000000;
 				if(empty($row[$m.'_adj_'.$stock]) || is_nan($row[$m.'_adj_'.$stock]) || is_infinite($row[$m.'_adj_'.$stock])) {
 					unset($row[$m.'_adj_'.$stock]);
 				}
@@ -271,7 +271,32 @@
 	}
 	$data=$newData;
 
-// exit;
+
+
+
+	$new=array();
+	foreach($stocks as $stock) {
+		$new[$stock]=array();
+		foreach($data as $row) {
+			array_push($new[$stock],$row[$stock]);
+		}
+	}
+	foreach($m_adjusteds as $m) {
+		$new[$m]=array();
+		foreach($data as $row) {
+			array_push($new[$m],$row[$m]);
+		}
+	}
+	foreach($m_adjusteds as $m) {
+		foreach($stocks as $stock) {
+			$new[$m.'_adj_'.$stock]=array();
+			foreach($data as $row) {
+				array_push($new[$m.'_adj_'.$stock],$row[$m.'_adj_'.$stock]);
+			}
+		}
+	}
+	// echo json_encode($new);
+	// exit;
 
 
 
@@ -405,7 +430,7 @@
 <link rel="preload" href="/assets/DMSans-Regular.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="preload" href="/assets/DMSans-Bold.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="preload" href="/assets/iosevka-custom-extended.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/iosevka-custom-extendedbold.woff2" as="font" type="font/woff2" crossorigin>
+<!-- <link rel="preload" href="/assets/iosevka-custom-extendedbold.woff2" as="font" type="font/woff2" crossorigin> -->
 <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt=""/></noscript>
 <title>
@@ -1555,7 +1580,8 @@
 			time_selected='all';
 		}
 		function decimalify(t) {
-			
+			console.log('in',t);
+			return t;
 			/* by levelsio */
 			if(t==0) {
 				t=0;
@@ -1587,6 +1613,8 @@
 			else {
 				t=number_format(t);
 			}
+
+			console.log('out',t);
 			return t;
 		}
 		function updateChart() {
@@ -1698,9 +1726,6 @@
 		gradientBlue.addColorStop(0, 'rgba(25,25,125,0.5)');	 
 		gradientBlue.addColorStop(1, 'rgba(25,25,125,0)');
 
-		var animationDelayBetweenPoints = 10;
-		var animationStarted = {};
-
 		var chart = new Chart(ctx, {
 			type: 'line',
 			data: {
@@ -1750,7 +1775,7 @@
 													echo ',';
 													continue;
 												}
-												echo '"'.$row[$m.'_adj_'.$stock].'"';
+												echo $row[$m.'_adj_'.$stock];
 												echo ',';
 												$previousValue=$row[$m.'_adj_'.$stock];
 												unset($doubleEmptyValueLimiter);
@@ -1793,7 +1818,7 @@
 												echo ',';
 												continue;
 											}
-											echo '"'.$row[$stock].'"';
+											echo $row[$stock];
 											echo ',';
 											$previousValue=$row[$stock];
 											unset($doubleEmptyValueLimiter);
@@ -1832,7 +1857,7 @@
 												echo ',';
 												continue;
 											}
-											echo '"'.$row[$adjusted].'"';
+											echo $row[$adjusted];
 											echo ',';
 											$previousValue=$row[$adjusted];
 											unset($doubleEmptyValueLimiter);
@@ -1932,7 +1957,8 @@
 									fontColor:'#2bde73',
 									fontSize: 12,
 									callback: function(t) {
-										return '$'+decimalify(t);
+										return t;
+										// return '$'+decimalify(t);
 									}
 								}
 							},
@@ -1962,7 +1988,8 @@
 									fontColor:'#ff4742',
 									fontSize: 12,
 									callback: function(t) {
-										return decimalify(t);
+										return t;
+										// return decimalify(t);
 									}
 								}
 							},
@@ -1992,7 +2019,8 @@
 									fontColor:'#42a5ff',
 									fontSize: 12,
 									callback: function(t) {
-										return '$'+decimalify(t);
+										return t;
+										// return '$'+decimalify(t);
 									}
 								}
 							}
