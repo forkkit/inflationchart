@@ -384,6 +384,9 @@
 		$_GET['stock']='income';
 	}*/
 
+	echo "<center><strong>🚨 Note: I broke some charts while importing new data, trying to find the bug then it'll work again! -Pieter</strong></center>";
+	echo '<hr>';
+
 
 	$page['title']='💰'."M1 Chart: The stock market adjusted for the US-dollar money supply M1 (and more) (by @levelsio)";
 	$page['description']="This chart shows the price of stock markets adjusted for inflation of the US dollar money supply in M1, M2 and the money base (MB).".'. Money printer goes brrrrrrrrr.';
@@ -1751,7 +1754,7 @@
 										borderWidth:2,
 									<?}?>
 									hidden:true,
-							 	 		id:'<?=$m?>_adj_<?=$stock?>',
+						 	 		id:'<?=$m?>_adj_<?=$stock?>',
 									label: 'in <?=strtoupper($m)?>',
 									yAxisID:'adjusted',
 									borderColor: '#ff4742',
