@@ -262,7 +262,7 @@
 				// echo "<br/>\n";
 
 
-				$row[$m.'_adj_'.$stock]=$row[$stock]/$row[$m]*10000000000;
+				$row[$m.'_adj_'.$stock]=$row[$stock]/$row[$m];
 				if(empty($row[$m.'_adj_'.$stock]) || is_nan($row[$m.'_adj_'.$stock]) || is_infinite($row[$m.'_adj_'.$stock])) {
 					unset($row[$m.'_adj_'.$stock]);
 				}
@@ -1468,14 +1468,12 @@
 			else {
 				chart.options.scales.yAxes[0].display=false;
 			}
-
 			if(show_adjusted) {
 				chart.options.scales.yAxes[1].display=true;
 			}
 			else {
 				chart.options.scales.yAxes[1].display=false;
 			}
-
 			if(show_adjuster) {
 				chart.options.scales.yAxes[2].display=true;
 			}
