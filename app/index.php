@@ -1,4 +1,5 @@
-<?
+Resetting db, back in a bit!<?
+exit;
 
 	// <router>
 		if($_GET['url']) {
