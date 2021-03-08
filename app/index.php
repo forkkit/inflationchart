@@ -59,11 +59,12 @@
 		if(empty($_GET['stock'])) {
 			$_GET['stock']='sp500';
 		}
-		if(empty($_GET['adjusted'])) {
+		if(empty($_GET['m'])) {
 			$_GET['adjusted']='m1';
 		}
 		$stocks=array($_GET['stock']);
-		$m_adjusteds=array($_GET['adjusted']);
+		$m_adjusteds=array($_GET['m']);
+		$adjusteds=array($_GET['m']);
 	// </config>
 
 	// <get data>
@@ -384,8 +385,8 @@
 		$_GET['stock']='income';
 	}*/
 
-	echo "<center><strong>🚨 Note: I broke some charts while importing new data, trying to find the bug then it'll work again! -Pieter</strong></center>";
-	echo '<hr>';
+	// echo "<center><strong>🚨 Note: I broke some charts while importing new data, trying to find the bug then it'll work again! -Pieter</strong></center>";
+	// echo '<hr>';
 
 
 	$page['title']='💰'."M1 Chart: The stock market adjusted for the US-dollar money supply M1 (and more) (by @levelsio)";
