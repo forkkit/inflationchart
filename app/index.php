@@ -144,6 +144,11 @@
 
 
 
+//TODO
+// find newest start time and remove older data than that so we don't have weirdly scaled charts if combo data of datasets that have lots of data and few data
+
+
+
 	// <sitemap>
 		if($_GET['url']=='sitemap.xml') {
 			header('Content-type: application/xml');
