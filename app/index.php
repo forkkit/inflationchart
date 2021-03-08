@@ -2009,7 +2009,7 @@
 
 
 		<span class="show_stock_legend">
-			<input type="checkbox" class="show_stock" <?if($show_stock){?>checked<?}?>> <span data-type="stock" style="color:rgb(43,222,115)"><!-- 🟢 --><span data-type="stock" class="stock"></span> in USD (nominal)</span> <span class="mobile_line_break"></span>
+			<input type="checkbox" class="show_stock" <?if($show_stock){?>checked<?}?>> <span data-type="stock" style="color:rgb(43,222,115)"><!-- 🟢 --><span data-type="stock" class="stock"></span> (nominal)</span> <span class="mobile_line_break"></span>
 		</span>
 		<br/>
 
