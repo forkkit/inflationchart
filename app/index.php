@@ -1611,6 +1611,9 @@
 			else if(t<=1) {
 				t=number_format(t,2);
 			}
+			else if(t<=10) {
+				t=number_format(t,2);
+			}
 			else {
 				t=number_format(t);
 			}
