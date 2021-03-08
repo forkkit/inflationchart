@@ -1923,7 +1923,7 @@
 								<?} else {?>
 									type: 'linear',
 								<?}?>
-								display:false;
+								display:false,
 								stacked:false,
 								position:'left',
 								gridLines:{
@@ -1955,7 +1955,7 @@
 								<?} else {?>
 									type: 'linear',
 								<?}?>
-								display:false;
+								display:false,
 								id:'adjusted',
 								stacked:false,
 								position:'right',
@@ -1987,7 +1987,7 @@
 								<?} else {?>
 									type: 'linear',
 								<?}?>
-								display:false;
+								display:false,
 								id: 'adjuster',
 								stacked:false,
 								position:'right',
