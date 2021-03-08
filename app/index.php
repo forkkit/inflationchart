@@ -1555,7 +1555,6 @@
 			time_selected='all';
 		}
 		function decimalify(t) {
-			return t;
 			
 			/* by levelsio */
 			if(t==0) {
