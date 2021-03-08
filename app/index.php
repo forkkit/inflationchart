@@ -490,7 +490,7 @@
 	}
 	.side .fed {
 		width:100%;
-		max-width:300px;
+		max-width:200px;
 		margin:0 auto;
 		display:block;
 	}
@@ -595,7 +595,7 @@
 	}
 
 	.side {
-		width:300px;
+		width:200px;
 		border-left:1px solid #2a2a2a;
 		height:100%;
 		background:#000;
@@ -607,9 +607,9 @@
 		display:none;
 	}
 	.main {
-		/*width:calc(100% - 300px - 28px);*/
+		/*width:calc(100% - 200px - 28px);*/
 		height:100vh;
-		/*margin-right:calc(300px + 28px);*/
+		/*margin-right:calc(200px + 28px);*/
 		overflow-y:hidden;
 		background:none;
 	}
@@ -656,8 +656,8 @@
 		position:fixed;
 		border:1px solid #2a2a2a;
 		z-index:1;
-		/*width:calc(100% - 300px - 1px - 7px - 7px);*/
-		width:300px;
+		/*width:calc(100% - 200px - 1px - 7px - 7px);*/
+		width:200px;
 		padding:7px;
 		padding-top:4px;
 		padding-bottom:10px;
@@ -844,7 +844,7 @@
 				<option value="china" <?if($_GET['stock']=='china'){?>selected<?}?>>🇨🇳China SSE</option>
 				<option value="home" <?if($_GET['stock']=='home'){?>selected<?}?>>🏡Avg US Home</option>
 				<option value="food" <?if($_GET['stock']=='food'){?>selected<?}?>>🥩Food Price</option>
-				<option value="bigmac" <?if($_GET['stock']=='bigmac'){?>selected<?}?>>🍔Big Mac</option>
+				<option value="bigmac" <?if($_GET['stock']=='bigmac'){?>selected<?}?>>🍔Big Mac Index</option>
 				<option value="btc" <?if($_GET['stock']=='btc'){?>selected<?}?>>🥇BTC</option>
 				<option value="eth" <?if($_GET['stock']=='eth'){?>selected<?}?>>🏅ETH</option>
 				<option value="tsla" <?if($_GET['stock']=='tsla'){?>selected<?}?>>🚗$TSLA</option>
@@ -861,7 +861,7 @@
 				<option value="home" <?if($_GET['m']=='home'){?>selected<?}?>>🏡Avg US Home</option>
 				<option value="food" <?if($_GET['m']=='food'){?>selected<?}?>>🥩Food price</option>
 				<option value="food_and_home" <?if($_GET['m']=='food_and_home'){?>selected<?}?>>🥩Food + 🏡Avg US Home</option>
-				<option value="bigmac" <?if($_GET['m']=='bigmac'){?>selected<?}?>>🍔Big Macs</option>
+				<option value="bigmac" <?if($_GET['m']=='bigmac'){?>selected<?}?>>🍔Big Mac Index</option>
 				<option value="btc" <?if($_GET['m']=='btc'){?>selected<?}?>>🥇BTC</option>
 				<option value="eth" <?if($_GET['m']=='eth'){?>selected<?}?>>🏅ETH</option>
 				<option value="population" <?if($_GET['m']=='population'){?>selected<?}?>>🌍Population</option>
@@ -2009,19 +2009,9 @@
 
 
 		<span class="show_stock_legend">
-			<input type="checkbox" class="show_stock" <?if($show_stock){?>checked<?}?>> <span data-type="stock" style="color:rgb(43,222,115)"><!-- 🟢 --><span data-type="stock" class="stock"></span> (nominal)</span> <span class="mobile_line_break"></span>
+			<input type="checkbox" class="show_stock" <?if($show_stock){?>checked<?}?>> <span data-type="stock" style="color:rgb(43,222,115)"><!-- 🟢 --><span data-type="stock" class="stock"></span></span> <span class="mobile_line_break"></span>
 		</span>
 		<br/>
-
-
-
-		<!-- <span class="hide_on_mobile">&nbsp;|&nbsp;</span> -->
-
-		<span class="show_adjusted_legend">
-			<span class="mobile_line_break"></span> <input type="checkbox" class="show_adjusted" <?if($show_adjusted){?>checked<?}?>> <span style="color:rgb(255,71,66)" data-type="adjusted"><!-- 🔴  --><span class="stock" data-type="adjusted"></span> / <span class="adjusted" data-type="adjusted"></span></span> <span class="mobile_line_break"></span>
-		</span>
-		<br/>
-
 
 
 
@@ -2029,6 +2019,16 @@
 
 		<span class="show_adjuster_legend">
 			<span class="mobile_line_break"></span> <input type="checkbox" class="show_adjuster" <?if($show_adjuster){?>checked<?}?>> <span style="color:#42a5ff" data-type="adjuster"><!-- 🔵 --><span class="adjuster" data-type="adjuster"></span></span> <span class="mobile_line_break"></span>
+		</span>
+		<br/>
+
+
+
+
+		<!-- <span class="hide_on_mobile">&nbsp;|&nbsp;</span> -->
+
+		<span class="show_adjusted_legend">
+			<span class="mobile_line_break"></span> <input type="checkbox" class="show_adjusted" <?if($show_adjusted){?>checked<?}?>> <span style="color:rgb(255,71,66)" data-type="adjusted"><!-- 🔴  --><span class="stock" data-type="adjusted"></span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/<br/>&nbsp;&nbsp; <span class="adjusted" data-type="adjusted"></span></span> <span class="mobile_line_break"></span>
 		</span>
 		<br/>
 
