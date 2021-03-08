@@ -835,6 +835,7 @@
 				<option value="m1" <?if(empty($_GET['m']) /* default to mb */ || $_GET['m']=='m1'){?>selected<?}?>>💳 M1: Cash + Bank</option>
 				<option value="m3" <?if($_GET['m']=='m3'){?>selected<?}?>>💰 M3: All Money</option>
 				<option value="cpi" <?if($_GET['m']=='cpi'){?>selected<?}?>>🛒Consumer Price Index</option>
+				<option value="sp500" <?if(empty($_GET['m']) || $_GET['m']=='sp500'){?>selected<?}?>>🇺🇸S&P500</option>
 				<option value="levels" <?if($_GET['m']=='levels'){?>selected<?}?>>🐩 Levels Inflation Index</option>
 				<option value="oil" <?if($_GET['m']=='oil'){?>selected<?}?>>🛢Oil</option>
 				<option value="gold" <?if($_GET['m']=='gold'){?>selected<?}?>>🏆Gold</option>
@@ -2024,7 +2025,8 @@
 			<a href="/sp500-in-income">S&P500 in Avg US Income</a><br/>
 
 			<a href="/sp500-in-btc?logarithmic=1">S&P500 in BTC</a><br/>
-			<a href="/sp500-in-gold">S&P500 in Gold</a><br/>
+			<a href="/sp500-in-oil?logarithmic=1">S&P500 in Oil</a><br/>
+			<a href="/sp500-in-gold?logarithmic=1">S&P500 in Gold</a><br/>
 			<a href="/btc-in-m1">BTC in M1</a><br/>
 			<a href="/china-in-btc?logarithmic=1">China SSE in BTC</a><br/>
 			<a href="/food-in-btc?logarithmic=1">Food in BTC</a><br/>
@@ -2043,7 +2045,7 @@
 			<a href="/gdp-in-btc?logarithmic=1">GDP in BTC</a><br/>
 
 			<a href="/sp500-in-bigmac">S&P500 in Big Macs</a><br/>
-			<a href="/sp500-in-food">China SSE in Food</a><br/>
+			<a href="/china-in-food">China SSE in Food</a><br/>
 			<a href="/china-in-food_and_home">S&P500 in Food + Avg US Home</a><br/>
 			
 			<a href="/home-in-food">Avg US Home in Food</a><br/>
