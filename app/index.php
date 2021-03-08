@@ -783,6 +783,7 @@
 				<option value="nasdaq" <?if($_GET['stock']=='nasdaq'){?>selected<?}?>>🤖NASDAQ</option>
 				<option value="gdp" <?if($_GET['stock']=='gdp'){?>selected<?}?>>💰US GDP</option>
 				<option value="income" <?if($_GET['stock']=='income'){?>selected<?}?>>💰Avg US Income</option>
+				<option value="oil" <?if($_GET['stock']=='oil'){?>selected<?}?>>🛢Oil</option>
 				<option value="gold" <?if($_GET['stock']=='gold'){?>selected<?}?>>🏆Gold</option>
 				<option value="silver" <?if($_GET['stock']=='silver'){?>selected<?}?>>🥈Silver</option>
 				<option value="asia" <?if($_GET['stock']=='asia'){?>selected<?}?>>🌏Asia ex-JP</option>
@@ -798,6 +799,7 @@
 				<option value="m1" <?if(empty($_GET['m']) /* default to mb */ || $_GET['m']=='m1'){?>selected<?}?>>💳 M1: Cash + Bank</option>
 				<option value="m3" <?if($_GET['m']=='m3'){?>selected<?}?>>💰 M3: All Money</option>
 				<option value="cpi" <?if($_GET['m']=='cpi'){?>selected<?}?>>🛒Consumer Price Index</option>
+				<option value="oil" <?if($_GET['m']=='oil'){?>selected<?}?>>🛢Oil</option>
 				<option value="gold" <?if($_GET['m']=='gold'){?>selected<?}?>>🏆Gold</option>
 				<option value="silver" <?if($_GET['m']=='silver'){?>selected<?}?>>🥈Silver</option>
 				<option value="home" <?if($_GET['m']=='home'){?>selected<?}?>>🏡Avg US Home</option>
