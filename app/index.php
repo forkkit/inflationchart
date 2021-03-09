@@ -1,5 +1,5 @@
-<?
-
+brb, updating<?
+exit;
 	// <router>
 		if($_GET['url']) {
 			$query=explode('-',str_replace('/','',$_GET['url']));
