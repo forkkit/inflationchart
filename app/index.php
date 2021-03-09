@@ -896,7 +896,7 @@
 					<option value="china" <?if($_GET['stock']=='china'){?>selected<?}?>>🇨🇳China SSE</option>
 					<option value="home" <?if($_GET['stock']=='home'){?>selected<?}?>>🏡Avg US Home</option>
 					<option value="food" <?if($_GET['stock']=='food'){?>selected<?}?>>🥩Food Price</option>
-					<option value="bigmac" <?if($_GET['stock']=='bigmac'){?>selected<?}?>>🍔Big Mac Index</option>
+					<option value="bigmac" <?if($_GET['stock']=='bigmac'){?>selected<?}?>>🍔Big Mac</option>
 					<option value="btc" <?if($_GET['stock']=='btc'){?>selected<?}?>>🥇BTC</option>
 					<option value="eth" <?if($_GET['stock']=='eth'){?>selected<?}?>>🏅ETH</option>
 					<option value="tsla" <?if($_GET['stock']=='tsla'){?>selected<?}?>>🚗$TSLA</option>
@@ -918,9 +918,9 @@
 					<option value="gold" <?if($_GET['m']=='gold'){?>selected<?}?>>🏆Gold</option>
 					<option value="silver" <?if($_GET['m']=='silver'){?>selected<?}?>>🥈Silver</option>
 					<option value="home" <?if($_GET['m']=='home'){?>selected<?}?>>🏡Avg US Home</option>
-					<option value="food" <?if($_GET['m']=='food'){?>selected<?}?>>🥩Food price</option>
+					<option value="food" <?if($_GET['m']=='food'){?>selected<?}?>>🥩Food</option>
 					<option value="food_and_home" <?if($_GET['m']=='food_and_home'){?>selected<?}?>>🥩Food + 🏡Avg US Home</option>
-					<option value="bigmac" <?if($_GET['m']=='bigmac'){?>selected<?}?>>🍔Big Mac Index</option>
+					<option value="bigmac" <?if($_GET['m']=='bigmac'){?>selected<?}?>>🍔Big Mac</option>
 					<option value="btc" <?if($_GET['m']=='btc'){?>selected<?}?>>🥇BTC</option>
 					<option value="eth" <?if($_GET['m']=='eth'){?>selected<?}?>>🏅ETH</option>
 					<option value="population" <?if($_GET['m']=='population'){?>selected<?}?>>🌍Population</option>
