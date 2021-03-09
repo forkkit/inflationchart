@@ -26,7 +26,7 @@
 			'china'=>'🇨🇳China SSE',
 			'home'=>'🏡Avg US Home',
 			'food'=>'🥩Food Price',
-			'bigmac'=>'🍔Big Mac,'
+			'bigmac'=>'🍔Big Mac',
 			'btc'=>'🥇BTC',
 			'eth'=>'🏅ETH',
 			'tsla'=>'🚗$TSLA'
