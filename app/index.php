@@ -78,8 +78,8 @@
 			$query->bindValue(':epoch',strtotime('-'.$_GET['time']));
 		}
 		else {
-			// default 10 years back
-			$query->bindValue(':epoch',0);
+			// default
+			$query->bindValue(':epoch',strtotime("-50 years"));
 		}
 		$query->execute();
 		$data=$query->fetchAll(PDO::FETCH_ASSOC);
@@ -905,7 +905,7 @@
 		<span><span class="mobile_line_break"></span><span class="slash"> / </span><span class="mobile_line_break"></span></span>
 			<div class="adjustment_selector_wrapper">
 				<div class="heading_above">
-					As measured in
+					As measured in the price of
 				</div>
 				<select class="adjustment_selector">
 					<option value="mb" <?if($_GET['m']=='mb'){?>selected<?}?>>💸 M0: Cash</option>
