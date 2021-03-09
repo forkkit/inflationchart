@@ -923,7 +923,7 @@
 					<option value="bigmac" <?if($_GET['m']=='bigmac'){?>selected<?}?>>🍔Big Mac</option>
 					<option value="btc" <?if($_GET['m']=='btc'){?>selected<?}?>>🥇BTC</option>
 					<option value="eth" <?if($_GET['m']=='eth'){?>selected<?}?>>🏅ETH</option>
-					<option value="population" <?if($_GET['m']=='population'){?>selected<?}?>>🌍Population</option>
+					<!-- <option value="population" <?if($_GET['m']=='population'){?>selected<?}?>>🌍Population</option> -->
 					<option value="income" <?if($_GET['m']=='income'){?>selected<?}?>>💰Avg US Income</option>
 				</select>
 			</div>
