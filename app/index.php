@@ -965,6 +965,60 @@
 		var dataEndTimes=<?=json_encode($dataEndTimes);?>;
 
 
+		function str_replace(search, replace, subject, count) {
+			/*Copyright (c) 2007-2016 Kevin van Zonneveld (https://kvz.io) 
+			and Contributors (https://locutus.io/authors)
+
+			Permission is hereby granted, free of charge, to any person obtaining a copy of
+			this software and associated documentation files (the "Software"), to deal in
+			the Software without restriction, including without limitation the rights to
+			use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+			of the Software, and to permit persons to whom the Software is furnished to do
+			so, subject to the following conditions:
+
+			The above copyright notice and this permission notice shall be included in all
+			copies or substantial portions of the Software.
+
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+			IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+			FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+			AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+			LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+			OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+			SOFTWARE.*/
+			var i = 0,
+				j = 0,
+				temp = '',
+				repl = '',
+				sl = 0,
+				fl = 0,
+				f = [].concat(search),
+				r = [].concat(replace),
+				s = subject,
+				ra = Object.prototype.toString.call(r) === '[object Array]',
+				sa = Object.prototype.toString.call(s) === '[object Array]';
+			s = [].concat(s);
+			if (count) {
+				this.window[count] = 0;
+			}
+
+			for (i = 0, sl = s.length; i < sl; i++) {
+				if (s[i] === '') {
+					continue;
+				}
+				for (j = 0, fl = f.length; j < fl; j++) {
+					temp = s[i] + '';
+					repl = ra ? (r[j] !== undefined ? r[j] : '') : r[0];
+					s[i] = (temp)
+						.split(f[j])
+						.join(repl);
+					if (count && s[i] !== temp) {
+						this.window[count] += (temp.length - s[i].length) / f[j].length;
+					}
+				}
+			}
+			return sa ? s : s[0];
+		}
 
 		function number_format(number, decimals, dec_point, thousands_sep) {
 			/*Copyright (c) 2007-2016 Kevin van Zonneveld (https://kvz.io) 
@@ -1667,6 +1721,8 @@
 			else {
 				t=number_format(t);
 			}
+
+			t=str_replace('.00','',t);
 			return t;
 		}
 		function updateChart() {
