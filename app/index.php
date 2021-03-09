@@ -182,7 +182,7 @@
 
 	// <screenshot with API Flash>
 		if($_GET['action']=='screenshot') {
-            require_once(__DIR__.'/config.php');
+			require_once(__DIR__.'/config.php');
 			$screenshotUrl='https://'.$_SERVER['SERVER_NAME'].$_GET['uri'].'&layout=screenshot&cache='.date('Y-m');
 			$url='https://api.apiflash.com/v1/urltoimage?quality=80&width=1250&height=667&format=jpeg&access_key='.$apiflash_key.'&url='.urlencode($screenshotUrl);
 			$response=curl_get_contents($url);
@@ -1814,6 +1814,90 @@
 						}
 					?>],
 					datasets: [
+						
+						<?
+						foreach($stocks as $stock) {?>
+							{
+								<?if($_GET['layout']=='screenshot'){?>
+									borderWidth:4,
+								<?} else {?>
+									borderWidth:2,
+								<?}?>
+								hidden:true,
+					 	 		id:'<?=$stock?>',
+								label: '<?=strtoupper($stock)?>',
+								borderColor: '#2bde73',
+								backgroundColor: gradientGreen,
+								yAxisID:'main',
+								fill: true,
+								data: 
+								[
+									<?
+										unset($previousValue);
+										foreach($data as $row) {
+											if(empty($row['epoch'])) {
+												continue;
+											}
+											if(!$row[$stock]) {
+												if(!empty($previousValue) && $doubleEmptyValueLimiter<2) { 
+													/* if missing data show previous value to fill in, because =GOOGLEFINANCE sometimes randomly misses single dates */
+													echo $previousValue;
+													$doubleEmptyValueLimiter++;
+												}
+												echo ',';
+												continue;
+											}
+											echo $row[$stock];
+											echo ',';
+											$previousValue=$row[$stock];
+											unset($doubleEmptyValueLimiter);
+										}
+									?>
+								],
+							},<?
+						}?>
+
+						
+						<?
+						foreach($adjusteds as $adjusted) {?>
+							{
+								<?if($_GET['layout']=='screenshot'){?>
+									borderWidth:4,
+								<?} else {?>
+									borderWidth:2,
+								<?}?>
+								hidden:true,
+					 	 		id:'<?=$adjusted?>_adjuster',
+								label: '<?=strtoupper($adjusted)?>',
+								borderColor: '#42a5ff',
+								backgroundColor: gradientBlue,
+								yAxisID:'adjuster',
+								fill: true,
+								data: 
+								[
+									<?
+										unset($previousValue);
+										foreach($data as $row) {
+											if(!$row[$adjusted]) {
+												if(!empty($previousValue) && $doubleEmptyValueLimiter<2) { 
+													/* if missing data show previous value to fill in, because =GOOGLEFINANCE sometimes randomly misses single dates */
+													echo $previousValue;
+													$doubleEmptyValueLimiter++;
+												}
+												echo ',';
+												continue;
+											}
+											echo $row[$adjusted];
+											echo ',';
+											$previousValue=$row[$adjusted];
+											unset($doubleEmptyValueLimiter);
+										}
+									?>
+								],
+							},<?
+						}?>
+						
+
 						<?foreach($m_adjusteds as $m) {
 							foreach($stocks as $stock) {?>
 								{
@@ -1858,86 +1942,6 @@
 							 	}
 						}?>
 
-						<?
-						foreach($stocks as $stock) {?>
-							{
-								<?if($_GET['layout']=='screenshot'){?>
-									borderWidth:4,
-								<?} else {?>
-									borderWidth:2,
-								<?}?>
-								hidden:true,
-					 	 		id:'<?=$stock?>',
-								label: '<?=strtoupper($stock)?>',
-								borderColor: '#2bde73',
-								backgroundColor: gradientGreen,
-								yAxisID:'main',
-								fill: true,
-								data: 
-								[
-									<?
-										unset($previousValue);
-										foreach($data as $row) {
-											if(empty($row['epoch'])) {
-												continue;
-											}
-											if(!$row[$stock]) {
-												if(!empty($previousValue) && $doubleEmptyValueLimiter<2) { 
-													/* if missing data show previous value to fill in, because =GOOGLEFINANCE sometimes randomly misses single dates */
-													echo $previousValue;
-													$doubleEmptyValueLimiter++;
-												}
-												echo ',';
-												continue;
-											}
-											echo $row[$stock];
-											echo ',';
-											$previousValue=$row[$stock];
-											unset($doubleEmptyValueLimiter);
-										}
-									?>
-								],
-							},<?
-						}?>
-
-						<?
-						foreach($adjusteds as $adjusted) {?>
-							{
-								<?if($_GET['layout']=='screenshot'){?>
-									borderWidth:4,
-								<?} else {?>
-									borderWidth:2,
-								<?}?>
-								hidden:true,
-					 	 		id:'<?=$adjusted?>_adjuster',
-								label: '<?=strtoupper($adjusted)?>',
-								borderColor: '#42a5ff',
-								backgroundColor: gradientBlue,
-								yAxisID:'adjuster',
-								fill: true,
-								data: 
-								[
-									<?
-										unset($previousValue);
-										foreach($data as $row) {
-											if(!$row[$adjusted]) {
-												if(!empty($previousValue) && $doubleEmptyValueLimiter<2) { 
-													/* if missing data show previous value to fill in, because =GOOGLEFINANCE sometimes randomly misses single dates */
-													echo $previousValue;
-													$doubleEmptyValueLimiter++;
-												}
-												echo ',';
-												continue;
-											}
-											echo $row[$adjusted];
-											echo ',';
-											$previousValue=$row[$adjusted];
-											unset($doubleEmptyValueLimiter);
-										}
-									?>
-								],
-							},<?
-						}?>
 
 
 
@@ -1959,7 +1963,34 @@
 						mode:'x-axis',
 						intersect:false,
 						callbacks: {
-							 label: function(tooltipItem, data) {
+							labelColor: function(tooltipItem, chart) {
+								var id=chart.config.data.datasets[tooltipItem.datasetIndex].id;
+								if(id==adjusted_selected+'_adj_'+stock_selected) {
+									return {
+										borderColor:'#ff4742',
+										backgroundColor:'#ff4742',
+									};
+								}
+								else if(id==stock_selected) {
+									return {
+										borderColor:'#2bde73',
+										backgroundColor:'#2bde73',
+									};
+								}
+								else if(id==adjusted_selected+'_adjuster') {
+									return {
+										borderColor:'#42a5ff',
+										backgroundColor:'#42a5ff',
+									};
+								}
+								else {
+									return {
+										borderColor:'#000',
+										backgroundColor:'#000',
+									};
+								}
+				            },
+							label: function(tooltipItem, data) {
 								var label = data.datasets[tooltipItem.datasetIndex].label || '';
 
 								t=decimalify(tooltipItem.yLabel);
@@ -1967,8 +1998,14 @@
 								if(label.indexOf('in ')>-1) {
 									label = t+' '+stock_selected_label+' / '+adjusted_selected_label;
 								}
+								else if(label.toUpperCase()==stock_selected.toUpperCase()) {
+									label = '$'+t+' '+stock_selected_label;
+								}
+								else if(label.toUpperCase()==adjusted_selected.toUpperCase()) {
+									label = '$'+t+' '+adjusted_selected_label;
+								}
 								else {
-									label = '$'+t;
+									label = '$'+t+' '+label;
 								}
 								return label;
 							}
