@@ -73,16 +73,14 @@
 		$chartDb	= new PDO($dir) or exit(68); /* db erorr */
 		$chartDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		// $query=$chartDb->prepare("SELECT * FROM m1chart WHERE epoch>:epoch ORDER BY epoch ASC");
-		// if($_GET['time']!='all' && !empty($_GET['time'])) {
-		// 	$query->bindValue(':epoch',strtotime('-'.$_GET['time']));
-		// }
-		// else {
-		// 	// default 10 years back
-		// 	$query->bindValue(':epoch',0);
-		// }
-		// $query=$chartDb->prepare("SELECT * FROM m1chart ORDER BY epoch ASC");
-		$query=$chartDb->prepare("SELECT * FROM m1chart ORDER BY epoch ASC");
+		$query=$chartDb->prepare("SELECT * FROM m1chart WHERE epoch>:epoch ORDER BY epoch ASC");
+		if($_GET['time']!='all' && !empty($_GET['time'])) {
+			$query->bindValue(':epoch',strtotime('-'.$_GET['time']));
+		}
+		else {
+			// default 10 years back
+			$query->bindValue(':epoch',0);
+		}
 		$query->execute();
 		$data=$query->fetchAll(PDO::FETCH_ASSOC);
 	// </get data>
@@ -568,6 +566,19 @@
 	select:hover {
 		opacity:0.75;
 	}
+	select.time_selector {
+		color:#fff;
+		border-color:#fff;
+
+		border-left:none;
+		border-right:none;
+		border-top:none;
+	}
+	select.time_selector:hover {
+		background:#ff4742;
+		color:#060b16;
+		background:#42a5ff;
+	}
 	select.adjustment_selector {
 		color:#ff4742;
 		border-color:#ff4742;
@@ -598,6 +609,7 @@
 		background:#fff;
 		color:#060b16;
 	}
+	.time_selector_wrapper,
 	.adjustment_selector_wrapper,
 	.stock_selector_wrapper {
 		display:inline-block;
@@ -869,7 +881,7 @@
 		<h1 class="selectors">
 			<div class="stock_selector_wrapper">
 				<div class="heading_above">
-					Show the price of
+					The price of
 				</div>
 				<select class="stock_selector">
 					<option value="sp500" <?if(empty($_GET['stock']) || $_GET['stock']=='sp500'){?>selected<?}?>>🇺🇸S&P500</option>
@@ -916,12 +928,19 @@
 				</select>
 			</div>
 
-			<?/*  <select class="time_selector">
-				<option value="1 year" <?if($_GET['time<span class="mobile_line_break"></span>']=='1 year'){?>selected<?}?>>last 1 year</option>
-				<option value="5 years" <?if($_GET['time']=='5 years'){?>selected<?}?>>last 5 years</option>
-				<option value="10 years" <?if($_GET['time']=='10 years'){?>selected<?}?>>last 10 years</option>
-				<option value="all" <?if(empty($_GET['time']) || $_GET['time']=='all'){?>selected<?}?>>last 20 years</option>
-			</select>*/?>
+			<div class="time_selector_wrapper">
+				<div class="heading_above">
+					In the last
+				</div>
+				<select class="time_selector">
+					<option value="1 year" <?if($_GET['time']=='1 year'){?>selected<?}?>>1 year</option>
+					<option value="5 years" <?if($_GET['time']=='5 years'){?>selected<?}?>>5 years</option>
+					<option value="10 years" <?if($_GET['time']=='10 years'){?>selected<?}?>>10 years</option>
+					<option value="20 years" <?if($_GET['time']=='20 years'){?>selected<?}?>>20 years</option>
+					<option value="50 years" <?if($_GET['time']=='50 years'){?>selected<?}?>>50 years</option>
+					<option value="all" <?if(empty($_GET['time']) || $_GET['time']=='all'){?>selected<?}?>>all time</option>
+				</select>
+			</div>
 		</h1>
 	</center>
 
@@ -1335,11 +1354,11 @@
 					window.location.reload();
 					// updateChart();
 				});
-				// $('select.time_selector').bind('change',function() {
-				// 	updateSelected();
-				// 	updateUrl();
-				// 	window.location.reload();
-				// });
+				$('select.time_selector').bind('change',function() {
+					updateSelected();
+					updateUrl();
+					window.location.reload();
+				});
 
 				$('.legend span').bind('click',function(e) {
 					e.stopPropagation();
@@ -1683,8 +1702,7 @@
 			adjusted_selected_label=$('select.adjustment_selector').children("option:selected").text();
 			stock_selected=$('select.stock_selector').children("option:selected").val();
 			stock_selected_label=$('select.stock_selector').children("option:selected").text();
-			// time_selected=$('select.time_selector').children("option:selected").val();
-			time_selected='all';
+			time_selected=$('select.time_selector').children("option:selected").val();
 		}
 		function decimalify(t) {
 			/* by levelsio */
