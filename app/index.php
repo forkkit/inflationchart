@@ -551,6 +551,8 @@
 		-webkit-appearance:none;
 		background:none;
 		padding:7px;
+		padding-left:0;
+		padding-right:0;
 		/*border-radius:7px;*/
 		color:rgb(186,186,186);
 		border:1px solid rgb(186,186,186);
@@ -561,16 +563,20 @@
 			font-weight:800;
 		<?}?>
 		cursor:pointer;
-		margin:7px;
+		margin:0;
 	}
 	select:hover {
 		opacity:0.75;
 	}
-	/*select.adjustment_selector {
+	select.adjustment_selector {
 		color:#ff4742;
 		border-color:#ff4742;
 		color:#42a5ff;
 		border-color:#42a5ff;
+
+		border-left:none;
+		border-right:none;
+		border-top:none;
 	}
 	select.adjustment_selector:hover {
 		background:#ff4742;
@@ -578,6 +584,9 @@
 		background:#42a5ff;
 	}
 	select.stock_selector {
+		border-left:none;
+		border-right:none;
+		border-top:none;
 		color:rgb(43,222,115);
 		border-color:rgb(43,222,115);
 	}
@@ -588,7 +597,20 @@
 	select.time_selector:hover {
 		background:#fff;
 		color:#060b16;
-	}*/
+	}
+	.adjustment_selector_wrapper,
+	.stock_selector_wrapper {
+		display:inline-block;
+		margin:7px;
+	}
+	.heading_above {
+		text-transform:uppercase;
+		color:#fff;
+		font-size:12px;
+		font-weight:normal;
+		text-align:left;
+		color:rgb(211,211,211);
+	}
 	a {
 		color:rgb(211,211,211);
 		color:#ff4742;
@@ -616,7 +638,7 @@
 
 	.main .chart {
 		margin:28px;
-		height:calc(100vh - 160px);
+		height:calc(100vh - 200px);
 	}
 
 	.logo,
@@ -722,14 +744,18 @@
 	@media (max-width:600px) {
 		.by-levelsio {
 			position:relative;
-			margin:14px auto;
+			margin:0 auto;
+			left:auto;
+			bottom:auto;
 			display:table;
 			background:none;
-			margin-top:14px;
-			margin-bottom:-28px;
+			margin-bottom:-14px;
 			border:none;
 			font-size:12px;
 			color:rgb(186,186,186);
+		}
+		.main .chart {
+			margin:7px;
 		}
 	}
 	@media (max-width:1000px) {
@@ -812,11 +838,22 @@
 		}
 		body {
 			padding:0;
-			padding-top:42px;
+			padding-top:14px;
 			text-align:center;
 		}
 		.hide_on_mobile {
 			display:none;
+		}
+		h1.selectors .slash {
+			display:none;
+		}
+		h1.selectors select {
+			border:1px solid;
+			padding:7px;
+			margin:7px;
+		}
+		.heading_above {
+			text-align:center;
 		}
 		.mobile_line_break {
 			display:block;
@@ -831,43 +868,57 @@
 <div class="main">
 	<center>
 		<h1 class="selectors">
-			<select class="stock_selector">
-				<option value="sp500" <?if(empty($_GET['stock']) || $_GET['stock']=='sp500'){?>selected<?}?>>🇺🇸S&P500</option>
-				<option value="dji" <?if($_GET['stock']=='dji'){?>selected<?}?>>🇺🇸DJI</option>
-				<option value="nasdaq" <?if($_GET['stock']=='nasdaq'){?>selected<?}?>>🤖NASDAQ</option>
-				<option value="gdp" <?if($_GET['stock']=='gdp'){?>selected<?}?>>💰US GDP</option>
-				<option value="income" <?if($_GET['stock']=='income'){?>selected<?}?>>💰Avg US Income</option>
-				<option value="oil" <?if($_GET['stock']=='oil'){?>selected<?}?>>🛢Oil</option>
-				<option value="gold" <?if($_GET['stock']=='gold'){?>selected<?}?>>🏆Gold</option>
-				<option value="silver" <?if($_GET['stock']=='silver'){?>selected<?}?>>🥈Silver</option>
-				<option value="asia" <?if($_GET['stock']=='asia'){?>selected<?}?>>🌏Asia ex-JP</option>
-				<option value="china" <?if($_GET['stock']=='china'){?>selected<?}?>>🇨🇳China SSE</option>
-				<option value="home" <?if($_GET['stock']=='home'){?>selected<?}?>>🏡Avg US Home</option>
-				<option value="food" <?if($_GET['stock']=='food'){?>selected<?}?>>🥩Food Price</option>
-				<option value="bigmac" <?if($_GET['stock']=='bigmac'){?>selected<?}?>>🍔Big Mac Index</option>
-				<option value="btc" <?if($_GET['stock']=='btc'){?>selected<?}?>>🥇BTC</option>
-				<option value="eth" <?if($_GET['stock']=='eth'){?>selected<?}?>>🏅ETH</option>
-				<option value="tsla" <?if($_GET['stock']=='tsla'){?>selected<?}?>>🚗$TSLA</option>
-			</select><span> / </span><select class="adjustment_selector">
-				<option value="mb" <?if($_GET['m']=='mb'){?>selected<?}?>>💸 M0: Cash</option>
-				<option value="m1" <?if(empty($_GET['m']) /* default to mb */ || $_GET['m']=='m1'){?>selected<?}?>>💳 M1: Cash + Bank</option>
-				<option value="m3" <?if($_GET['m']=='m3'){?>selected<?}?>>💰 M3: All Money</option>
-				<option value="cpi" <?if($_GET['m']=='cpi'){?>selected<?}?>>🛒Consumer Price Index</option>
-				<option value="sp500" <?if(empty($_GET['m']) || $_GET['m']=='sp500'){?>selected<?}?>>🇺🇸S&P500</option>
-				<option value="levels" <?if($_GET['m']=='levels'){?>selected<?}?>>🐩 Levels Inflation Index</option>
-				<option value="oil" <?if($_GET['m']=='oil'){?>selected<?}?>>🛢Oil</option>
-				<option value="gold" <?if($_GET['m']=='gold'){?>selected<?}?>>🏆Gold</option>
-				<option value="silver" <?if($_GET['m']=='silver'){?>selected<?}?>>🥈Silver</option>
-				<option value="home" <?if($_GET['m']=='home'){?>selected<?}?>>🏡Avg US Home</option>
-				<option value="food" <?if($_GET['m']=='food'){?>selected<?}?>>🥩Food price</option>
-				<option value="food_and_home" <?if($_GET['m']=='food_and_home'){?>selected<?}?>>🥩Food + 🏡Avg US Home</option>
-				<option value="bigmac" <?if($_GET['m']=='bigmac'){?>selected<?}?>>🍔Big Mac Index</option>
-				<option value="btc" <?if($_GET['m']=='btc'){?>selected<?}?>>🥇BTC</option>
-				<option value="eth" <?if($_GET['m']=='eth'){?>selected<?}?>>🏅ETH</option>
-				<option value="population" <?if($_GET['m']=='population'){?>selected<?}?>>🌍Population</option>
-				<option value="income" <?if($_GET['m']=='income'){?>selected<?}?>>💰Avg US Income</option>
-			</select><?/* <span class="mobile_line_break"></span> <select class="time_selector">
-				<option value="1 year" <?if($_GET['time']=='1 year'){?>selected<?}?>>last 1 year</option>
+			<div class="stock_selector_wrapper">
+				<div class="heading_above">
+					Show the price of
+				</div>
+				<select class="stock_selector">
+					<option value="sp500" <?if(empty($_GET['stock']) || $_GET['stock']=='sp500'){?>selected<?}?>>🇺🇸S&P500</option>
+					<option value="dji" <?if($_GET['stock']=='dji'){?>selected<?}?>>🇺🇸DJI</option>
+					<option value="nasdaq" <?if($_GET['stock']=='nasdaq'){?>selected<?}?>>🤖NASDAQ</option>
+					<option value="gdp" <?if($_GET['stock']=='gdp'){?>selected<?}?>>💰US GDP</option>
+					<option value="income" <?if($_GET['stock']=='income'){?>selected<?}?>>💰Avg US Income</option>
+					<option value="oil" <?if($_GET['stock']=='oil'){?>selected<?}?>>🛢Oil</option>
+					<option value="gold" <?if($_GET['stock']=='gold'){?>selected<?}?>>🏆Gold</option>
+					<option value="silver" <?if($_GET['stock']=='silver'){?>selected<?}?>>🥈Silver</option>
+					<option value="asia" <?if($_GET['stock']=='asia'){?>selected<?}?>>🌏Asia ex-JP</option>
+					<option value="china" <?if($_GET['stock']=='china'){?>selected<?}?>>🇨🇳China SSE</option>
+					<option value="home" <?if($_GET['stock']=='home'){?>selected<?}?>>🏡Avg US Home</option>
+					<option value="food" <?if($_GET['stock']=='food'){?>selected<?}?>>🥩Food Price</option>
+					<option value="bigmac" <?if($_GET['stock']=='bigmac'){?>selected<?}?>>🍔Big Mac Index</option>
+					<option value="btc" <?if($_GET['stock']=='btc'){?>selected<?}?>>🥇BTC</option>
+					<option value="eth" <?if($_GET['stock']=='eth'){?>selected<?}?>>🏅ETH</option>
+					<option value="tsla" <?if($_GET['stock']=='tsla'){?>selected<?}?>>🚗$TSLA</option>
+				</select>
+			</div>
+		<span><span class="mobile_line_break"></span><span class="slash"> / </span><span class="mobile_line_break"></span></span>
+			<div class="adjustment_selector_wrapper">
+				<div class="heading_above">
+					Compared to
+				</div>
+				<select class="adjustment_selector">
+					<option value="mb" <?if($_GET['m']=='mb'){?>selected<?}?>>💸 M0: Cash</option>
+					<option value="m1" <?if(empty($_GET['m']) /* default to mb */ || $_GET['m']=='m1'){?>selected<?}?>>💳 M1: Cash + Bank</option>
+					<option value="m3" <?if($_GET['m']=='m3'){?>selected<?}?>>💰 M3: All Money</option>
+					<option value="cpi" <?if($_GET['m']=='cpi'){?>selected<?}?>>🛒Consumer Price Index</option>
+					<option value="sp500" <?if(empty($_GET['m']) || $_GET['m']=='sp500'){?>selected<?}?>>🇺🇸S&P500</option>
+					<option value="levels" <?if($_GET['m']=='levels'){?>selected<?}?>>🐩 Levels Inflation Index</option>
+					<option value="oil" <?if($_GET['m']=='oil'){?>selected<?}?>>🛢Oil</option>
+					<option value="gold" <?if($_GET['m']=='gold'){?>selected<?}?>>🏆Gold</option>
+					<option value="silver" <?if($_GET['m']=='silver'){?>selected<?}?>>🥈Silver</option>
+					<option value="home" <?if($_GET['m']=='home'){?>selected<?}?>>🏡Avg US Home</option>
+					<option value="food" <?if($_GET['m']=='food'){?>selected<?}?>>🥩Food price</option>
+					<option value="food_and_home" <?if($_GET['m']=='food_and_home'){?>selected<?}?>>🥩Food + 🏡Avg US Home</option>
+					<option value="bigmac" <?if($_GET['m']=='bigmac'){?>selected<?}?>>🍔Big Mac Index</option>
+					<option value="btc" <?if($_GET['m']=='btc'){?>selected<?}?>>🥇BTC</option>
+					<option value="eth" <?if($_GET['m']=='eth'){?>selected<?}?>>🏅ETH</option>
+					<option value="population" <?if($_GET['m']=='population'){?>selected<?}?>>🌍Population</option>
+					<option value="income" <?if($_GET['m']=='income'){?>selected<?}?>>💰Avg US Income</option>
+				</select>
+			</div>
+
+			<?/*  <select class="time_selector">
+				<option value="1 year" <?if($_GET['time<span class="mobile_line_break"></span>']=='1 year'){?>selected<?}?>>last 1 year</option>
 				<option value="5 years" <?if($_GET['time']=='5 years'){?>selected<?}?>>last 5 years</option>
 				<option value="10 years" <?if($_GET['time']=='10 years'){?>selected<?}?>>last 10 years</option>
 				<option value="all" <?if(empty($_GET['time']) || $_GET['time']=='all'){?>selected<?}?>>last 20 years</option>
