@@ -1,13 +1,16 @@
-brb, updating<?
-exit;
+<?
+
 	// <router>
+		if($_GET['m']) {
+			$_GET['adjuster']=$_GET['m'];
+		}
 		if($_GET['url']) {
 			$query=explode('-',str_replace('/','',$_GET['url']));
 			if($query[0]) {
 				$_GET['stock']=$query[0];
 			}
 			if($query[2]) {
-				$_GET['m']=$query[2];
+				$_GET['adjuster']=$query[2];
 			}
 		}
 	// </router>
@@ -50,11 +53,20 @@ exit;
 			'income'=>'💰Avg US Income'
 		);
 		
-		if(empty($_GET['stock'])) {
-			$_GET['stock']='sp500';
+		$stock_selected=$_GET['stock'];
+		$adjuster_selected=$_GET['adjuster'];
+
+		if(
+			empty($_GET['stock']) || 
+			!$stocks[$_GET['stock']]
+		) {
+			$stock_selected='sp500';
 		}
-		if(empty($_GET['m'])) {
-			$_GET['m']='m1';
+		if(
+			empty($_GET['adjuster']) || 
+			!$adjusters[$_GET['adjuster']]
+		) {
+			$adjuster_selected='m1';
 		}
 	// </config>
 
@@ -64,7 +76,8 @@ exit;
 		$chartDb	= new PDO($dir) or exit(68); /* db erorr */
 		$chartDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		$query=$chartDb->prepare("SELECT * FROM m1chart WHERE epoch>:epoch ORDER BY epoch ASC");
+		/* make sure you check if $adjuster_selected and $stock selected are safe from $_GET[] user input above */
+		$query=$chartDb->prepare("SELECT epoch,".$adjuster_selected.",".$stock_selected." FROM m1chart WHERE epoch>:epoch ORDER BY epoch ASC");
 		if($_GET['time']!='all' && !empty($_GET['time'])) {
 			$query->bindValue(':epoch',strtotime('-'.$_GET['time']));
 		}
@@ -85,57 +98,163 @@ exit;
 		// so we can change the X axis to start at the first point of data
 		// e.g. BTC starts in 2009 not 2000
 
+		$newestStartTime=0;
 		foreach($data as $row) {
-			foreach($stocks as $stock) {
-				if(!empty($row[$stock]) && ($row['epoch']<$dataStartTimes[$stock] || empty($dataStartTimes[$stock]))) {
-					$dataStartTimes[$stock]=$row['epoch'];
+			if(!empty($row[$stock_selected]) && ($row['epoch']<$dataStartTimes[$stock_selected] || empty($dataStartTimes[$stock_selected]))) {
+				$dataStartTimes[$stock_selected]=$row['epoch'];
+				if($row['epoch']>$newestStartTime) {
+					$newestStartTime=$row['epoch'];
 				}
 			}
-			foreach($adjusteds as $adjusted) {
-				if(!empty($row[$adjusted]) && ($row['epoch']<$dataStartTimes[$adjusted] || empty($dataStartTimes[$adjusted]))) {
-					$dataStartTimes[$adjusted]=$row['epoch'];
+			if(!empty($row[$adjuster_selected]) && ($row['epoch']<$dataStartTimes[$adjuster] || empty($dataStartTimes[$adjuster_selected]))) {
+				$dataStartTimes[$adjuster_selected]=$row['epoch'];
+				if($row['epoch']>$newestStartTime) {
+					$newestStartTime=$row['epoch'];
 				}
 			}
-			foreach($adjusters as $adjuster) {
-				foreach($stocks as $stock) {
-					if(!empty($row[$stock]) && !empty($row[$adjuster]) && ($row['epoch']<$dataStartTimes[$adjuster.'_adj_'.$stock] || empty($dataStartTimes[$adjuster.'_adj_'.$stock]))) {
-						$dataStartTimes[$adjuster.'_adj_'.$stock]=$row['epoch'];
-					}
+			if(!empty($row[$stock_selected]) && !empty($row[$adjuster_selected]) && ($row['epoch']<$dataStartTimes[$adjuster_selected.'_adj_'.$stock_selected] || empty($dataStartTimes[$adjuster_selected.'_adj_'.$stock_selected]))) {
+				$dataStartTimes[$adjuster_selected.'_adj_'.$stock_selected]=$row['epoch'];
+				if($row['epoch']>$newestStartTime) {
+					$newestStartTime=$row['epoch'];
+				}
+			}
+			if(!empty($row[$stock_selected]) && !empty($row[$adjuster_selected]) && ($row['epoch']<$dataStartTimes[$stock_selected.'_divided_by_'.$adjuster_selected] || empty($dataStartTimes[$stock_selected.'_divided_by_'.$adjuster_selected]))) {
+				$dataStartTimes[$stock_selected.'_divided_by_'.$adjuster_selected]=$row['epoch'];
+				if($row['epoch']>$newestStartTime) {
+					$newestStartTime=$row['epoch'];
 				}
 			}
 		}
 
 		$dataEndTimes=array();
 
+
 		// find the last timestamp of a non-empty value of each data set
 		// so we can change the X axis to end at the last point of data
-
+		
+		$oldestEndTime=0;
 		foreach($data as $row) {
-			foreach($stocks as $stock) {
-				if(!empty($row[$stock]) && ($row['epoch']>$dataStartTimes[$stock] || empty($dataStartTimes[$stock]))) {
-					$dataEndTimes[$stock]=$row['epoch'];
+			if(!empty($row[$stock_selected]) && ($row['epoch']>$dataStartTimes[$stock_selected] || empty($dataEndTimes[$stock_selected]))) {
+				$dataEndTimes[$stock_selected]=$row['epoch'];
+				if($row['epoch']>$oldestEndTime) {
+					$oldestEndTime=$row['epoch'];
 				}
 			}
-			foreach($adjusteds as $adjusted) {
-				if(!empty($row[$adjusted]) && ($row['epoch']>$dataStartTimes[$adjusted] || empty($dataStartTimes[$adjusted]))) {
-					$dataEndTimes[$adjusted]=$row['epoch'];
+			if(!empty($row[$adjuster_selected]) && ($row['epoch']>$dataStartTimes[$adjuster_selected] || empty($dataEndTimes[$adjuster_selected]))) {
+				$dataEndTimes[$adjuster_selected]=$row['epoch'];
+				if($row['epoch']<$oldestEndTime) {
+					$oldestEndTime=$row['epoch'];
 				}
 			}
-			foreach($adjusters as $adjuster) {
-				foreach($stocks as $stock) {
-					if(!empty($row[$stock]) && !empty($row[$adjuster]) && ($row['epoch']>$dataStartTimes[$adjuster.'_adj_'.$stock] || empty($dataStartTimes[$adjuster.'_adj_'.$stock]))) {
-						$dataEndTimes[$adjuster.'_adj_'.$stock]=$row['epoch'];
-					}
+			if(!empty($row[$stock_selected]) && !empty($row[$adjuster_selected]) && ($row['epoch']>$dataEndTimes[$adjuster_selected.'_adj_'.$stock_selected] || empty($dataStartTimes[$adjuster_selected.'_adj_'.$stock_selected]))) {
+				$dataEndTimes[$adjuster_selected.'_adj_'.$stock_selected]=$row['epoch'];
+				if($row['epoch']<$oldestEndTime) {
+					$oldestEndTime=$row['epoch'];
+				}
+			}
+			if(!empty($row[$stock_selected]) && !empty($row[$adjuster_selected]) && ($row['epoch']>$dataEndTimes[$stock_selected.'_divided_by_'.$adjuster_selected] || empty($dataStartTimes[$stock_selected.'_divided_by_'.$adjuster_selected]))) {
+				$dataEndTimes[$stock_selected.'_divided_by_'.$adjuster_selected]=$row['epoch'];
+				if($row['epoch']<$oldestEndTime) {
+					$oldestEndTime=$row['epoch'];
 				}
 			}
 		}
+
+		// find newest start time $newestStartTime above and remove older data than that so we don't have weirdly scaled charts if combo data of datasets that have lots of data and few data
+		$newData=array();
+		foreach($data as $row) {
+			if($row['epoch']<$newestStartTime) continue;
+			if($row['epoch']>$oldestEndTime) continue;
+			$row['date']=date('Y-m',$row['epoch']);
+			array_push($newData,$row);
+		}
+		$data=$newData;
+
+
+
+		// <get first for each data set but us startTime>
+			$first=array();
+			$query=$chartDb->prepare("SELECT * FROM m1chart WHERE epoch>=:epoch AND ".$adjuster_selected." IS NOT NULL AND ".$adjuster_selected." IS NOT '' ORDER BY epoch ASC LIMIT 1");
+			$query->bindValue(':epoch',$newestStartTime);
+			$query->execute();
+			$first[$adjuster_selected]=$query->fetchAll(PDO::FETCH_ASSOC)[0][$adjuster_selected];
+
+			$query=$chartDb->prepare("SELECT * FROM m1chart WHERE epoch>=:epoch AND ".$stock_selected." IS NOT NULL AND ".$stock_selected." IS NOT '' ORDER BY epoch ASC LIMIT 1");
+			$query->bindValue(':epoch',$newestStartTime);
+			$query->execute();
+			$first[$stock_selected]=$query->fetchAll(PDO::FETCH_ASSOC)[0][$stock_selected];
+		// </get first for each data set>
+
 	// </data start/end times>
 
 
+	// <set show/hide stock/adjusted from URL>
+		if(isset($_GET['show_stock'])){
+			if($_GET['show_stock']==1) {
+				$show_stock=1;
+			}
+			else {
+				$show_stock=0;
+			}
+		}
+		else {
+			// default if not set to show
+			$show_stock=1;
+		}
 
-//TODO
-// find newest start time and remove older data than that so we don't have weirdly scaled charts if combo data of datasets that have lots of data and few data
+		if(isset($_GET['show_divided_by'])){
+			if($_GET['show_divided_by']==1) {
+				$show_divided_by=1;
+			}
+			else {
+				$show_divided_by=0;
+			}
+		}
+		else {
+			// default if not set to show
+			$show_divided_by=1;
+		}
 
+		if(isset($_GET['show_adjusted'])){
+			if($_GET['show_adjusted']==1) {
+				$show_adjusted=1;
+			}
+			else {
+				$show_adjusted=0;
+			}
+		}
+		else {
+			// default if not set to show
+			$show_adjusted=1;
+		}
+
+		if(isset($_GET['show_adjuster'])){
+			if($_GET['show_adjuster']==1) {
+				$show_adjuster=1;
+			}
+			else {
+				$show_adjuster=0;
+			}
+		}
+		else {
+			// default if not set to show
+			$show_adjuster=0;
+		}
+
+
+		if(isset($_GET['logarithmic'])){
+			if($_GET['logarithmic']==1) {
+				$logarithmic=1;
+			}
+			else {
+				$logarithmic=0;
+			}
+		}
+		else {
+			// default if not set to not logarithmic, e.g. linear
+			$logarithmic=0;
+		}
+	// </set show/hide stock/adjusted from URL>
 
 
 	// <sitemap>
@@ -194,120 +313,35 @@ exit;
 	// </screenshot with API Flash>
 
 
-	// <get adjusteds that we haven't had in stocks yet, to display as blue line>
-		$adjusteds=array_unique(array_merge($stocks,$adjusters));
-	// </get adjusteds that we haven't had in stocks yet, to display as blue line>
 
-	// <get latest for each data set>
-		// $latest=array();
-		// foreach($adjusters as $adjuster) {
-		// 	$query=$chartDb->prepare("SELECT * FROM m1chart WHERE ".$adjuster." IS NOT NULL AND ".$adjuster." IS NOT '' ORDER BY epoch DESC LIMIT 1");
-		// 	$query->execute();
-		// 	$latest[$adjuster]=$query->fetchAll(PDO::FETCH_ASSOC)[0][$adjuster];
-		// }
-		// foreach($stocks as $stock) {
-		// 	$query=$chartDb->prepare("SELECT * FROM m1chart WHERE ".$stock." IS NOT NULL AND ".$stock." IS NOT '' ORDER BY epoch DESC LIMIT 1");
-		// 	$query->execute();
-		// 	$latest[$stock]=$query->fetchAll(PDO::FETCH_ASSOC)[0][$stock];
-		// }
-	// </get latest for each data set>
-
-	// <get first for each data set>
-		// $first=array();
-		// foreach($adjusters as $adjuster) {
-		// 	$query=$chartDb->prepare("SELECT * FROM m1chart WHERE epoch>:epoch AND ".$adjuster." IS NOT NULL AND ".$adjuster." IS NOT '' ORDER BY epoch ASC LIMIT 1");
-		// 	if($_GET['time']!='all' && !empty($_GET['time'])) {
-		// 		$query->bindValue(':epoch',strtotime('-'.$_GET['time']));
-		// 	}
-		// 	else {
-		// 		// default 10 years back
-		// 		$query->bindValue(':epoch',0);
-		// 	}
-		// 	$query->execute();
-		// 	$first[$adjuster]=$query->fetchAll(PDO::FETCH_ASSOC)[0][$adjuster];
-		// }
-		// foreach($stocks as $stock) {
-		// 	$query=$chartDb->prepare("SELECT * FROM m1chart WHERE epoch>:epoch AND ".$stock." IS NOT NULL AND ".$stock." IS NOT '' ORDER BY epoch ASC LIMIT 1");
-		// 	if($_GET['time']!='all' && !empty($_GET['time'])) {
-		// 		$query->bindValue(':epoch',strtotime('-'.$_GET['time']));
-		// 	}
-		// 	else {
-		// 		// default 10 years back
-		// 		$query->bindValue(':epoch',0);
-		// 	}
-		// 	$query->execute();
-		// 	$first[$stock]=$query->fetchAll(PDO::FETCH_ASSOC)[0][$stock];
-		// }
-	// </get first for each data set>
-		
 
 
 	$newData=array();
 	foreach($data as $row) {
 
-		foreach($adjusters as $adjuster) {
-			foreach($stocks as $stock) {
-				// $row[$adjuster.'_adj_'.$stock]=$row[$stock]/$row[$adjuster]*$latest[$adjuster];
-				// $row[$adjuster.'_adj_'.$stock]=($row[$stock]/$row[$adjuster])*$first[$stock]/$first[$adjuster];
-				// $row[$adjuster.'_adj_'.$stock]=($row[$stock]/$row[$adjuster])/($first[$stock]/$first[$adjuster]);
-				// $row[$adjuster.'_adj_'.$stock]=$row[$stock]/$row[$adjuster];
+		$row[$adjuster_selected.'_adj_'.$stock_selected]=$row[$stock_selected]/$row[$adjuster_selected]*$first[$adjuster_selected];
+		if(
+			empty($row[$adjuster_selected.'_adj_'.$stock_selected]) || 
+			is_nan($row[$adjuster_selected.'_adj_'.$stock_selected]) || 
+			is_infinite($row[$adjuster_selected.'_adj_'.$stock_selected]) ||
+			!is_numeric($row[$adjuster_selected.'_adj_'.$stock_selected])
+		) {
+			unset($row[$adjuster_selected.'_adj_'.$stock_selected]);
+		}
 
-				// echo $adjuster.'_adj_'.$stock.'='.$row[$stock].'['.$stock.']'.'/'.$row[$adjuster].'['.$adjuster.']';
-				// echo "<br/>\n";
-
-
-				$row[$adjuster.'_adj_'.$stock]=$row[$stock]/$row[$adjuster]*$first[$adjuster];
-				if(
-					empty($row[$adjuster.'_adj_'.$stock]) || 
-					is_nan($row[$adjuster.'_adj_'.$stock]) || 
-					is_infinite($row[$adjuster.'_adj_'.$stock]) ||
-					!is_numeric($row[$adjuster.'_adj_'.$stock])
-				) {
-					unset($row[$adjuster.'_adj_'.$stock]);
-				}
-
-
-				$row[$adjuster.'_divided_by_'.$stock]=$row[$stock]/$row[$adjuster];
-				if(
-					empty($row[$adjuster.'_divided_by_'.$stock]) || 
-					is_nan($row[$adjuster.'_divided_by_'.$stock]) || 
-					is_infinite($row[$adjuster.'_divided_by_'.$stock]) ||
-					!is_numeric($row[$adjuster.'_divided_by_'.$stock])
-				) {
-					unset($row[$adjuster.'_divided_by_'.$stock]);
-				}
-			}
+		$row[$stock_selected.'_divided_by_'.$adjuster_selected]=$row[$stock_selected]/$row[$adjuster_selected];
+		if(
+			empty($row[$stock_selected.'_divided_by_'.$adjuster_selected]) || 
+			is_nan($row[$stock_selected.'_divided_by_'.$adjuster_selected]) || 
+			is_infinite($row[$stock_selected.'_divided_by_'.$adjuster_selected]) ||
+			!is_numeric($row[$stock_selected.'_divided_by_'.$adjuster_selected])
+		) {
+			unset($row[$stock_selected.'_divided_by_'.$adjuster_selected]);
 		}
 		array_push($newData,$row);
 	}
 	$data=$newData;
 
-
-
-
-	$new=array();
-	foreach($stocks as $stock) {
-		$new[$stock]=array();
-		foreach($data as $row) {
-			array_push($new[$stock],$row[$stock]);
-		}
-	}
-	foreach($adjusters as $adjuster) {
-		$new[$adjuster]=array();
-		foreach($data as $row) {
-			array_push($new[$adjuster],$row[$adjuster]);
-		}
-	}
-	foreach($adjusters as $adjuster) {
-		foreach($stocks as $stock) {
-			$new[$adjuster.'_adj_'.$stock]=array();
-			foreach($data as $row) {
-				array_push($new[$adjuster.'_adj_'.$stock],$row[$adjuster.'_adj_'.$stock]);
-			}
-		}
-	}
-	// echo json_encode($new);
-	// exit;
 
 
 
@@ -317,99 +351,13 @@ exit;
 		foreach($data as $row) {
 			$newRow=array();
 			foreach($row as $key => $value) {
-				if($key=='date') {
-					$newRow[$key]=$value;
-				}
-				else {
-					$newValue=(float) $value;
-					$newRow[$key]=$newValue;
-				}
+				$newValue=(float) $value;
+				$newRow[$key]=$newValue;
 			}
 			array_push($newData,$newRow);
 		}
 		$data=$newData;
 	// </make strings numbers>
-
-	// <set show/hide stock/adjusted from URL>
-		if(isset($_GET['show_stock'])){
-			if($_GET['show_stock']==1) {
-				$show_stock=1;
-			}
-			else {
-				$show_stock=0;
-			}
-		}
-		else {
-			// default if not set to show
-			$show_stock=1;
-		}
-
-		if(isset($_GET['show_divided_by'])){
-			if($_GET['show_divided_by']==1) {
-				$show_divided_by=1;
-			}
-			else {
-				$show_divided_by=0;
-			}
-		}
-		else {
-			// default if not set to show
-			$show_divided_by=0;
-		}
-
-		if(isset($_GET['show_adjusted'])){
-			if($_GET['show_adjusted']==1) {
-				$show_adjusted=1;
-			}
-			else {
-				$show_adjusted=0;
-			}
-		}
-		else {
-			// default if not set to show
-			$show_adjusted=1;
-		}
-
-		if(isset($_GET['show_adjuster'])){
-			if($_GET['show_adjuster']==1) {
-				$show_adjuster=1;
-			}
-			else {
-				$show_adjuster=0;
-			}
-		}
-		else {
-			// default if not set to show
-			$show_adjuster=0;
-		}
-
-
-		if(isset($_GET['logarithmic'])){
-			if($_GET['logarithmic']==1) {
-				$logarithmic=1;
-			}
-			else {
-				$logarithmic=0;
-			}
-		}
-		else {
-			// default if not set to not logarithmic, e.g. linear
-			$logarithmic=0;
-		}
-	// </set show/hide stock/adjusted from URL>
-
-
-
-	/*if(empty($_GET) && !$data[30]['sp500']) {
-		echo "<center><strong>🚨 Note: I detected that Google Finance historical data is down, so some indices like S&P500, DJI etc. are rekt and site may look broken, check back in a few hours</strong></center>";
-		echo '<hr>';
-		$logarithmic=0;
-		$_GET['m']='gold';
-		$_GET['stock']='income';
-	}*/
-
-	// echo "<center><strong>🚨 Note: I broke some charts while importing new data, trying to find the bug then it'll work again! -Pieter</strong></center>";
-	// echo '<hr>';
 
 
 	$page['title']='💰'."M1 Chart: The stock market adjusted for the US-dollar money supply M1 (and more) (by @levelsio)";
@@ -417,9 +365,9 @@ exit;
 
 	// ob_start("sanitizeOutput");
 
-	if($_GET['m'] || $_GET['stock']) {
-		$page['title']='💰'.strtoupper($_GET['stock']).' Price in '.strtoupper($_GET['m']);
-		$page['description']="This chart shows the price of ".strtoupper($_GET['stock'])." measured in ".strtoupper($_GET['m']).', to adjust it for inflation. Money printer goes brrrrrrrrr.';
+	if($_GET['adjuster'] || $_GET['stock']) {
+		$page['title']='💰'.strtoupper($_GET['stock']).' Price in '.strtoupper($_GET['adjuster']);
+		$page['description']="This chart shows the price of ".strtoupper($_GET['stock'])." measured in ".strtoupper($_GET['adjuster']).', to adjust it for inflation. Money printer goes brrrrrrrrr.';
 	}
 
 ?><!doctype html>
@@ -594,7 +542,7 @@ exit;
 		color:#060b16;
 		background:#42a5ff;
 	}
-	select.adjustment_selector {
+	select.adjuster_selector {
 		color:#ff4742;
 		border-color:#ff4742;
 		color:#42a5ff;
@@ -604,7 +552,7 @@ exit;
 		border-right:none;
 		border-top:none;
 	}
-	select.adjustment_selector:hover {
+	select.adjuster_selector:hover {
 		background:#ff4742;
 		color:#060b16;
 		background:#42a5ff;
@@ -625,7 +573,7 @@ exit;
 		color:#060b16;
 	}
 	.time_selector_wrapper,
-	.adjustment_selector_wrapper,
+	.adjuster_selector_wrapper,
 	.stock_selector_wrapper {
 		display:inline-block;
 		margin:7px;
@@ -729,6 +677,15 @@ exit;
 	.legend .show_adjuster_legend:hover,
 	.legend .logarithmic_legend:hover {
 		opacity:0.75 !important;
+	}
+	.legend .show_stock_legend {
+		color:#42a5ff;
+	}
+	.legend .show_divided_by_legend {
+		color:#ff4742;
+	}
+	.legend .show_adjusted_legend {
+		color:#ffc924;
 	}
 	.legend span {
 		cursor:pointer;
@@ -901,19 +858,29 @@ exit;
 				</div>
 				<select class="stock_selector">
 					<?foreach($stocks as $stock => $label) {?>
-						<option value="<?=$stock?>" <?if($_GET['stock']==$stock){?>selected<?}?>>
+						<option data-short="<?
+							list($short,$rest)=explode(': ',$label);
+							echo $short;
+						?>" value="<?=$stock?>" <?if($_GET['stock']==$stock){?>selected<?}?>>
 							<?=$label?>
 						</option>
 					<?}?>
 				</select>
 			</div>
 		<span><span class="mobile_line_break"></span><span class="slash"> / </span><span class="mobile_line_break"></span></span>
-			<div class="adjustment_selector_wrapper">
+			<div class="adjuster_selector_wrapper">
 				<div class="heading_above">
 					As measured in the price of
 				</div>
-				<select class="adjustment_selector">
-					
+				<select class="adjuster_selector">
+					<?foreach($adjusters as $adjuster => $label) {?>
+						<option data-short="<?
+							list($short,$rest)=explode(': ',$label);
+							echo $short;
+						?>" value="<?=$adjuster?>" <?if($_GET['adjuster']==$adjuster){?>selected<?}?>>
+							<?=$label?>
+						</option>
+					<?}?>
 				</select>
 			</div>
 
@@ -944,8 +911,8 @@ exit;
 	
 	<script>
 		var chart;
-		var adjusted_selected='';
-		var adjusted_selected_label='';
+		var adjuster_selected='';
+		var adjuster_selected_label='';
 		var stock_selected='';
 		var stock_selected_label='';
 		var show_stock=<?=$show_stock?>;
@@ -968,10 +935,6 @@ exit;
 		var animationFindDatasetIndexIterator=0;
 		var animationWhatAreWeAnimating='';
 
-
-		var dataStartTimes=<?=json_encode($dataStartTimes);?>;
-
-		var dataEndTimes=<?=json_encode($dataEndTimes);?>;
 
 
 		function str_replace(search, replace, subject, count) {
@@ -1332,7 +1295,7 @@ exit;
 			updateChart();
 
 			/* <events> */
-				$('select.adjustment_selector').bind('change',function() {
+				$('select.adjuster_selector').bind('change',function() {
 					updateSelected();
 					updateUrl();
 					window.location.reload();
@@ -1350,12 +1313,13 @@ exit;
 					window.location.reload();
 				});
 
-				$('.legend .interactive_legend').bind('click',function(e) {
-					e.stopPropagation();
-					$(this).find('input[type="checkbox"]').click();
-				});
+				// $('.legend .interactive_legend').bind('click',function(e) {
+				// 	e.stopPropagation();
+				// 	$(this).find('input[type="checkbox"]').click();
+				// });
 
-				$('.legend input[type="checkbox"]').bind('change',function() {
+				$('.legend input[type="checkbox"]').bind('change',function(e) {
+					e.stopPropagation();
 					show_stock=$('.legend input[type="checkbox"].show_stock:checked').length;
 					show_divided_by=$('.legend input[type="checkbox"].show_divided_by:checked').length;
 					show_adjusted=$('.legend input[type="checkbox"].show_adjusted:checked').length;
@@ -1371,6 +1335,7 @@ exit;
 		var stock_max=0;
 		var adjusted_max=0;
 		var adjuster_max=0;
+		var divided_by_max=0;
 		var is_animating=0;
 
 		/* <animation> */
@@ -1382,6 +1347,7 @@ exit;
 					chart.options.scales.yAxes[0].ticks.max=0;
 					chart.options.scales.yAxes[1].ticks.max=0;
 					chart.options.scales.yAxes[2].ticks.max=0;
+					chart.options.scales.yAxes[3].ticks.max=0;
 
 					animationDataBufferIterator=0;
 					animationWhatAreWeAnimating='stock';
@@ -1389,7 +1355,7 @@ exit;
 					animationFindDatasetIndexIterator=0;
 					chart.data.datasets.forEach(function(dataset) {
 						
-						if(dataset.id==adjusted_selected+'_adjuster') {
+						if(dataset.id==adjuster_selected+'_adjuster') {
 							// console.log(chart.data.datasets[animationFindDatasetIndexIterator]['id'],chart.data.datasets[animationFindDatasetIndexIterator]['data']);
 
 							/* <set chart max for adjuster> */
@@ -1419,14 +1385,25 @@ exit;
 							requestAnimationFrame(animationStep);
 						}
 						
-						if(dataset.id==adjusted_selected+'_adj_'+stock_selected) {
-							// console.log(chart.data.datasets[animationFindDatasetIndexIterator]['id'],chart.data.datasets[animationFindDatasetIndexIterator]['data']);
+						if(dataset.id==adjuster_selected+'_adj_'+stock_selected) {
+							// console.log(findMax(chart.data.datasets[animationFindDatasetIndexIterator]['data']),chart.data.datasets[animationFindDatasetIndexIterator]['id'],chart.data.datasets[animationFindDatasetIndexIterator]['data']);
 							/* <set chart max for adjusted> */
 								adjusted_max=findMax(chart.data.datasets[animationFindDatasetIndexIterator]['data']);
 							/* </set chart max for adjusted> */
 
 							animationDataAdjustedBuffer=chart.data.datasets[animationFindDatasetIndexIterator]['data'];
 							chart.data.datasets[animationFindDatasetIndexIterator]['data']=[];
+						}
+
+
+						if(dataset.id==stock_selected+'_divided_by_'+adjuster_selected) {
+							// console.log(chart.data.datasets[animationFindDatasetIndexIterator]['id'],chart.data.datasets[animationFindDatasetIndexIterator]['data']);
+							/* <set chart max for adjusted> */
+								divided_by_max=findMax(chart.data.datasets[animationFindDatasetIndexIterator]['data']);
+							/* </set chart max for adjusted> */
+
+							// animationDataAdjustedBuffer=chart.data.datasets[animationFindDatasetIndexIterator]['data'];
+							// chart.data.datasets[animationFindDatasetIndexIterator]['data']=[];
 						}
 					
 						animationFindDatasetIndexIterator++;;
@@ -1446,7 +1423,7 @@ exit;
 					animationFindDatasetIndexIterator=0;
 					chart.data.datasets.forEach(function(dataset) {
 
-						if(dataset.id==adjusted_selected+'_adj_'+stock_selected) {
+						if(dataset.id==adjuster_selected+'_adj_'+stock_selected) {
 							animationDatasetIndex=animationFindDatasetIndexIterator;
 							requestAnimationFrame(animationStep);
 						}
@@ -1564,63 +1541,40 @@ exit;
 			}
 
 
-
-			if(show_stock && show_adjusted) {
-				// console.log('startTime = '+adjusted_selected+'_adj_'+stock_selected,date('Y-m-d',dataStartTimes[adjusted_selected+'_adj_'+stock_selected]));
-				var startTime=dataStartTimes[adjusted_selected+'_adj_'+stock_selected];
-				var endTime=dataEndTimes[adjusted_selected+'_adj_'+stock_selected];
-			}
-			else if(show_adjusted) {
-				// console.log('startTime = '+adjusted_selected+'_adj_'+stock_selected,date('Y-m-d',dataStartTimes[adjusted_selected+'_adj_'+stock_selected]));
-				var startTime=dataStartTimes[adjusted_selected+'_adj_'+stock_selected];
-				var endTime=dataEndTimes[adjusted_selected+'_adj_'+stock_selected];
-			}
-			else if(show_stock) {
-				// console.log('startTime = '+stock_selected,date('Y-m-d',dataStartTimes[stock_selected]));
-				var startTime=dataStartTimes[stock_selected];
-				var endTime=dataEndTimes[stock_selected];
-			}
-			else if(show_adjuster) {
-				// console.log('startTime = '+adjusted_selected,date('Y-m-d',dataStartTimes[adjusted_selected]));
-				var startTime=dataStartTimes[adjusted_selected];
-				var endTime=dataEndTimes[adjusted_selected];
-			}
-
-
-			// <set minimum start of dataset time>
-				chart.options.scales.xAxes[0].ticks.min=date('Y-m',startTime);
-				chart.options.scales.xAxes[0].ticks.max=date('Y-m',endTime);
-				// console.log("chart.options.scales.xAxes[0].ticks.min",date('Y-m',startTime));
-				// console.log("chart.options.scales.xAxes[0].ticks.max",date('Y-m',endTime));
-			// </set minimum start of dataset time>
-
-
-
 			if(show_stock) {
 				chart.options.scales.yAxes[0].display=true;
 			}
 			else {
 				chart.options.scales.yAxes[0].display=false;
 			}
-			if(show_adjusted) {
+
+			if(show_adjuster) {
 				chart.options.scales.yAxes[1].display=true;
 			}
 			else {
 				chart.options.scales.yAxes[1].display=false;
 			}
-			if(show_adjuster) {
+
+			if(show_divided_by) {
 				chart.options.scales.yAxes[2].display=true;
 			}
 			else {
 				chart.options.scales.yAxes[2].display=false;
 			}
 
+			if(show_adjusted) {
+				chart.options.scales.yAxes[3].display=true;
+			}
+			else {
+				chart.options.scales.yAxes[3].display=false;
+			}
+
 			// <set maxes>
 				chart.options.scales.yAxes[0].ticks.max=stock_max;
-				chart.options.scales.yAxes[1].ticks.max=adjusted_max;
-				chart.options.scales.yAxes[2].ticks.max=adjuster_max;
+				chart.options.scales.yAxes[1].ticks.max=adjuster_max;
+				chart.options.scales.yAxes[2].ticks.max=divided_by_max;
+				chart.options.scales.yAxes[3].ticks.max=adjusted_max;
 			// </set maxes>
-
 
 			var iterator=0;
 			chart.data.datasets.forEach(function(dataset) {
@@ -1632,17 +1586,17 @@ exit;
 					chart.data.datasets[iterator].hidden=false;
 				}
 
-				if(dataset.id==adjusted_selected+'_adj_'+stock_selected && !show_adjusted) {
+				if(dataset.id==adjuster_selected+'_adj_'+stock_selected && !show_adjusted) {
 					chart.data.datasets[iterator].hidden=true;
 				}
-				if(dataset.id==adjusted_selected+'_adj_'+stock_selected && show_adjusted) {
+				if(dataset.id==adjuster_selected+'_adj_'+stock_selected && show_adjusted) {
 					chart.data.datasets[iterator].hidden=false;
 				}
 
-				if(dataset.id==adjusted_selected+'_adjuster' && !show_adjuster) {
+				if(dataset.id==adjuster_selected+'_adjuster' && !show_adjuster) {
 					chart.data.datasets[iterator].hidden=true;
 				}
-				if(dataset.id==adjusted_selected+'_adjuster' && show_adjuster) {
+				if(dataset.id==adjuster_selected+'_adjuster' && show_adjuster) {
 					chart.data.datasets[iterator].hidden=false;
 				}
 
@@ -1653,7 +1607,7 @@ exit;
 		}
 		function updateUrl() {
 			// console.log('updateUrl');
-			// uri='/?m='+adjusted_selected+'&stock='+stock_selected+'&time='+time_selected+'&show_stock='+show_stock+'&show_adjusted='+show_adjusted+'&show_adjuster='+show_adjuster+'&logarithmic='+logarithmic;
+			// uri='/?m='+adjuster_selected+'&stock='+stock_selected+'&time='+time_selected+'&show_stock='+show_stock+'&show_adjusted='+show_adjusted+'&show_adjuster='+show_adjuster+'&logarithmic='+logarithmic;
 			var params='';
 			if(time_selected!='all') {
 				params=params+'&time='+time_selected;
@@ -1674,7 +1628,7 @@ exit;
 			if(params) {
 				params='/?'+params;
 			}
-			uri='/'+stock_selected+'-in-'+adjusted_selected+params;
+			uri='/'+stock_selected+'-in-'+adjuster_selected+params;
 			history.pushState(null,null,uri);
 
 			/* <preload social image so it's available/cached when needed> */
@@ -1690,8 +1644,8 @@ exit;
 
 		function updateSelected() {
 			// console.log('updateSelected');
-			adjusted_selected=$('select.adjustment_selector').children("option:selected").val();
-			adjusted_selected_label=$('select.adjustment_selector').children("option:selected").text();
+			adjuster_selected=$('select.adjuster_selector').children("option:selected").val();
+			adjuster_selected_label=$('select.adjuster_selector').children("option:selected").text();
 			stock_selected=$('select.stock_selector').children("option:selected").val();
 			stock_selected_label=$('select.stock_selector').children("option:selected").text();
 			time_selected=$('select.time_selector').children("option:selected").val();
@@ -1739,15 +1693,10 @@ exit;
 			// console.log('updateChart');
 			updateSelected();
 			
-			document.title=stock_selected_label+' Price in '+adjusted_selected_label;
+			document.title=stock_selected_label+' Price in '+adjuster_selected_label;
 
-			if(!$('select.adjustment_selector').children("option:selected").data('legend')) {
-				$('.legend span.adjuster').text($('select.adjustment_selector').children("option:selected").text());
-			}
-			else {
-				$('.legend span.adjuster').text($('select.adjustment_selector').children("option:selected").data('legend'));
-			}
-
+			$('.legend .stock_selected').text($('select.stock_selector').children("option:selected").data('short'));
+			$('.legend .adjuster_selected').text($('select.adjuster_selector').children("option:selected").data('short'));
 
 			chart.data.datasets.forEach(function(dataset) {
 
@@ -1756,21 +1705,28 @@ exit;
 				if(dataset.id==stock_selected) {
 					/* make original stock low opacity, but show */
 					dataset.hidden=false;
-					dataset.borderColor='rgba(43,222,115,1)';
+					// dataset.borderColor='rgba(43,222,115,1)';
 					notTheStockOrTheAdjustedStock=false;
 				}
 
-				if(dataset.id==adjusted_selected+'_adj_'+stock_selected) {
+				if(dataset.id==stock_selected+'_divided_by_'+adjuster_selected) {
 					/* make adjusted stock high opacity, and show */
 					dataset.hidden=false;
 					dataset.borderColor='rgba(255,71,66,1)';
 					notTheStockOrTheAdjustedStock=false;
 				}
 
+				if(dataset.id==adjuster_selected+'_adj_'+stock_selected) {
+					/* make adjusted stock high opacity, and show */
+					dataset.hidden=false;
+					// dataset.borderColor='#ffc924';
+					notTheStockOrTheAdjustedStock=false;
+				}
+
 				// <new, show adjusted nominal values too as blue line>
-					if(dataset.id==adjusted_selected+'_adjuster') {
+					if(dataset.id==adjuster_selected+'_adjuster') {
 						dataset.hidden=false;
-						dataset.borderColor='rgba(66, 165, 255)';
+						// dataset.borderColor='rgba(66, 165, 255)';
 						notTheStockOrTheAdjustedStock=false;
 					}
 				// </new, show adjusted nominal values too as blue line>
@@ -1812,6 +1768,11 @@ exit;
 		gradientBlue.addColorStop(0, 'rgba(25,25,125,0.5)');	 
 		gradientBlue.addColorStop(1, 'rgba(25,25,125,0)');
 
+		var gradientYellow = ctx.createLinearGradient(0, 0, 0, 600);
+		gradientYellow.addColorStop(0.85, 'rgba(255,201,36,0.125)');   
+		gradientYellow.addColorStop(1, 'rgba(255,201,36,0)');
+
+
 		var chart = new Chart(ctx, {
 			type: 'line',
 			data: {
@@ -1830,7 +1791,7 @@ exit;
 					datasets: [
 						
 						<?
-						foreach($stocks as $stock) {?>
+						// foreach($stocks as $stock) {?>
 							{
 								<?if($_GET['layout']=='screenshot'){?>
 									borderWidth:4,
@@ -1838,11 +1799,11 @@ exit;
 									borderWidth:2,
 								<?}?>
 								hidden:true,
-					 	 		id:'<?=$stock?>',
-								label: '<?=strtoupper($stock)?>',
+					 	 		id:'<?=$stock_selected?>',
+								label: '<?=$stocks[$stock_selected]?>',
 								borderColor: '#2bde73',
 								backgroundColor: gradientGreen,
-								yAxisID:'main',
+								yAxisID:'stock',
 								fill: true,
 								data: 
 								[
@@ -1852,7 +1813,7 @@ exit;
 											if(empty($row['epoch'])) {
 												continue;
 											}
-											if(!$row[$stock]) {
+											if(!$row[$stock_selected]) {
 												if(!empty($previousValue) && $doubleEmptyValueLimiter<2) { 
 													/* if missing data show previous value to fill in, because =GOOGLEFINANCE sometimes randomly misses single dates */
 													echo $previousValue;
@@ -1861,19 +1822,19 @@ exit;
 												echo ',';
 												continue;
 											}
-											echo $row[$stock];
+											echo $row[$stock_selected];
 											echo ',';
-											$previousValue=$row[$stock];
+											$previousValue=$row[$stock_selected];
 											unset($doubleEmptyValueLimiter);
 										}
 									?>
 								],
 							},<?
-						}?>
+						//}?>
 
 						
 						<?
-						foreach($adjusteds as $adjusted) {?>
+						// foreach($adjusters as $adjuster) {?>
 							{
 								<?if($_GET['layout']=='screenshot'){?>
 									borderWidth:4,
@@ -1881,8 +1842,8 @@ exit;
 									borderWidth:2,
 								<?}?>
 								hidden:true,
-					 	 		id:'<?=$adjusted?>_adjuster',
-								label: '<?=strtoupper($adjusted)?>',
+					 	 		id:'<?=$adjuster_selected?>_adjuster',
+								label: '<?=$adjusters[$adjuster_selected]?>',
 								borderColor: '#42a5ff',
 								backgroundColor: gradientBlue,
 								yAxisID:'adjuster',
@@ -1892,7 +1853,7 @@ exit;
 									<?
 										unset($previousValue);
 										foreach($data as $row) {
-											if(!$row[$adjusted]) {
+											if(!$row[$adjuster_selected]) {
 												if(!empty($previousValue) && $doubleEmptyValueLimiter<2) { 
 													/* if missing data show previous value to fill in, because =GOOGLEFINANCE sometimes randomly misses single dates */
 													echo $previousValue;
@@ -1901,19 +1862,20 @@ exit;
 												echo ',';
 												continue;
 											}
-											echo $row[$adjusted];
+											echo $row[$adjuster_selected];
 											echo ',';
-											$previousValue=$row[$adjusted];
+											$previousValue=$row[$adjuster_selected];
 											unset($doubleEmptyValueLimiter);
 										}
 									?>
 								],
 							},<?
-						}?>
+						//}?>
 						
 
-						<?foreach($adjusters as $adjuster) {
-							foreach($stocks as $stock) {?>
+
+						<?/*foreach($adjusters as $adjuster) {
+							foreach($stocks as $stock) {*/?>
 								{
 									<?if($_GET['layout']=='screenshot'){?>
 										borderWidth:4,
@@ -1921,9 +1883,8 @@ exit;
 										borderWidth:2,
 									<?}?>
 									hidden:true,
-						 	 		id:'<?=$adjuster?>_adj_<?=$stock?>',
-									label: 'in <?=strtoupper($adjuster)?>',
-									yAxisID:'adjusted',
+						 	 		id:'<?=$stock_selected?>_divided_by_<?=$adjuster_selected?>',
+									yAxisID:'divided_by',
 									borderColor: '#ff4742',
 									backgroundColor: gradientRed,
 									fill: true,
@@ -1936,7 +1897,7 @@ exit;
 												if(empty($row['epoch'])) {
 													continue;
 												}
-												if(!$row[$adjuster.'_adj_'.$stock]) {
+												if(!$row[$stock_selected.'_divided_by_'.$adjuster_selected]) {
 													if(!empty($previousValue) && $doubleEmptyValueLimiter<2) {
 														/* if missing data show previous value to fill in, because =GOOGLEFINANCE sometimes randomly misses single dates */
 														echo $previousValue;
@@ -1945,16 +1906,59 @@ exit;
 													echo ',';
 													continue;
 												}
-												echo $row[$adjuster.'_adj_'.$stock];
+												echo $row[$stock_selected.'_divided_by_'.$adjuster_selected];
 												echo ',';
-												$previousValue=$row[$adjuster.'_adj_'.$stock];
+												$previousValue=$row[$stock_selected.'_divided_by_'.$adjuster_selected];
 												unset($doubleEmptyValueLimiter);
 											}
 										?>
 									],
 								},<?
-							 	}
-						}?>
+							 	//}
+						//}?>
+
+						<?/*foreach($adjusters as $adjuster) {
+							foreach($stocks as $stock) {*/?>
+								{
+									<?if($_GET['layout']=='screenshot'){?>
+										borderWidth:4,
+									<?} else {?>
+										borderWidth:2,
+									<?}?>
+									hidden:true,
+						 	 		id:'<?=$adjuster_selected?>_adj_<?=$stock_selected?>',
+									yAxisID:'adjusted',
+									borderColor: '#ffc924',
+									backgroundColor: gradientYellow,
+									fill: true,
+									data: 
+									[
+										<?
+											unset($previousValue);
+											$doubleEmptyValueLimiter=0;
+											foreach($data as $row) {
+												if(empty($row['epoch'])) {
+													continue;
+												}
+												if(!$row[$adjuster_selected.'_adj_'.$stock_selected]) {
+													if(!empty($previousValue) && $doubleEmptyValueLimiter<2) {
+														/* if missing data show previous value to fill in, because =GOOGLEFINANCE sometimes randomly misses single dates */
+														echo $previousValue;
+														$doubleEmptyValueLimiter++;
+													}
+													echo ',';
+													continue;
+												}
+												echo $row[$adjuster_selected.'_adj_'.$stock_selected];
+												echo ',';
+												$previousValue=$row[$adjuster_selected.'_adj_'.$stock_selected];
+												unset($doubleEmptyValueLimiter);
+											}
+										?>
+									],
+								},<?
+							 	//}
+						//}?>
 
 
 
@@ -1979,10 +1983,16 @@ exit;
 						callbacks: {
 							labelColor: function(tooltipItem, chart) {
 								var id=chart.config.data.datasets[tooltipItem.datasetIndex].id;
-								if(id==adjusted_selected+'_adj_'+stock_selected) {
+								if(id==adjuster_selected+'_adj_'+stock_selected) {
 									return {
-										borderColor:'#ff4742',
-										backgroundColor:'#ff4742',
+										borderColor:'#ffc924',
+										backgroundColor:'#ffc924',
+									};
+								}
+								else if(id==stock_selected+'_divided_by_'+adjuster_selected) {
+									return {
+										borderColor:'#ffc924',
+										backgroundColor:'#ffc924',
 									};
 								}
 								else if(id==stock_selected) {
@@ -1991,7 +2001,7 @@ exit;
 										backgroundColor:'#2bde73',
 									};
 								}
-								else if(id==adjusted_selected+'_adjuster') {
+								else if(id==adjuster_selected+'_adjuster') {
 									return {
 										borderColor:'#42a5ff',
 										backgroundColor:'#42a5ff',
@@ -2010,13 +2020,13 @@ exit;
 								t=decimalify(tooltipItem.yLabel);
 
 								if(label.indexOf('in ')>-1) {
-									label = t+' '+stock_selected_label+' / '+adjusted_selected_label;
+									label = t+' '+stock_selected_label+' / '+adjuster_selected_label;
 								}
 								else if(label.toUpperCase()==stock_selected.toUpperCase()) {
 									label = '$'+t+' '+stock_selected_label;
 								}
-								else if(label.toUpperCase()==adjusted_selected.toUpperCase()) {
-									label = '$'+t+' '+adjusted_selected_label;
+								else if(label.toUpperCase()==adjuster_selected.toUpperCase()) {
+									label = '$'+t+' '+adjuster_selected_label;
 								}
 								else {
 									label = '$'+t+' '+label;
@@ -2054,7 +2064,7 @@ exit;
 						}],
 						yAxes: [
 							{
-								id:'main',
+								id:'stock',
 								<?if($logarithmic){?>
 									type: 'logarithmic',
 								<?} else {?>
@@ -2093,38 +2103,6 @@ exit;
 									type: 'linear',
 								<?}?>
 								display:false,
-								id:'adjusted',
-								stacked:false,
-								position:'right',
-								gridLines:{
-									tickMarkLength: 1,
-									color: '#252525',
-									zeroLineColor: '#252525'
-								},
-								ticks: {
-									maxRotation: 0,
-									autoSkip:true,
-									maxTicksLimit:12,
-									beginAtZero: false,
-									// min: 0, 
-									max:1,
-									padding:14,
-									fontFamily:'Iosevka Web, monospace',
-									fontColor:'#ff4742',
-									fontSize: 12,
-									callback: function(t) {
-										// return t;
-										return decimalify(t);
-									}
-								}
-							},
-							{
-								<?if($logarithmic){?>
-									type: 'logarithmic',
-								<?} else {?>
-									type: 'linear',
-								<?}?>
-								display:false,
 								id: 'adjuster',
 								stacked:false,
 								position:'right',
@@ -2149,8 +2127,71 @@ exit;
 										return '$'+decimalify(t);
 									}
 								}
+							},
+							{
+								<?if($logarithmic){?>
+									type: 'logarithmic',
+								<?} else {?>
+									type: 'linear',
+								<?}?>
+								display:false,
+								id: 'divided_by',
+								stacked:false,
+								position:'right',
+								gridLines:{
+									tickMarkLength: 1,
+									color: '#252525',
+									zeroLineColor: '#252525'
+								},
+								ticks: {
+									maxRotation: 0,
+									autoSkip:true,
+									maxTicksLimit:12,
+									beginAtZero: false,
+									// min: 0, 
+									max:1,
+									padding:14,
+									fontFamily:'Iosevka Web, monospace',
+									fontColor:'#ff4742',
+									fontSize: 12,
+									callback: function(t) {
+										// return t;
+										return '$'+decimalify(t);
+									}
+								}
+							},
+							{
+								<?if($logarithmic){?>
+									type: 'logarithmic',
+								<?} else {?>
+									type: 'linear',
+								<?}?>
+								display:false,
+								id:'adjusted',
+								stacked:false,
+								position:'right',
+								gridLines:{
+									tickMarkLength: 1,
+									color: '#252525',
+									zeroLineColor: '#252525'
+								},
+								ticks: {
+									maxRotation: 0,
+									autoSkip:true,
+									maxTicksLimit:12,
+									beginAtZero: false,
+									// min: 0, 
+									max:1,
+									padding:14,
+									fontFamily:'Iosevka Web, monospace',
+									fontColor:'#ffc924',
+									fontSize: 12,
+									callback: function(t) {
+										// return t;
+										return decimalify(t);
+									}
+								}
 							}
-
 						]
 					}
 				}
@@ -2167,17 +2208,14 @@ exit;
 
 		<span class="show_stock_legend">
 			<input type="checkbox" class="show_stock" <?if($show_stock){?>checked<?}?>>
-			&nbsp;
-			<span data-type="stock" style="color:rgb(43,222,115)">
+			<span style="color:rgb(43,222,115)">
 				<!-- 🟢 -->
 
-				<span data-type="stock" class="stock">
+				<span class="stock_selected">
 					
 				</span>
 			</span>
-			&nbsp;
-		</span>
-		<br/>
+		</span><br/>
 
 
 
@@ -2186,46 +2224,39 @@ exit;
 
 		<span class="show_adjuster_legend interactive_legend">
 			<input type="checkbox" class="show_adjuster" <?if($show_adjuster){?>checked<?}?>>
-			&nbsp;
-			<span style="color:#42a5ff" data-type="adjuster">
+			<span style="color:#42a5ff">
 				<!-- 🔵 -->
 
-				<span class="adjuster" data-type="adjuster">
+				<span class="adjuster_selected">
 					
 				</span>
 			</span>
-			&nbsp;
-		</span>
-		<br/>
+		</span><br/>
 
+
+
+		<span class="mobile_line_break"></span>
+
+		<span class="show_divided_by_legend interactive_legend">
+			<input type="checkbox" class="show_divided_by" <?if($show_divided_by){?>checked<?}?>>
+			<span data-type="adjusted"><!-- 🔴  -->
+				<span class="stock_selected"></span>
+				/
+				<span class="adjuster_selected"></span>
+			</span>
+		</span>
+		</span><br/>
 
 
 		<span class="mobile_line_break"></span>
 
 		<span class="show_adjusted_legend interactive_legend">
 			<input type="checkbox" class="show_adjusted" <?if($show_adjusted){?>checked<?}?>>
-			&nbsp;
-			<span style="color:rgb(255,71,66)" data-type="adjusted"><!-- 🔴  -->
-				<span class="stock" data-type="adjusted"></span>
-				&nbsp;/&nbsp;
-				<span class="adjusted" data-type="adjusted"></span>
+			<span class="adjuster_selected"></span>-adj
+			<span><!-- 🔴  -->
+				<span class="stock_selected"></span>
 			</span>
-			&nbsp;
-		</span>
-		<br/>
-
-
-		<span class="mobile_line_break"></span>
-
-		<span class="show_adjusted_legend interactive_legend">
-			<input type="checkbox" class="show_divided_by_legend" <?if($show_divided_by_legend){?>checked<?}?>>
-			&nbsp;
-			<span class="adjusted" data-type="adjusted"></span>-adj&nbsp;
-			<span style="color:rgb(255,71,66)" data-type="divided_by"><!-- 🔴  -->
-				<span class="stock" data-type="divided_by"></span>
-			</span>
-		</span>
-		<br/>
+		</span><br/>
 
 
 
@@ -2236,10 +2267,8 @@ exit;
 
 		<span class="logarithmic_legend interactive_legend">
 			<input type="checkbox" class="logarithmic" <?if($logarithmic){?>checked<?}?>>
-			&nbsp;
 			<span data-type="logarithmic">📐Logarithmic</span>
-		</span>
-		<br/>
+		</span><br/>
 
 
 	</div>
