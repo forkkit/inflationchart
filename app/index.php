@@ -17,40 +17,40 @@
 
 	// <config>
 		$stocks=array(
-			'sp500'=>'🇺🇸S&P500',
-			'dji'=>'🇺🇸DJI',
-			'nasdaq'=>'🤖NASDAQ',
-			'gdp'=>'💰US GDP',
-			'income'=>'💰Avg US Income',
-			'oil'=>'🛢Oil',
-			'gold'=>'🏆Gold',
-			'silver'=>'🥈Silver',
-			'asia'=>'🌏Asia ex-JP',
-			'china'=>'🇨🇳China SSE',
-			'home'=>'🏡Avg US Home',
-			'food'=>'🥩Food Price',
-			'bigmac'=>'🍔Big Mac',
-			'btc'=>'🥇BTC',
-			'eth'=>'🏅ETH',
-			'tsla'=>'🚗$TSLA'
+			'sp500'=>'🇺🇸 S&P500',
+			'dji'=>'🇺🇸 DJI',
+			'nasdaq'=>'🤖 NASDAQ',
+			'gdp'=>'💰 US GDP',
+			'income'=>'💰 Avg US Income',
+			'oil'=>'🛢 Oil',
+			'gold'=>'🏆 Gold',
+			'silver'=>'🥈 Silver',
+			'asia'=>'🌏 Asia ex-JP',
+			'china'=>'🇨🇳 China SSE',
+			'home'=>'🏡 Avg US Home',
+			'food'=>'🥩 Food Price',
+			'bigmac'=>'🍔 Big Mac',
+			'btc'=>'🥇 BTC',
+			'eth'=>'🏅 ETH',
+			'tsla'=>'🚗 $TSLA'
 		);
 
 		$adjusters=array(
-			'mb'=>'💸M0: Cash',
-			'm1'=>'💳M1: Cash + Bank',
-			'm3'=>'💰M3: All Money',
-			'cpi'=>'🛒Consumer Price Index',
-			'sp500'=>'🇺🇸S&P500',
+			'mb'=>'💸 M0: Cash',
+			'm1'=>'💳 M1: Cash + Bank',
+			'm3'=>'💰 M3: All Money',
+			'cpi'=>'🛒 Consumer Price Index',
+			'sp500'=>'🇺🇸 S&P500',
 			'levels'=>'🐩 Levels Inflation Index',
-			'oil'=>'🛢Oil',
-			'gold'=>'🏆Gold',
-			'silver'=>'🥈Silver',
-			'home'=>'🏡Avg US Home',
-			'food'=>'🥩Food',
-			'bigmac'=>'🍔Big Mac',
-			'btc'=>'🥇BTC',
-			'eth'=>'🏅ETH',
-			'income'=>'💰Avg US Income'
+			'oil'=>'🛢 Oil',
+			'gold'=>'🏆 Gold',
+			'silver'=>'🥈 Silver',
+			'home'=>'🏡 Avg US Home',
+			'food'=>'🥩 Food',
+			'bigmac'=>'🍔 Big Mac',
+			'btc'=>'🥇 BTC',
+			'eth'=>'🏅 ETH',
+			'income'=>'💰 Avg US Income'
 		);
 		
 		$stock_selected=$_GET['stock'];
