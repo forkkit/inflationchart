@@ -656,7 +656,7 @@
 		border:1px solid #2a2a2a;
 		z-index:1;
 		/*width:calc(100% - 200px - 1px - 7px - 7px);*/
-		width:200px;
+		width:250px;
 		padding:7px;
 		padding-top:4px;
 		padding-bottom:10px;
@@ -994,7 +994,15 @@
 			}
 			return sa ? s : s[0];
 		}
-
+		function removeEmojis(str) {
+			var ranges = [
+				'\ud83c[\udf00-\udfff]', // U+1F300 to U+1F3FF
+				'\ud83d[\udc00-\ude4f]', // U+1F400 to U+1F64F
+				'\ud83d[\ude80-\udeff]'  // U+1F680 to U+1F6FF
+			];
+			str = str.replace(new RegExp(ranges.join('|'), 'g'), '');
+			return str;
+		}
 		function number_format(number, decimals, dec_point, thousands_sep) {
 			/*Copyright (c) 2007-2016 Kevin van Zonneveld (https://kvz.io) 
 			and Contributors (https://locutus.io/authors)
@@ -1603,6 +1611,13 @@
 					chart.data.datasets[iterator].hidden=false;
 				}
 
+				if(dataset.id==stock_selected+'_divided_by_'+adjuster_selected && !show_divided_by) {
+					chart.data.datasets[iterator].hidden=true;
+				}
+				if(dataset.id==stock_selected+'_divided_by_'+adjuster_selected && show_divided_by) {
+					chart.data.datasets[iterator].hidden=false;
+				}
+
 				iterator++;
 			});
 
@@ -1699,6 +1714,9 @@
 			document.title=stock_selected_label+' Price in '+adjuster_selected_label;
 
 			$('.legend .stock_selected').text($('select.stock_selector').children("option:selected").data('short'));
+			
+			
+
 			$('.legend .adjuster_selected').text($('select.adjuster_selector').children("option:selected").data('short'));
 
 			chart.data.datasets.forEach(function(dataset) {
