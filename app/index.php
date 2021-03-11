@@ -215,6 +215,7 @@
 			$show_divided_by=1;
 		}
 
+
 		if(isset($_GET['show_adjusted'])){
 			if($_GET['show_adjusted']==1) {
 				$show_adjusted=1;
@@ -224,8 +225,8 @@
 			}
 		}
 		else {
-			// default if not set to show
-			$show_adjusted=1;
+			// default if not set to not show
+			$show_adjusted=0;
 		}
 
 		if(isset($_GET['show_adjuster'])){
@@ -930,7 +931,7 @@
 
 		var animationDataBufferIterator=0;
 		var animationInterval;
-		var animationDataAdjustedBuffer=0;
+		var animationDataDividedByBuffer=0;
 		var animationDataAdjusterBuffer=0;
 		var animationDataStockBuffer=0;
 		var animationDatasetIndex=0;
@@ -1393,7 +1394,7 @@
 								adjusted_max=findMax(chart.data.datasets[animationFindDatasetIndexIterator]['data']);
 							/* </set chart max for adjusted> */
 
-							animationDataAdjustedBuffer=chart.data.datasets[animationFindDatasetIndexIterator]['data'];
+							animationDataDividedByBuffer=chart.data.datasets[animationFindDatasetIndexIterator]['data'];
 							chart.data.datasets[animationFindDatasetIndexIterator]['data']=[];
 						}
 
@@ -1404,7 +1405,7 @@
 								divided_by_max=findMax(chart.data.datasets[animationFindDatasetIndexIterator]['data']);
 							/* </set chart max for adjusted> */
 
-							// animationDataAdjustedBuffer=chart.data.datasets[animationFindDatasetIndexIterator]['data'];
+							// animationDataDividedByBuffer=chart.data.datasets[animationFindDatasetIndexIterator]['data'];
 							// chart.data.datasets[animationFindDatasetIndexIterator]['data']=[];
 						}
 					
@@ -1414,13 +1415,13 @@
 				}
 			// </find currently visible dataset of stock and animate it>
 
-			// <find currently visible dataset of adjusted data and animate it>
-				function animateAdjustedLine() {
+			// <find currently visible dataset of divided_by data and animate it>
+				function animateDividedByLine() {
 					is_animating=true;
 
-					// console.log('animateAdjustedLine');
+					// console.log('animateDividedByLine');
 					animationDataBufferIterator=0;
-					animationWhatAreWeAnimating='adjusted';
+					animationWhatAreWeAnimating='divided_by';
 
 					animationFindDatasetIndexIterator=0;
 					chart.data.datasets.forEach(function(dataset) {
@@ -1444,8 +1445,8 @@
 					if(animationWhatAreWeAnimating=='stock') {
 						var bufferToUse=animationDataStockBuffer;
 					}
-					if(animationWhatAreWeAnimating=='adjusted') {
-						var bufferToUse=animationDataAdjustedBuffer
+					if(animationWhatAreWeAnimating=='divided_by') {
+						var bufferToUse=animationDataDividedByBuffer
 					}
 
 					var i=0;
@@ -1463,8 +1464,8 @@
 				/* <quit if data finished> */
 					if(animationWhatAreWeAnimating=='stock' && !show_stock) {
 						/* if stock not visible, skip straight to draw the line instantly then go animate adjusted line, otherwise we'd have wait for a line to be drawn that we cannot see anyway (stock) */
-						window.requestAnimationFrame(animateAdjustedLine);
-						// console.log('animateAdjustedLine 1');
+						window.requestAnimationFrame(animateDividedByLine);
+						// console.log('animateDividedByLine 1');
 					}
 					else if(animationDataBufferIterator<bufferToUse.length) {
 						/* continue animating because we're not done yet */
@@ -1474,8 +1475,8 @@
 					else {
 						/* if we finished, see if we are animating the stock line, so we can animate the adjusted line next */
 						if(animationWhatAreWeAnimating=='stock') {
-							window.requestAnimationFrame(animateAdjustedLine);
-							// console.log('animateAdjustedLine 2');
+							window.requestAnimationFrame(animateDividedByLine);
+							// console.log('animateDividedByLine 2');
 						}
 					}
 				/* </quit if data finished> */
@@ -2158,7 +2159,7 @@
 									fontSize: 12,
 									callback: function(t) {
 										// return t;
-										return '$'+decimalify(t);
+										return decimalify(t);
 									}
 								}
 							},
@@ -2190,7 +2191,7 @@
 									fontSize: 12,
 									callback: function(t) {
 										// return t;
-										return decimalify(t);
+										return '$'+decimalify(t);
 									}
 								}
 							}
