@@ -1,5 +1,4 @@
-down for maintenance, brb
-<?exit;
+<?
 
 	// <router>
 		if($_GET['m']) {
@@ -370,6 +369,8 @@ down for maintenance, brb
 		$page['title']='💰'.strtoupper($_GET['stock']).' Price in '.strtoupper($_GET['adjuster']);
 		$page['description']="This chart shows the price of ".strtoupper($_GET['stock'])." measured in ".strtoupper($_GET['adjuster']).', to adjust it for inflation. Money printer goes brrrrrrrrr.';
 	}
+
+
 
 ?><!doctype html>
 <html class="<?=$_GET['layout']?>">
