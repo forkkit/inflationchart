@@ -1610,31 +1610,31 @@
 			}
 
 			// <set min & max>
-				if(show_stock) {
-					var stock_or_adjusted_max=stock_max;
-				}
-				if(show_adjusted) {
-					var stock_or_adjusted_max=adjusted_max;
-				}
 				if(show_adjusted && show_stock && stock_max<adjusted_max) {
 					var stock_or_adjusted_max=adjusted_max;
 				}
-
+				else if(show_stock) {
+					var stock_or_adjusted_max=stock_max;
+				}
+				else if(show_adjusted) {
+					var stock_or_adjusted_max=adjusted_max;
+				}
+				
 				chart.options.scales.yAxes[0].ticks.max=stock_or_adjusted_max;
 				chart.options.scales.yAxes[1].ticks.max=adjuster_max;
 				chart.options.scales.yAxes[2].ticks.max=divided_by_max;
 				chart.options.scales.yAxes[3].ticks.max=stock_or_adjusted_max; /* adj by shd follow same as stock min/max to align */
 
-				if(show_stock) {
-					var stock_or_adjusted_min=stock_min;
-				}
-				if(show_adjusted) {
-					var stock_or_adjusted_min=adjusted_min;
-				}
 				if(show_adjusted && show_stock &&  stock_min>adjusted_min) {
 					var stock_or_adjusted_min=adjusted_min;
 				}
-
+				else if(show_stock) {
+					var stock_or_adjusted_min=stock_min;
+				}
+				else if(show_adjusted) {
+					var stock_or_adjusted_min=adjusted_min;
+				}
+				
 				chart.options.scales.yAxes[0].ticks.min=stock_or_adjusted_min; /* adj by shd follow same as stock min/max to align */
 				chart.options.scales.yAxes[1].ticks.min=adjuster_min;
 				chart.options.scales.yAxes[2].ticks.min=divided_by_min;
