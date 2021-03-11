@@ -1610,9 +1610,13 @@
 			}
 
 			// <set min & max>
-
-				var stock_or_adjusted_max=stock_max;
-				if(show_adjusted && stock_max<adjusted_max) {
+				if(show_stock) {
+					var stock_or_adjusted_max=stock_max;
+				}
+				if(show_adjusted) {
+					var stock_or_adjusted_max=adjusted_max;
+				}
+				if(show_adjusted && show_stock && stock_max<adjusted_max) {
 					var stock_or_adjusted_max=adjusted_max;
 				}
 
@@ -1621,8 +1625,13 @@
 				chart.options.scales.yAxes[2].ticks.max=divided_by_max;
 				chart.options.scales.yAxes[3].ticks.max=stock_or_adjusted_max; /* adj by shd follow same as stock min/max to align */
 
-				var stock_or_adjusted_min=stock_min;
-				if(show_adjusted && stock_min>adjusted_min) {
+				if(show_stock) {
+					var stock_or_adjusted_min=stock_min;
+				}
+				if(show_adjusted) {
+					var stock_or_adjusted_min=adjusted_min;
+				}
+				if(show_adjusted && show_stock &&  stock_min>adjusted_min) {
 					var stock_or_adjusted_min=adjusted_min;
 				}
 
