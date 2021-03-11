@@ -1740,13 +1740,13 @@
 				t=number_format(t/1000000,1)+'M';
 			}
 			else if(t<=0.00000000001) {
-				t=number_format(t*1000000000000,1)+' Tth';
+				t=number_format(t*1000000000000,1)+' (1/T)';
 			}
 			else if(t<=0.00000001) {
-				t=number_format(t*1000000000,1)+' Bth';
+				t=number_format(t*1000000000,1)+' (1/B)';
 			}
 			else if(t<=0.00001) {
-				t=number_format(t*1000000,1)+' Mth';
+				t=number_format(t*1000000,1)+' (1/M)';
 			}
 			else if(t<=0.1) {
 				t=number_format(t,2);
