@@ -1347,6 +1347,12 @@
 		var adjusted_max=0;
 		var adjuster_max=0;
 		var divided_by_max=0;
+
+		var stock_min=0;
+		var adjusted_min=0;
+		var adjuster_min=0;
+		var divided_by_min=0;
+
 		var is_animating=0;
 
 		/* <animation> */
@@ -1354,6 +1360,11 @@
 			// <find currently visible dataset of stock and animate it>
 				function animateStockLine() {
 					is_animating=true;
+
+					chart.options.scales.yAxes[0].ticks.min=0;
+					chart.options.scales.yAxes[1].ticks.min=0;
+					chart.options.scales.yAxes[2].ticks.min=0;
+					chart.options.scales.yAxes[3].ticks.min=0;
 
 					chart.options.scales.yAxes[0].ticks.max=0;
 					chart.options.scales.yAxes[1].ticks.max=0;
@@ -1370,6 +1381,7 @@
 							// console.log(chart.data.datasets[animationFindDatasetIndexIterator]['id'],chart.data.datasets[animationFindDatasetIndexIterator]['data']);
 
 							/* <set chart max for adjuster> */
+								adjuster_min=findMin(chart.data.datasets[animationFindDatasetIndexIterator]['data']);
 								adjuster_max=findMax(chart.data.datasets[animationFindDatasetIndexIterator]['data']);
 							/* </set chart max for adjuster> */
 
@@ -1382,6 +1394,7 @@
 							// console.log(chart.data.datasets[animationFindDatasetIndexIterator]['id'],chart.data.datasets[animationFindDatasetIndexIterator]['data']);
 
 							/* <set chart max for stock> */
+								stock_min=findMin(chart.data.datasets[animationFindDatasetIndexIterator]['data']);
 								stock_max=findMax(chart.data.datasets[animationFindDatasetIndexIterator]['data']);
 							/* </set chart max for stock> */
 
@@ -1399,6 +1412,7 @@
 						if(dataset.id==adjuster_selected+'_adj_'+stock_selected) {
 							// console.log(findMax(chart.data.datasets[animationFindDatasetIndexIterator]['data']),chart.data.datasets[animationFindDatasetIndexIterator]['id'],chart.data.datasets[animationFindDatasetIndexIterator]['data']);
 							/* <set chart max for adjusted> */
+								adjusted_min=findMin(chart.data.datasets[animationFindDatasetIndexIterator]['data']);
 								adjusted_max=findMax(chart.data.datasets[animationFindDatasetIndexIterator]['data']);
 							/* </set chart max for adjusted> */
 
@@ -1410,6 +1424,7 @@
 						if(dataset.id==stock_selected+'_divided_by_'+adjuster_selected) {
 							// console.log(chart.data.datasets[animationFindDatasetIndexIterator]['id'],chart.data.datasets[animationFindDatasetIndexIterator]['data']);
 							/* <set chart max for adjusted> */
+								divided_by_min=findMin(chart.data.datasets[animationFindDatasetIndexIterator]['data']);
 								divided_by_max=findMax(chart.data.datasets[animationFindDatasetIndexIterator]['data']);
 							/* </set chart max for adjusted> */
 
@@ -1489,6 +1504,18 @@
 					}
 				/* </quit if data finished> */
 				
+			}
+			function findMin(array) {
+				console.log(array);
+				var min=Infinity;
+				for (var i = 0; i < array.length; i++) {
+					var value=parseFloat(array[i]);
+					if(value<min) {
+						min=value;
+					}
+				}
+				console.log(min);
+				return min;
 			}
 			function findMax(array) {
 				// console.log(array);
@@ -1580,12 +1607,28 @@
 				chart.options.scales.yAxes[3].display=false;
 			}
 
-			// <set maxes>
-				chart.options.scales.yAxes[0].ticks.max=stock_max;
+			// <set min & max>
+
+				var stock_or_adjusted_max=stock_max;
+				if(show_adjusted && stock_max<adjusted_max) {
+					var stock_or_adjusted_max=adjusted_max;
+				}
+
+				chart.options.scales.yAxes[0].ticks.max=stock_or_adjusted_max;
 				chart.options.scales.yAxes[1].ticks.max=adjuster_max;
 				chart.options.scales.yAxes[2].ticks.max=divided_by_max;
-				chart.options.scales.yAxes[3].ticks.max=stock_max;
-			// </set maxes>
+				chart.options.scales.yAxes[3].ticks.max=stock_or_adjusted_max; /* adj by shd follow same as stock min/max to align */
+
+				var stock_or_adjusted_min=stock_min;
+				if(show_adjusted && stock_min>adjusted_min) {
+					var stock_or_adjusted_min=adjusted_min;
+				}
+
+				chart.options.scales.yAxes[0].ticks.min=stock_or_adjusted_min; /* adj by shd follow same as stock min/max to align */
+				chart.options.scales.yAxes[1].ticks.min=adjuster_min;
+				chart.options.scales.yAxes[2].ticks.min=divided_by_min;
+				chart.options.scales.yAxes[3].ticks.min=stock_or_adjusted_min; /* adj by shd follow same as stock min/max to align */
+			// </set min & max>
 
 			var iterator=0;
 			chart.data.datasets.forEach(function(dataset) {
@@ -2106,7 +2149,7 @@
 									maxRotation: 0,
 									autoSkip:true,
 									maxTicksLimit:12,
-									beginAtZero: true,
+									beginAtZero: false, 
 									/*min: 0,*/
 									max:1,
 									padding:14,
@@ -2139,7 +2182,7 @@
 									maxRotation: 0,
 									autoSkip:true,
 									maxTicksLimit:12,
-									beginAtZero: true,
+									beginAtZero: false,
 									// min: 0, 
 									max:1,
 									padding:14,
@@ -2171,7 +2214,7 @@
 									maxRotation: 0,
 									autoSkip:true,
 									maxTicksLimit:12,
-									beginAtZero: true,
+									beginAtZero: false,
 									// min: 0, 
 									max:1,
 									padding:14,
@@ -2203,7 +2246,7 @@
 									maxRotation: 0,
 									autoSkip:true,
 									maxTicksLimit:12,
-									beginAtZero: true,
+									beginAtZero: false,
 									// min: 0, 
 									max:1,
 									padding:14,
