@@ -1,4 +1,5 @@
-<?
+down for maintenance, brb
+<?exit;
 
 	// <router>
 		if($_GET['m']) {
@@ -2252,8 +2253,7 @@
 
 		<span class="show_adjusted_legend interactive_legend">
 			<input type="checkbox" class="show_adjusted" <?if($show_adjusted){?>checked<?}?>>
-			<span class="adjuster_selected"></span>-adj
-			<span><!-- 🔴  -->
+			<span class="adjuster_selected"></span>-adj<span><!-- 🔴  -->
 				<span class="stock_selected"></span>
 			</span>
 		</span><br/>
