@@ -1538,11 +1538,13 @@
 				chart.options.scales.yAxes[0].type='logarithmic'
 				chart.options.scales.yAxes[1].type='logarithmic'
 				chart.options.scales.yAxes[2].type='logarithmic'
+				chart.options.scales.yAxes[3].type='logarithmic'
 			}
 			else {
 				chart.options.scales.yAxes[0].type='linear'
 				chart.options.scales.yAxes[1].type='linear'
 				chart.options.scales.yAxes[2].type='linear'
+				chart.options.scales.yAxes[3].type='linear'
 			}
 
 
