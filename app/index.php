@@ -1584,7 +1584,7 @@
 				chart.options.scales.yAxes[0].ticks.max=stock_max;
 				chart.options.scales.yAxes[1].ticks.max=adjuster_max;
 				chart.options.scales.yAxes[2].ticks.max=divided_by_max;
-				chart.options.scales.yAxes[3].ticks.max=adjusted_max;
+				chart.options.scales.yAxes[3].ticks.max=stock_max;
 			// </set maxes>
 
 			var iterator=0;
@@ -1633,11 +1633,14 @@
 			if(!show_stock) {
 				params=params+'&show_stock='+show_stock;
 			}
-			if(!show_adjusted) {
+			if(show_adjusted) {
 				params=params+'&show_adjusted='+show_adjusted;
 			}
 			if(show_adjuster) {
 				params=params+'&show_adjuster='+show_adjuster;
+			}
+			if(!show_divided_by) {
+				params=params+'&show_divided_by='+show_divided_by;
 			}
 			if(logarithmic) {
 				params=params+'&logarithmic='+logarithmic;
@@ -2103,7 +2106,7 @@
 									maxRotation: 0,
 									autoSkip:true,
 									maxTicksLimit:12,
-									beginAtZero: false, 
+									beginAtZero: true,
 									/*min: 0,*/
 									max:1,
 									padding:14,
@@ -2136,7 +2139,7 @@
 									maxRotation: 0,
 									autoSkip:true,
 									maxTicksLimit:12,
-									beginAtZero: false,
+									beginAtZero: true,
 									// min: 0, 
 									max:1,
 									padding:14,
@@ -2168,7 +2171,7 @@
 									maxRotation: 0,
 									autoSkip:true,
 									maxTicksLimit:12,
-									beginAtZero: false,
+									beginAtZero: true,
 									// min: 0, 
 									max:1,
 									padding:14,
@@ -2200,7 +2203,7 @@
 									maxRotation: 0,
 									autoSkip:true,
 									maxTicksLimit:12,
-									beginAtZero: false,
+									beginAtZero: true,
 									// min: 0, 
 									max:1,
 									padding:14,
