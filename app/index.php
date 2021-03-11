@@ -870,7 +870,7 @@
 					<?}?>
 				</select>
 			</div>
-		<span><span class="mobile_line_break"></span><span class="slash"> / </span><span class="mobile_line_break"></span></span>
+		<span><span class="mobile_line_break"></span><?/*<span class="slash"> / </span>*/?><span class="mobile_line_break"></span></span>
 			<div class="adjuster_selector_wrapper">
 				<div class="heading_above">
 					As measured in the price of
