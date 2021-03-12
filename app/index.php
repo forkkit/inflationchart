@@ -83,7 +83,7 @@
 		}
 		else {
 			// default
-			$query->bindValue(':epoch',strtotime("-50 years"));
+			$query->bindValue(':epoch',strtotime("-20 years"));
 		}
 		$query->execute();
 		$data=$query->fetchAll(PDO::FETCH_ASSOC);
@@ -895,9 +895,9 @@
 					<option value="1 year" <?if($_GET['time']=='1 year'){?>selected<?}?>>1 year</option>
 					<option value="5 years" <?if($_GET['time']=='5 years'){?>selected<?}?>>5 years</option>
 					<option value="10 years" <?if($_GET['time']=='10 years'){?>selected<?}?>>10 years</option>
-					<option value="20 years" <?if($_GET['time']=='20 years'){?>selected<?}?>>20 years</option>
+					<option value="20 years" <?if(empty($_GET['time']) || $_GET['time']=='20 years'){?>selected<?}?>>20 years</option>
 					<option value="50 years" <?if($_GET['time']=='50 years'){?>selected<?}?>>50 years</option>
-					<option value="all" <?if(empty($_GET['time']) || $_GET['time']=='all'){?>selected<?}?>>all time</option>
+					<option value="all" <?if($_GET['time']=='all'){?>selected<?}?>>all time</option>
 				</select>
 			</div>
 		</h1>
