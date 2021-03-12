@@ -1688,7 +1688,7 @@
 			// console.log('updateUrl');
 			// uri='/?m='+adjuster_selected+'&stock='+stock_selected+'&time='+time_selected+'&show_stock='+show_stock+'&show_adjusted='+show_adjusted+'&show_adjuster='+show_adjuster+'&logarithmic='+logarithmic;
 			var params='';
-			if(time_selected!='all') {
+			if(time_selected!='20 years') {
 				params=params+'&time='+time_selected;
 			}
 			if(!show_stock) {
