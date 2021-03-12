@@ -2144,8 +2144,6 @@
 								fontColor:'rgb(186,186,186)',
 								labelOffset: 18,
 								callback: function(t) {
-									// this draws the date labels 2020-01 etc. on the horizontal X axis, from the unix epoch timestamp
-									// return date('Y-m',t);
 									return t;
 								}
 							}
