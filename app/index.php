@@ -13,6 +13,11 @@
 				$_GET['adjuster']=$query[2];
 			}
 		}
+		if(empty($_GET)) {
+// fix for broken defaults
+			header("Location:/sp500-in-mb");
+			exit;
+		}
 	// </router>
 
 	// <config>
