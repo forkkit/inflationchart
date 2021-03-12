@@ -1739,6 +1739,9 @@
 			else if(t>=1000000) {
 				t=number_format(t/1000000,1)+'M';
 			}
+			else if(t>=1000) {
+				t=number_format(t/1000,1)+'k';
+			}
 			else if(t<=0.00000000001) {
 				t=number_format(t*1000000000000,1)+' (1/T)';
 			}
