@@ -85,7 +85,10 @@
 
 		/* make sure you check if $adjuster_selected and $stock selected are safe from $_GET[] user input above */
 		$query=$chartDb->prepare("SELECT epoch,".$adjuster_selected.",".$stock_selected." FROM m1chart WHERE epoch>:epoch ORDER BY epoch ASC");
-		if($_GET['time']!=$time_selected_default && !empty($_GET['time'])) {
+		if($_GET['time']=='all') { {
+			$query->bindValue(':epoch',0);
+		}
+		else if($_GET['time']!=$time_selected_default && !empty($_GET['time'])) {
 			$query->bindValue(':epoch',strtotime('-'.$_GET['time']));
 		}
 		else {
