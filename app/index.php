@@ -2179,7 +2179,9 @@
 									fontColor:'#2bde73',
 									fontSize: 12,
 									callback: function(t) {
-										// return t;
+										if(stock_selected_suffix) {
+											return decimalify(t)+stock_selected_suffix;
+										}
 										return '$'+decimalify(t);
 									}
 								}
@@ -2211,7 +2213,9 @@
 									fontColor:'#42a5ff',
 									fontSize: 12,
 									callback: function(t) {
-										// return t;
+										if(adjuster_selected_suffix) {
+											return decimalify(t)+adjuster_selected_suffix;
+										}
 										return '$'+decimalify(t);
 									}
 								}
@@ -2243,7 +2247,6 @@
 									fontColor:'#ff4742',
 									fontSize: 12,
 									callback: function(t) {
-										// return t;
 										return decimalify(t);
 									}
 								}
@@ -2275,8 +2278,10 @@
 									fontColor:'#ffc924',
 									fontSize: 12,
 									callback: function(t) {
-										// return t;
-										return '$'+decimalify(t);
+										if(adjuster_selected_suffix) {
+											return decimalify(t)+adjuster_selected_suffix;
+										}
+										return '$'+decimalify(t)+adjuster_selected_suffix;
 									}
 								}
 							}
