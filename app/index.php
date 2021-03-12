@@ -661,7 +661,8 @@
 		left:120px;
 		top:155px;
 		/*background:linear-gradient(180deg,#0a1325 0,#0a1325);*/
-		background:#0a1325;
+		/*background:#0a1325;*/
+		background:rgb(10 19 37 / 90%);
 		position:fixed;
 		border:1px solid #2a2a2a;
 		z-index:1;
