@@ -75,7 +75,6 @@
 		foreach($rows as $row) {
 			foreach($row as $key => $value) {
 				$value=str_replace('Loading...','',$value);
-				if($value==)
 				if(is_numeric(str_replace('$','',str_replace(',','',trim($value))))) {
 					$value=str_replace('$','',$value);
 					$value=str_replace(',','',$value);
