@@ -39,7 +39,7 @@
 			'mb'=>'💸 M0: Cash',
 			'm1'=>'💳 M1: Cash + Bank',
 			'm3'=>'💰 M3: All Money',
-			'm3'=>'💲 10Y Treasury Rate',
+			'us10y'=>'💲 10Y Treasury Rate',
 			'cpi'=>'🛒 Consumer Price Index',
 			'sp500'=>'🇺🇸 S&P500',
 			'levels'=>'🐩 Levels Inflation Index',
