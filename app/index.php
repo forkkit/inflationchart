@@ -35,6 +35,10 @@
 			'tsla'=>'🚗 $TSLA'
 		);
 
+		$suffix=array(
+			'us10y'=>'%'
+		);
+
 		$adjusters=array(
 			'mb'=>'💸 M0: Cash',
 			'm1'=>'💳 M1: Cash + Bank',
@@ -861,8 +865,8 @@
 					The price of
 				</div>
 				<select class="stock_selector">
-					<?foreach($stocks as $stock => $label) {?>
-						<option data-short="<?
+					<?foreach($stocks as $stock => $label) {
+						?><option data-suffix="<?=$suffix[$stock]?>" data-short="<?
 							list($short,$rest)=explode(': ',$label);
 							echo $short;
 						?>" value="<?=$stock?>" <?if($_GET['stock']==$stock){?>selected<?}?>>
@@ -917,8 +921,10 @@
 		var chart;
 		var adjuster_selected='';
 		var adjuster_selected_label='';
+		var adjuster_selected_suffix='';
 		var stock_selected='';
 		var stock_selected_label='';
+		var stock_selected_suffix='';
 		var show_stock=<?=$show_stock?>;
 		var show_divided_by=<?=$show_divided_by?>;
 		var show_adjusted=<?=$show_adjusted?>;
@@ -1722,8 +1728,10 @@
 			// console.log('updateSelected');
 			adjuster_selected=$('select.adjuster_selector').children("option:selected").val();
 			adjuster_selected_label=$('select.adjuster_selector').children("option:selected").text();
+			adjuster_selected_suffix=$('select.adjuster_selector').children("option:selected").data('suffix');
 			stock_selected=$('select.stock_selector').children("option:selected").val();
 			stock_selected_label=$('select.stock_selector').children("option:selected").text();
+			stock_selected_suffix=$('select.stock_selector').children("option:selected").data('suffix');
 			time_selected=$('select.time_selector').children("option:selected").val();
 		}
 		function decimalify(t) {
@@ -1775,8 +1783,6 @@
 			document.title=stock_selected_label+' Price in '+adjuster_selected_label;
 
 			$('.legend .stock_selected').text($('select.stock_selector').children("option:selected").data('short'));
-			
-			
 
 			$('.legend .adjuster_selected').text($('select.adjuster_selector').children("option:selected").data('short'));
 
