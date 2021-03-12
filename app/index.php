@@ -882,7 +882,7 @@
 				</div>
 				<select class="adjuster_selector">
 					<?foreach($adjusters as $adjuster => $label) {?>
-						<option data-short="<?
+						<option data-suffix="<?=$suffix[$adjuster]?>" data-short="<?
 							list($short,$rest)=explode(': ',$label);
 							echo $short;
 						?>" value="<?=$adjuster?>" <?if($_GET['adjuster']==$adjuster){?>selected<?}?>>
