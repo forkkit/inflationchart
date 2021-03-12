@@ -1688,6 +1688,7 @@
 			// console.log('updateUrl');
 			// uri='/?m='+adjuster_selected+'&stock='+stock_selected+'&time='+time_selected+'&show_stock='+show_stock+'&show_adjusted='+show_adjusted+'&show_adjuster='+show_adjuster+'&logarithmic='+logarithmic;
 			var params='';
+			/* make sure all these are set to the default, so that if they differ from the default we add the ?params only */
 			if(time_selected!='20 years') {
 				params=params+'&time='+time_selected;
 			}
