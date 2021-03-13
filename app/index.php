@@ -1756,7 +1756,7 @@
 			}
 			// <cpi-in-btc -> bitcoin-price-index>
 				if(stock_selected+'-in-'+adjuster_selected=='cpi-in-btc') {
-					uri='/'+stock_selected+'-in-'+adjuster_selected='bitcoin-price-index'+params;
+					uri='/bitcoin-price-index'+params;
 				}
 			// </cpi-in-btc -> bitcoin-price-index>
 			else {
