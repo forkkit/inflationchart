@@ -635,6 +635,7 @@
 	}
 
 	.logo,
+	.on-github,
 	.by-levelsio {
 		border:1px solid #2a2a2a;
 		padding:7px;
@@ -659,6 +660,14 @@
 		color:rgb(211,211,211);
 		bottom:14px;
 		left:14px;
+	}
+
+	.on-github {
+		position:fixed;
+		text-decoration:none;
+		color:rgb(211,211,211);
+		bottom:14px;
+		right:14px;
 	}
 
 	.legend {
@@ -745,6 +754,7 @@
 	}
 
 	@media (max-width:600px) {
+		.on-github,
 		.by-levelsio {
 			position:relative;
 			margin:0 auto;
@@ -762,7 +772,6 @@
 		}
 	}
 	@media (max-width:1000px) {
-
 		h1.selectors,
 		h1.selectors select {
 			font-size:20px;
@@ -922,6 +931,9 @@
 
 	<a href="https://twitter.com/levelsio" class="by-levelsio">
 		by @levelsio
+	</a>
+	<a href="https://github.com/levelsio/inflationchart" class="on-github">
+		on Github
 	</a>
 
 	<a href="https://m1chart.com" class="logo">
