@@ -15,7 +15,7 @@
 		}
 		if(empty($_GET)) {
 // fix for broken defaults
-			header("Location:/sp500-in-mb");
+			header("Location:/sp500-in-m1");
 			exit;
 		}
 	// </router>
