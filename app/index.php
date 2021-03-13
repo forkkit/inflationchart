@@ -1832,6 +1832,9 @@
 			updateSelected();
 			
 			document.title=stock_selected_label+' Price in '+adjuster_selected_label;
+			if(stock_selected+'-in-'+adjuster_selected=='cpi-in-btc') {
+				document.title='Bitcoin Price Index';
+			}
 
 			$('.legend .stock_selected').text($('select.stock_selector').children("option:selected").data('short'));
 
