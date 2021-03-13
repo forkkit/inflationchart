@@ -13,6 +13,10 @@
 				$_GET['adjuster']=$query[2];
 			}
 		}
+		if($_GET['url']=='bitcoin-price-index') {
+			$_GET['adjuster']='btc';
+			$_GET['stock']='cpi';
+		}
 		if(empty($_GET)) {
 			$_GET['adjuster']='m1';
 			$_GET['stock']='sp500';
@@ -1369,12 +1373,13 @@
 					window.location.reload();
 				});
 
-				// $('.legend .interactive_legend').bind('click',function(e) {
-				// 	e.stopPropagation();
-				// 	$(this).find('input[type="checkbox"]').click();
-				// });
+				$('.legend .interactive_legend').bind('click',function(e) {
+					e.stopPropagation();
+					$(this).find('input[type="checkbox"]').click();
+				});
 
 				$('.legend input[type="checkbox"]').bind('change',function(e) {
+					console.log("$('.legend input[type=checkbox]').bind('change',function(e) {");
 					e.stopPropagation();
 					show_stock=$('.legend input[type="checkbox"].show_stock:checked').length;
 					show_divided_by=$('.legend input[type="checkbox"].show_divided_by:checked').length;
@@ -1551,7 +1556,7 @@
 				
 			}
 			function findMin(array) {
-				console.log(array);
+				// console.log(array);
 				var min=Infinity;
 				for (var i = 0; i < array.length; i++) {
 					var value=parseFloat(array[i]);
@@ -1559,7 +1564,7 @@
 						min=value;
 					}
 				}
-				console.log(min);
+				// console.log(min);
 				return min;
 			}
 			function findMax(array) {
@@ -1749,7 +1754,14 @@
 			if(params) {
 				params='/?'+params;
 			}
-			uri='/'+stock_selected+'-in-'+adjuster_selected+params;
+			// <cpi-in-btc -> bitcoin-price-index>
+				if(stock_selected+'-in-'+adjuster_selected=='cpi-in-btc') {
+					uri='/'+stock_selected+'-in-'+adjuster_selected='bitcoin-price-index'+params;
+				}
+			// </cpi-in-btc -> bitcoin-price-index>
+			else {
+				uri='/'+stock_selected+'-in-'+adjuster_selected+params;
+			}
 			history.pushState(null,null,uri);
 
 			/* <preload social image so it's available/cached when needed> */
