@@ -403,6 +403,10 @@
 		$page['description']="This chart shows the price of ".strtoupper($_GET['stock'])." measured in ".strtoupper($_GET['adjuster']).', to adjust it for inflation. Money printer goes brrrrrrrrr.';
 	}
 
+	if($_GET['adjuster']=='btc' && $_GET['stock']=='cpi') {
+		$page['title']='Bitcoin Price Index';
+	}
+
 
 
 ?><!doctype html>
