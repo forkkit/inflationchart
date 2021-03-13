@@ -767,7 +767,9 @@
 	}
 
 	@media (max-width:600px) {
-		.on-github,
+		.on-github {
+			display:none;
+		}
 		.by-levelsio {
 			position:relative;
 			margin:0 auto;
