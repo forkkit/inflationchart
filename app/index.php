@@ -16,6 +16,8 @@
 		if($_GET['url']=='bitcoin-price-index') {
 			$_GET['adjuster']='btc';
 			$_GET['stock']='cpi';
+			$_GET['logarithmic']=1;
+			$_GET['show_adjuster']=1;
 		}
 		if(empty($_GET)) {
 			$_GET['adjuster']='m1';
