@@ -933,7 +933,7 @@
 		by @levelsio
 	</a>
 	<a href="https://github.com/levelsio/inflationchart" class="on-github">
-		on Github
+		Star on GitHub
 	</a>
 
 	<a href="https://m1chart.com" class="logo">
