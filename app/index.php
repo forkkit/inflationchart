@@ -14,11 +14,23 @@
 			}
 		}
 		if(empty($_GET)) {
-// fix for broken defaults
-			header("Location:/sp500-in-m1");
-			exit;
+			$_GET['adjuster']='m1';
+			$_GET['stock']='sp500';
 		}
 	// </router>
+
+
+// 20210313222719
+// https://m1chart.test/sp500-in-m1
+
+// {
+//   "url": "sp500-in-m1",
+//   "stock": "sp500",
+//   "adjuster": "m1"
+// }
+
+
+
 
 	// <config>
 		$time_selected_default='20 years';
