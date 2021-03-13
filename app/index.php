@@ -29,6 +29,7 @@
 			'nasdaq'=>'🤖 NASDAQ',
 			'gdp'=>'💰 US GDP',
 			'income'=>'💰 Avg US Income',
+			'cpi'=>'🛒 Consumer Price Index',
 			'oil'=>'🛢 Oil',
 			'gold'=>'🏆 Gold',
 			'silver'=>'🥈 Silver',
