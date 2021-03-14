@@ -1,5 +1,4 @@
 <?
-	echo json_encode($_SERVER);exit;
 	
 	// <router>
 		if($_SERVER['HTTP_HOST']=='m1chart.com') {
