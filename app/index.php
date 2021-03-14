@@ -1,5 +1,9 @@
 <?
 
+echo 'host='.$_SERVER['HTTP_HOST']."<br/>\n";
+echo '<hr>';
+exit;
+
 	// <router>
 		if($_SERVER['HTTP_HOST']=='m1chart.com') {
 			header("HTTP/1.1 301 Moved Permanently");
