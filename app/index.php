@@ -109,11 +109,11 @@
 	// <get data>
 		$dbFile=__DIR__.'/../data/inflationchart.db';
 		$dir = 'sqlite:/'.$dbFile;
-		$chartDb	= new PDO($dir) or exit(68); /* db erorr */
-		$chartDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$inflationChartDb	= new PDO($dir) or exit(68); /* db erorr */
+		$inflationChartDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		/* make sure you check if $adjuster_selected and $stock selected are safe from $_GET[] user input above */
-		$query=$chartDb->prepare("SELECT epoch,".$adjuster_selected.",".$stock_selected." FROM inflationchart xWHERE epoch>:epoch ORDER BY epoch ASC");
+		$query=$inflationChartDb->prepare("SELECT epoch,".$adjuster_selected.",".$stock_selected." FROM inflationchart WHERE epoch>:epoch ORDER BY epoch ASC");
 		if($_GET['time']=='all') {
 			$query->bindValue(':epoch',0);
 		}
@@ -213,12 +213,12 @@
 
 		// <get first for each data set but us startTime>
 			$first=array();
-			$query=$chartDb->prepare("SELECT * FROM inflationchart WHERE epoch>=:epoch AND ".$adjuster_selected." IS NOT NULL AND ".$adjuster_selected." IS NOT '' ORDER BY epoch ASC LIMIT 1");
+			$query=$inflationchartDb->prepare("SELECT * FROM inflationchart WHERE epoch>=:epoch AND ".$adjuster_selected." IS NOT NULL AND ".$adjuster_selected." IS NOT '' ORDER BY epoch ASC LIMIT 1");
 			$query->bindValue(':epoch',$newestStartTime);
 			$query->execute();
 			$first[$adjuster_selected]=$query->fetchAll(PDO::FETCH_ASSOC)[0][$adjuster_selected];
 
-			$query=$chartDb->prepare("SELECT * FROM inflationchart WHERE epoch>=:epoch AND ".$stock_selected." IS NOT NULL AND ".$stock_selected." IS NOT '' ORDER BY epoch ASC LIMIT 1");
+			$query=$inflationchartDb->prepare("SELECT * FROM inflationchart WHERE epoch>=:epoch AND ".$stock_selected." IS NOT NULL AND ".$stock_selected." IS NOT '' ORDER BY epoch ASC LIMIT 1");
 			$query->bindValue(':epoch',$newestStartTime);
 			$query->execute();
 			$first[$stock_selected]=$query->fetchAll(PDO::FETCH_ASSOC)[0][$stock_selected];
