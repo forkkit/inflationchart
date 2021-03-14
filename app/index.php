@@ -1,7 +1,7 @@
 <?
 	
 	// <router>
-		if($_SERVER['HTTP_HOST']=='m1chart.com') {
+		if($_SERVER['HTTP_HOST']!='inflationchart.com') {
 			header("HTTP/1.1 301 Moved Permanently");
 			header("Location:https://inflationchart.com".$_SERVER['REQUEST_URI']);
 			exit;
