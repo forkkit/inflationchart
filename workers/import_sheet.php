@@ -11,13 +11,13 @@
 
 
 	// <rows>
-		$dbFile=__DIR__.'/../data/m1chart.db';
+		$dbFile=__DIR__.'/../data/inflationchart.db';
 		$dir = 'sqlite:/'.$dbFile;
-		$m1chartDb  = new PDO($dir) or exit(68); /* db erorr */
-		$m1chartDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		if (!$m1chartDb) exit(68); /* db error */
+		$inflationchartDb  = new PDO($dir) or exit(68); /* db erorr */
+		$inflationchartDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		if (!$inflationchartDb) exit(68); /* db error */
 		
-		$query = $m1chartDb->prepare('DELETE from m1chart');
+		$query = $inflationchartDb->prepare('DELETE from inflationchart');
 		$query->execute();
 
 		$feed = 'https://docs.google.com/spreadsheets/d/1xJGrHWj6uO6ykFPvht-RBG5qlLeO0axraxUJ9UzOhFo/export?format=csv&gid=347952624';
@@ -96,7 +96,7 @@
 				continue;
 			}
 
-			$query = $m1chartDb->prepare('REPLACE INTO m1chart(epoch,m1,m2,m3,mb,cpi,gdp,income,bigmac,sp500,dji,asia,singapore,china,nasdaq,btc,home,food,food_and_home,levels,oil,us10y,gold,silver,eth,tsla,population,date,epoch_updated) values (:epoch,:m1,:m2,:m3,:mb,:cpi,:gdp,:income,:bigmac,:sp500,:dji,:asia,:singapore,:china,:nasdaq,:btc,:home,:food,:food_and_home,:levels,:oil,:us10y,:gold,:silver,:eth,:tsla,:population,:date,:epoch_updated);');
+			$query = $inflationchartDb->prepare('REPLACE INTO inflationchart(epoch,m1,m2,m3,mb,cpi,gdp,income,bigmac,sp500,dji,asia,singapore,china,nasdaq,btc,home,food,food_and_home,levels,oil,us10y,gold,silver,eth,tsla,population,date,epoch_updated) values (:epoch,:m1,:m2,:m3,:mb,:cpi,:gdp,:income,:bigmac,:sp500,:dji,:asia,:singapore,:china,:nasdaq,:btc,:home,:food,:food_and_home,:levels,:oil,:us10y,:gold,:silver,:eth,:tsla,:population,:date,:epoch_updated);');
 			$query->bindValue(':epoch',strtotime($row['date']));
 			$query->bindValue(':m1',$row['m1']);
 			$query->bindValue(':m2',$row['m2']);
