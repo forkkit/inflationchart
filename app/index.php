@@ -1,11 +1,11 @@
 <?
 
 	// <router>
-		// if($_SERVER['HTTP_HOST']=='m1chart.com') {
-		// 	// header("HTTP/1.1 301 Moved Permanently");
-		// 	header("Location:https://inflationchart.com".$_SERVER['REQUEST_URI']);
-		// 	exit;
-		// }
+		if($_SERVER['HTTP_HOST']=='m1chart.com') {
+			header("HTTP/1.1 301 Moved Permanently");
+			header("Location:https://inflationchart.com".$_SERVER['REQUEST_URI']);
+			exit;
+		}
 		if($_GET['m']) {
 			$_GET['adjuster']=$_GET['m'];
 		}
