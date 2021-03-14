@@ -1,7 +1,7 @@
 <?
 	
 	// <router>
-		if($_SERVER['HTTP_HOST']=='inflationchart.com') {
+		if($_SERVER['HTTP_HOST']=='m1chart.com') {
 			header("HTTP/1.1 301 Moved Permanently");
 			header("Location:https://inflationchart.com".$_SERVER['REQUEST_URI']);
 			exit;
@@ -113,7 +113,7 @@
 		$chartDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		/* make sure you check if $adjuster_selected and $stock selected are safe from $_GET[] user input above */
-		$query=$chartDb->prepare("SELECT epoch,".$adjuster_selected.",".$stock_selected." FROM inflationchart WHERE epoch>:epoch ORDER BY epoch ASC");
+		$query=$chartDb->prepare("SELECT epoch,".$adjuster_selected.",".$stock_selected." FROM inflationchart xWHERE epoch>:epoch ORDER BY epoch ASC");
 		if($_GET['time']=='all') {
 			$query->bindValue(':epoch',0);
 		}
