@@ -1,7 +1,7 @@
 <?
 	
 	// <router>
-		if($_SERVER['HTTP_HOST']=='m1chart.com') {
+		if($_SERVER['HTTP_HOST']=='inflationchart.com') {
 			header("HTTP/1.1 301 Moved Permanently");
 			header("Location:https://inflationchart.com".$_SERVER['REQUEST_URI']);
 			exit;
@@ -32,7 +32,7 @@
 
 
 // 20210313222719
-// https://m1chart.test/sp500-in-m1
+// https://inflationchart.test/sp500-in-m1
 
 // {
 //   "url": "sp500-in-m1",
@@ -107,13 +107,13 @@
 	// </config>
 
 	// <get data>
-		$dbFile=__DIR__.'/../data/m1chart.db';
+		$dbFile=__DIR__.'/../data/inflationchart.db';
 		$dir = 'sqlite:/'.$dbFile;
 		$chartDb	= new PDO($dir) or exit(68); /* db erorr */
 		$chartDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		/* make sure you check if $adjuster_selected and $stock selected are safe from $_GET[] user input above */
-		$query=$chartDb->prepare("SELECT epoch,".$adjuster_selected.",".$stock_selected." FROM m1chart WHERE epoch>:epoch ORDER BY epoch ASC");
+		$query=$chartDb->prepare("SELECT epoch,".$adjuster_selected.",".$stock_selected." FROM inflationchart WHERE epoch>:epoch ORDER BY epoch ASC");
 		if($_GET['time']=='all') {
 			$query->bindValue(':epoch',0);
 		}
@@ -213,12 +213,12 @@
 
 		// <get first for each data set but us startTime>
 			$first=array();
-			$query=$chartDb->prepare("SELECT * FROM m1chart WHERE epoch>=:epoch AND ".$adjuster_selected." IS NOT NULL AND ".$adjuster_selected." IS NOT '' ORDER BY epoch ASC LIMIT 1");
+			$query=$chartDb->prepare("SELECT * FROM inflationchart WHERE epoch>=:epoch AND ".$adjuster_selected." IS NOT NULL AND ".$adjuster_selected." IS NOT '' ORDER BY epoch ASC LIMIT 1");
 			$query->bindValue(':epoch',$newestStartTime);
 			$query->execute();
 			$first[$adjuster_selected]=$query->fetchAll(PDO::FETCH_ASSOC)[0][$adjuster_selected];
 
-			$query=$chartDb->prepare("SELECT * FROM m1chart WHERE epoch>=:epoch AND ".$stock_selected." IS NOT NULL AND ".$stock_selected." IS NOT '' ORDER BY epoch ASC LIMIT 1");
+			$query=$chartDb->prepare("SELECT * FROM inflationchart WHERE epoch>=:epoch AND ".$stock_selected." IS NOT NULL AND ".$stock_selected." IS NOT '' ORDER BY epoch ASC LIMIT 1");
 			$query->bindValue(':epoch',$newestStartTime);
 			$query->execute();
 			$first[$stock_selected]=$query->fetchAll(PDO::FETCH_ASSOC)[0][$stock_selected];
@@ -307,7 +307,7 @@
 					?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 						<url>
 							<loc>
-								https://m1chart.com/<?=$stock?>-in-<?=$adjuster?>
+								https://inflationchart.com/<?=$stock?>-in-<?=$adjuster?>
 							</loc>
 							<changefreq>
 								weekly
@@ -430,22 +430,22 @@
 
 -->
 <meta charset="UTF-8" />
-<script src="https://m1chart.com/assets/jquery.js?<?=filemtime(__DIR__.'/../assets/jquery.js');?>"></script>
+<script src="https://inflationchart.com/assets/jquery.js?<?=filemtime(__DIR__.'/../assets/jquery.js');?>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://m1chart.com/assets/chartjs.js?<?=filemtime(__DIR__.'/../assets/chartjs.js');?>"></script>
+<script src="https://inflationchart.com/assets/chartjs.js?<?=filemtime(__DIR__.'/../assets/chartjs.js');?>"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@levelsio">
 <meta name="twitter:creator" content="@levelsio">
 <meta name="twitter:title" content="<?=$page['title']?>">
 <meta name="twitter:description" content="<?=$page['description']?>" />
-<meta name="twitter:image:src" content="https://m1chart.com/?action=screenshot&uri=<?=urlencode($_SERVER['REQUEST_URI'])?>">
+<meta name="twitter:image:src" content="https://inflationchart.com/?action=screenshot&uri=<?=urlencode($_SERVER['REQUEST_URI'])?>">
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="<?=$page['title']?>"/>
-<meta property="og:image" content="https://m1chart.com/?action=screenshot&uri=<?=urlencode($_SERVER['REQUEST_URI'])?>"/>
+<meta property="og:image" content="https://inflationchart.com/?action=screenshot&uri=<?=urlencode($_SERVER['REQUEST_URI'])?>"/>
 <meta property="og:description" content="<?=$page['description']?>" />
-<meta property="og:url" content="https://m1chart.com<?=$_SERVER['REQUEST_URI']?>">
-<meta name="twitter:url" content="https://m1chart.com<?=$_SERVER['REQUEST_URI']?>">
+<meta property="og:url" content="https://inflationchart.com<?=$_SERVER['REQUEST_URI']?>">
+<meta name="twitter:url" content="https://inflationchart.com<?=$_SERVER['REQUEST_URI']?>">
 <link rel="icon" href="/assets/favicon.png"/>
 <link rel="shortcut icon" href="/assets/favicon.png"/>
 <link rel="preload" href="/assets/DMSans-Regular.ttf" as="font" type="font/ttf" crossorigin>
@@ -966,7 +966,7 @@
 		Star on GitHub
 	</a>
 
-	<a href="https://m1chart.com" class="logo">
+	<a href="https://inflationchart.com" class="logo">
 		M1 Chart
 	</a>
 	
@@ -1779,7 +1779,7 @@
 				<?if($_GET['layout']!='screenshot'){ /* avoid recursive loop */ ?>
 					setTimeout(function() {
 						$.ajax({
-							url: 'https://m1chart.com/?action=screenshot&uri='+encodeURIComponent(uri)
+							url: 'https://inflationchart.com/?action=screenshot&uri='+encodeURIComponent(uri)
 						});
 					},5000);
 				<?}?>
@@ -2436,7 +2436,7 @@
 		</div> -->
 		<p>
 			<strong style="color:#fff;">
-				Most popular pages (via <a href="https://simpleanalytics.com/m1chart.com">Simple Analytics</a>)
+				Most popular pages (via <a href="https://simpleanalytics.com/inflationchart.com">Simple Analytics</a>)
 			</strong><br/>
 			<a href="/sp500-in-m1">S&P500 in M1</a><br/>
 			<a href="/income-in-food">Avg US Income in Food</a><br/>
@@ -2587,7 +2587,7 @@
 			🧠 The database behind this is an open <a href="https://docs.google.com/spreadsheets/d/1xJGrHWj6uO6ykFPvht-RBG5qlLeO0axraxUJ9UzOhFo/edit?usp=sharing">Google Sheet</a> you can view. If you see any problems/bugs/errors with it, please let me know on Twitter below!
 		</p>
 		<p>
-			👨‍🎨 Made by <a href="https://twitter.com/levelsio">@levelsio</a> (if you like it, tweet me a fun msg 😊). Inspired by <a href="https://stonksinbtc.xyz?ref=m1chart.com">Stonks in BTC</a> by <a href="https://twitter.com/dannyaziz97">Danny Aziz</a>, and <a href="https://cryptowat.ch">Cryptowatch</a>'s layout.
+			👨‍🎨 Made by <a href="https://twitter.com/levelsio">@levelsio</a> (if you like it, tweet me a fun msg 😊). Inspired by <a href="https://stonksinbtc.xyz?ref=inflationchart.com">Stonks in BTC</a> by <a href="https://twitter.com/dannyaziz97">Danny Aziz</a>, and <a href="https://cryptowat.ch">Cryptowatch</a>'s layout.
 			
 		</p>
 	</div>
