@@ -1,7 +1,7 @@
 <?
 	
 	// <router>
-		if($_SERVER['HTTP_HOST']!='inflationchart.com') {
+		if($_SERVER['HTTP_HOST']=='m1chart.com') {
 			header("HTTP/1.1 301 Moved Permanently");
 			header("Location:https://inflationchart.com".$_SERVER['REQUEST_URI']);
 			exit;
@@ -659,9 +659,11 @@
 
 	.main .chart {
 		margin:28px;
-		height:calc(100vh - 200px);
+		margin-top:14px;
+		height:calc(100vh - 250px);
 	}
 
+	.aux-text,
 	.logo,
 	.on-github,
 	.by-levelsio {
@@ -673,6 +675,41 @@
 		z-index:1;
 	}
 
+	.aux-text {
+		display:table;
+		font-size:14px;
+		padding:0;
+		padding-left:14px;
+		padding-right:14px;
+		text-decoration:none;
+		color:#fff;
+		margin:14px auto;
+		text-align:center;
+		box-shadow:1px 2px 4px rgba(0,0,0,1);
+	}
+	.aux-text .button {
+		display:inline-block;
+		border:2px solid #ff4742;
+		padding:7px;
+		color:#ff4742;
+		margin:-1px;
+		margin-right:-16px;
+		background:rgba(255,71,66,0.125);
+	}
+
+	@media (max-width:1200px) {
+		.aux-text {
+			line-height:1.5;
+			font-size:12px;
+			padding:14px;
+		}
+		.aux-text .button {
+			display:table;
+			margin:0 auto;
+			margin-top:7px;
+			padding:3.5px;
+		}
+	}
 	.logo {
 		position:fixed;
 		top:14px;
@@ -781,7 +818,7 @@
 		/*display:inline;*/
 	}
 
-	@media (max-width:600px) {
+	@media (max-width:1200px) {
 		.on-github {
 			display:none;
 		}
@@ -796,6 +833,7 @@
 			border:none;
 			font-size:12px;
 			color:rgb(186,186,186);
+			display:none;
 		}
 		.main .chart {
 			margin:7px;
@@ -957,7 +995,6 @@
 			</div>
 		</h1>
 	</center>
-
 
 	<a href="https://twitter.com/levelsio" class="by-levelsio">
 		by @levelsio
@@ -1905,7 +1942,6 @@
 		<canvas id="chart" width="500" height="600"></canvas>
 	</div>
 
-
 	<script>
 		
 		var ctx = document.getElementById("chart").getContext('2d');
@@ -2353,81 +2389,93 @@
 				}
 		});
 		</script>
-	</div>
 
 
 
 
-	<div class="legend">
+		<div class="legend">
 
 
 
-		<span class="show_stock_legend">
-			<input type="checkbox" class="show_stock" <?if($show_stock){?>checked<?}?>>
-			<span style="color:rgb(43,222,115)">
-				<!-- 🟢 -->
+			<span class="show_stock_legend">
+				<input type="checkbox" class="show_stock" <?if($show_stock){?>checked<?}?>>
+				<span style="color:rgb(43,222,115)">
+					<!-- 🟢 -->
 
-				<span class="stock_selected">
-					
+					<span class="stock_selected">
+						
+					</span>
+				</span>
+			</span><br/>
+
+
+
+
+			<span class="mobile_line_break"></span>
+
+			<span class="show_adjuster_legend interactive_legend">
+				<input type="checkbox" class="show_adjuster" <?if($show_adjuster){?>checked<?}?>>
+				<span style="color:#42a5ff">
+					<!-- 🔵 -->
+
+					<span class="adjuster_selected">
+						
+					</span>
+				</span>
+			</span><br/>
+
+
+
+			<span class="mobile_line_break"></span>
+
+			<span class="show_divided_by_legend interactive_legend">
+				<input type="checkbox" class="show_divided_by" <?if($show_divided_by){?>checked<?}?>>
+				<span data-type="adjusted"><!-- 🔴  -->
+					<span class="stock_selected"></span>
+					/
+					<span class="adjuster_selected"></span>
 				</span>
 			</span>
-		</span><br/>
+			</span><br/>
 
 
+			<span class="mobile_line_break"></span>
 
-
-		<span class="mobile_line_break"></span>
-
-		<span class="show_adjuster_legend interactive_legend">
-			<input type="checkbox" class="show_adjuster" <?if($show_adjuster){?>checked<?}?>>
-			<span style="color:#42a5ff">
-				<!-- 🔵 -->
-
-				<span class="adjuster_selected">
-					
+			<span class="show_adjusted_legend interactive_legend">
+				<input type="checkbox" class="show_adjusted" <?if($show_adjusted){?>checked<?}?>>
+				<span class="adjuster_selected"></span>-adj<span><!-- 🔴  -->
+					<span class="stock_selected"></span>
 				</span>
-			</span>
-		</span><br/>
-
-
-
-		<span class="mobile_line_break"></span>
-
-		<span class="show_divided_by_legend interactive_legend">
-			<input type="checkbox" class="show_divided_by" <?if($show_divided_by){?>checked<?}?>>
-			<span data-type="adjusted"><!-- 🔴  -->
-				<span class="stock_selected"></span>
-				/
-				<span class="adjuster_selected"></span>
-			</span>
-		</span>
-		</span><br/>
-
-
-		<span class="mobile_line_break"></span>
-
-		<span class="show_adjusted_legend interactive_legend">
-			<input type="checkbox" class="show_adjusted" <?if($show_adjusted){?>checked<?}?>>
-			<span class="adjuster_selected"></span>-adj<span><!-- 🔴  -->
-				<span class="stock_selected"></span>
-			</span>
-		</span><br/>
+			</span><br/>
 
 
 
 
 
 
-		<span class="mobile_line_break"></span>
+			<span class="mobile_line_break"></span>
 
-		<span class="logarithmic_legend interactive_legend">
-			<input type="checkbox" class="logarithmic" <?if($logarithmic){?>checked<?}?>>
-			<span data-type="logarithmic">📐Logarithmic</span>
-		</span><br/>
+			<span class="logarithmic_legend interactive_legend">
+				<input type="checkbox" class="logarithmic" <?if($logarithmic){?>checked<?}?>>
+				<span data-type="logarithmic">📐Logarithmic</span>
+			</span><br/>
+
+
+		</div>
+
+
+
+
+
+		<a target="_new" href="https://ibkr.com/referral/pieter414" class="aux-text">
+			Invest wisely and you can maintain or increase your standard of life. Invest poorly and the road to serfdom is real. <span class="button">Invest Now</span>
+		</a>
+
+
+
 
 
 	</div>
-
 
 
 	<div class="side">
