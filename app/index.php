@@ -2468,7 +2468,7 @@
 
 
 		<a target="_new" href="https://ibkr.com/referral/pieter414" class="aux-text">
-			Invest wisely and you can maintain or increase your standard of life. Invest poorly and the road to serfdom is real. <span class="button">Invest Now</span>
+			Invest wisely and you can maintain or increase your standard of life. Invest poorly and the road to serfdom is real. <span class="button">Invest on IBKR</span>
 		</a>
 
 
