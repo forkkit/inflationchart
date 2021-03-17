@@ -417,15 +417,13 @@
 	// ob_start("sanitizeOutput");
 
 	if($_GET['adjuster'] || $_GET['stock']) {
-		$page['title']='💰'.$stocks[strtoupper($_GET['stock'])].' Price in '.$adjusters[strtoupper($_GET['adjuster'])];
-		$page['description']="This chart shows the price of ".$stocks[strtoupper($_GET['stock'])]." measured in ".$adjusters[strtoupper($_GET['adjuster'])].', to adjust it for inflation. Money printer goes brrrrrrrrr.';
+		$page['title']='💰'.$stocks[$_GET['stock']].' Price in '.$adjusters[$_GET['adjuster']];
+		$page['description']="This chart shows the price of ".$stocks[$_GET['stock']]." measured in ".$adjusters[$_GET['adjuster']].', to adjust it for inflation. Money printer goes brrrrrrrrr.';
 	}
 
 	if($_GET['adjuster']=='btc' && $_GET['stock']=='cpi') {
 		$page['title']='Bitcoin Price Index';
 	}
-
-
 
 ?><!doctype html>
 <html class="<?=$_GET['layout']?>">
@@ -1227,7 +1225,7 @@
 				return jsdate.getDate();
 			},
 			l: function() { // Full day name; Monday...Sunday
-				return txt_words[f.w()] + 'day';
+				return txt_words[f.w(] + 'day';
 			},
 			N: function() { // ISO-8601 day of week; 1[Mon]..7[Sun]
 				return f.w() || 7;
@@ -1258,7 +1256,7 @@
 
 			// Month
 			F: function() { // Full month name; January...December
-				return txt_words[6 + f.n()];
+				return txt_words[6 + f.n(];
 			},
 			m: function() { // Month w/leading 0; 01...12
 				return _pad(f.n(), 2);
