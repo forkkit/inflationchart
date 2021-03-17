@@ -1,5 +1,8 @@
 <?
 	
+	$config['telegramAdminChat']['bot_token']='704648289:AAFtE0fntKtatt8vvus1lpGbTo9Wrg2Zbas';
+	$config['telegramAdminChat']['chat_id']='-377848809'; /* admin group */
+	
 	// <router>
 		if($_SERVER['HTTP_HOST']=='m1chart.com') {
 			header("HTTP/1.1 301 Moved Permanently");
@@ -29,6 +32,17 @@
 			$_GET['stock']='sp500';
 		}
 	// </router>
+
+
+	// <add reminder for stale data>
+		$query=$db->prepare("SELECT epoch ORDER BY epoch DESC");
+		$query->execute();
+		$newestEpoch=$query->fetchAll(PDO::FETCH_ASSOC)[0]['epoch'];
+		if($newestEpoch<strtotime("-30 days")) {
+			sendToAdminTelegram("📈 InflationChart.com: source data is older than 30 days, time to update maybe? Thanks!");
+		}
+	// </add reminder for stale data>
+
 
 
 // 20210313222719
@@ -2664,5 +2678,15 @@ function curl_get_contents ($url) {
 		curl_close($ch);
 		return $output;
 }
+function sendToAdminTelegram($message) {
+	global $config;
+	$telegram_bot_token=$config['telegramAdminChat']['bot_token'];
+	$telegram_chat_id=$config['telegramAdminChat']['chat_id'];
+	// file_get_contents('https://api.telegram.org/bot'.$telegram_bot_token.'/sendMessage?chat_id='.$telegram_chat_id.'&parse_mode=markdown&disable_web_page_preview=true&text='.urlencode($message).'&disable_web_page_preview=true');
+	// use shell exec to do it async and not slow down entire site
+	$text=$message;
+	// shell_exec('curl '.escapeshellarg('https://api.telegram.org/bot'.$telegram_bot_token.'/sendMessage?chat_id='.$telegram_chat_id.'&text='.urlencode($text).'&parse_mode=markdown&disable_web_page_preview=true').' > /dev/null 1>/dev/null &');
+	shell_exec('curl '.escapeshellarg('https://api.telegram.org/bot'.$telegram_bot_token.'/sendMessage?chat_id='.$telegram_chat_id.'&text='.urlencode($text).'&parse_mode=markdown&disable_web_page_preview=true').' > /dev/null 1>/dev/null &');
 
+}
 ?>
