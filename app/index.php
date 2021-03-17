@@ -418,7 +418,7 @@
 
 	if($_GET['adjuster'] || $_GET['stock']) {
 		$page['title']='💰'.$stocks[$_GET['stock']].' Price in '.$adjusters[$_GET['adjuster']];
-		$page['description']="This chart shows the price of ".$stocks[$_GET['stock']]." measured in ".$adjusters[$_GET['adjuster']].', to adjust it for inflation. Money printer goes brrrrrrrrr.';
+		$page['description']="The price of ".$stocks[$_GET['stock']]." measured in the price of ".$adjusters[$_GET['adjuster']].', to adjust it for inflation. Money printer goes brrrrrrrrr.';
 	}
 
 	if($_GET['adjuster']=='btc' && $_GET['stock']=='cpi') {
