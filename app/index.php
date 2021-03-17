@@ -1225,7 +1225,7 @@
 				return jsdate.getDate();
 			},
 			l: function() { // Full day name; Monday...Sunday
-				return txt_words[f.w(] + 'day';
+				return txt_words[f.w()] + 'day';
 			},
 			N: function() { // ISO-8601 day of week; 1[Mon]..7[Sun]
 				return f.w() || 7;
@@ -1256,7 +1256,7 @@
 
 			// Month
 			F: function() { // Full month name; January...December
-				return txt_words[6 + f.n(];
+				return txt_words[6 + f.n()];
 			},
 			m: function() { // Month w/leading 0; 01...12
 				return _pad(f.n(), 2);
