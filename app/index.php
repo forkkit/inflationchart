@@ -442,6 +442,8 @@
 
 	🌙 Ad lunam!
 
+	Code: https://github.com/levelsio/inflationchart
+
 -->
 <meta charset="UTF-8" />
 <script src="https://inflationchart.com/assets/jquery.js?<?=filemtime(__DIR__.'/../assets/jquery.js');?>"></script>
