@@ -2198,8 +2198,8 @@
 								}
 								else if(id==stock_selected+'_divided_by_'+adjuster_selected) {
 									return {
-										borderColor:'#ffc924',
-										backgroundColor:'#ffc924',
+										borderColor:'#ff4742',
+										backgroundColor:'#ff4742',
 									};
 								}
 								else if(id==stock_selected) {
