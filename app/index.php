@@ -41,7 +41,7 @@
 	// </init db>
 
 	// <add reminder for stale data>
-		$query=$db->prepare("SELECT epoch ORDER BY epoch DESC");
+		$query=$db->prepare("SELECT epoch FROM inflationchart ORDER BY epoch DESC");
 		$query->execute();
 		$newestEpoch=$query->fetchAll(PDO::FETCH_ASSOC)[0]['epoch'];
 		if($newestEpoch<strtotime("-30 days")) {
