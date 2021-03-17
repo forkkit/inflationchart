@@ -33,6 +33,12 @@
 		}
 	// </router>
 
+	// <init db>
+		$dbFile=__DIR__.'/../data/inflationchart.db';
+		$dir = 'sqlite:/'.$dbFile;
+		$db	= new PDO($dir) or exit(68); /* db erorr */
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	// </init db>
 
 	// <add reminder for stale data>
 		$query=$db->prepare("SELECT epoch ORDER BY epoch DESC");
@@ -121,11 +127,6 @@
 	// </config>
 
 	// <get data>
-		$dbFile=__DIR__.'/../data/inflationchart.db';
-		$dir = 'sqlite:/'.$dbFile;
-		$db	= new PDO($dir) or exit(68); /* db erorr */
-		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
 		/* make sure you check if $adjuster_selected and $stock selected are safe from $_GET[] user input above */
 		$query=$db->prepare("SELECT epoch,".$adjuster_selected.",".$stock_selected." FROM inflationchart WHERE epoch>:epoch ORDER BY epoch ASC");
 		if($_GET['time']=='all') {
