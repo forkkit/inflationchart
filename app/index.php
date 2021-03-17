@@ -397,10 +397,6 @@
 	}
 	$data=$newData;
 
-
-
-
-
 	// <make strings numbers>
 		$newData=array();
 		foreach($data as $row) {
@@ -421,8 +417,8 @@
 	// ob_start("sanitizeOutput");
 
 	if($_GET['adjuster'] || $_GET['stock']) {
-		$page['title']='💰'.strtoupper($_GET['stock']).' Price in '.strtoupper($_GET['adjuster']);
-		$page['description']="This chart shows the price of ".strtoupper($_GET['stock'])." measured in ".strtoupper($_GET['adjuster']).', to adjust it for inflation. Money printer goes brrrrrrrrr.';
+		$page['title']='💰'.$stocks[strtoupper($_GET['stock'])].' Price in '.$adjusters[strtoupper($_GET['adjuster'])];
+		$page['description']="This chart shows the price of ".$stocks[strtoupper($_GET['stock'])]." measured in ".$adjusters[strtoupper($_GET['adjuster'])].', to adjust it for inflation. Money printer goes brrrrrrrrr.';
 	}
 
 	if($_GET['adjuster']=='btc' && $_GET['stock']=='cpi') {
