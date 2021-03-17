@@ -45,7 +45,7 @@
 		$query->execute();
 		$newestEpoch=$query->fetchAll(PDO::FETCH_ASSOC)[0]['epoch'];
 		if($newestEpoch<strtotime("-30 days")) {
-			sendToAdminTelegram("📈 InflationChart.com: source data is older than 30 days, time to update maybe? Thanks!");
+			sendToAdminTelegram("📈 InflationChart.com: source data is ".timeAgoLong($newestEpoch)." old, time to update maybe? Thanks!");
 		}
 	// </add reminder for stale data>
 
@@ -2697,6 +2697,39 @@ function sendToAdminTelegram($message) {
 	$text=$message;
 	// shell_exec('curl '.escapeshellarg('https://api.telegram.org/bot'.$telegram_bot_token.'/sendMessage?chat_id='.$telegram_chat_id.'&text='.urlencode($text).'&parse_mode=markdown&disable_web_page_preview=true').' > /dev/null 1>/dev/null &');
 	shell_exec('curl '.escapeshellarg('https://api.telegram.org/bot'.$telegram_bot_token.'/sendMessage?chat_id='.$telegram_chat_id.'&text='.urlencode($text).'&parse_mode=markdown&disable_web_page_preview=true').' > /dev/null 1>/dev/null &');
+}
 
+function timeAgoLong($ptime) {
+  
+  	if($ptime>time()) {
+		// in future, so reverse it
+	    $etime = $ptime - time();
+	}
+	else {
+	    $etime = time() - $ptime;
+	}
+
+    if ($etime < 1)
+    {
+        return 'one day';
+    }
+
+    $a = array( 12 * 30 * 24 * 60 * 60  =>  'year',
+                30 * 24 * 60 * 60       =>  'month',
+                24 * 60 * 60            =>  'day',
+                60 * 60                 =>  'hour',
+                60						=>  'minute',
+                1						=>  'second'
+                );
+
+    foreach ($a as $secs => $str)
+    {
+        $d = $etime / $secs;
+        if ($d >= 1)
+        {
+            $r = floor($d);
+            return $r . ' ' . $str . ($r > 1 ? 's' : '');
+        }
+    }
 }
 ?>
