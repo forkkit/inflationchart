@@ -692,6 +692,7 @@
 		z-index:1;
 	}
 
+	/* aux means ad */
 	.aux-text {
 		display:table;
 		font-size:14px;
@@ -725,6 +726,12 @@
 			margin:0 auto;
 			margin-top:7px;
 			padding:3.5px;
+		}
+	}
+	@media (max-width:600px) {
+		.aux-text {
+			border-right:none;
+			border-left:none;
 		}
 	}
 	.logo {
