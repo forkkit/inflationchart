@@ -44,7 +44,7 @@
 		$query=$db->prepare("SELECT epoch FROM inflationchart WHERE epoch IS NOT NULL AND epoch IS NOT '' ORDER BY epoch DESC");
 		$query->execute();
 		$newestEpoch=$query->fetchAll(PDO::FETCH_ASSOC)[0]['epoch'];
-		if($newestEpoch<strtotime("-30 days")) {
+		if($newestEpoch<strtotime("-1 days")) {
 			sendToAdminTelegram("📈 InflationChart.com: source data is ".timeAgoLong($newestEpoch)." old, time to update maybe? Thanks!");
 		}
 	// </add reminder for stale data>
