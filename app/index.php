@@ -4,6 +4,11 @@
 	$config['telegramAdminChat']['chat_id']='-377848809'; /* admin group */
 	
 	// <router>
+		if(stripos($_GET['url'],'sp500')) {
+			header("HTTP/1.1 301 Moved Permanently");
+			header("Location:".str_replace('sp500','spx',$_SERVER['REQUEST_URI']));
+			exit;
+		}
 		if($_SERVER['HTTP_HOST']=='m1chart.com') {
 			header("HTTP/1.1 301 Moved Permanently");
 			header("Location:https://inflationchart.com".$_SERVER['REQUEST_URI']);
@@ -29,7 +34,7 @@
 		}
 		if(empty($_GET)) {
 			$_GET['adjuster']='m1';
-			$_GET['stock']='sp500';
+			$_GET['stock']='spx';
 		}
 	// </router>
 
@@ -52,11 +57,11 @@
 
 
 // 20210313222719
-// https://inflationchart.test/sp500-in-m1
+// https://inflationchart.test/spx-in-m1
 
 // {
-//   "url": "sp500-in-m1",
-//   "stock": "sp500",
+//   "url": "spx-in-m1",
+//   "stock": "spx",
 //   "adjuster": "m1"
 // }
 
@@ -67,7 +72,7 @@
 		$time_selected_default='20 years';
 
 		$stocks=array(
-			'sp500'=>'🇺🇸 S&P500',
+			'spx'=>'🇺🇸 S&P500',
 			'dji'=>'🇺🇸 DJI',
 			'nasdaq'=>'🤖 NASDAQ',
 			'gdp'=>'💰 US GDP',
@@ -96,7 +101,7 @@
 			'm3'=>'💰 M3: All Money',
 			'us10y'=>'💲 10Y Treasury',
 			'cpi'=>'🛒 CPI',
-			'sp500'=>'🇺🇸 S&P500',
+			'spx'=>'🇺🇸 S&P500',
 			// 'levels'=>'🐩 Levels Inflation Index',
 			'oil'=>'🛢 Oil',
 			'gold'=>'🏆 Gold',
@@ -116,7 +121,7 @@
 			empty($_GET['stock']) || 
 			!$stocks[$_GET['stock']]
 		) {
-			$stock_selected='sp500';
+			$stock_selected='spx';
 		}
 		if(
 			empty($_GET['adjuster']) || 
@@ -2504,14 +2509,14 @@
 			<strong style="color:#fff;">
 				Most popular pages (via <a href="https://simpleanalytics.com/inflationchart.com">Simple Analytics</a>)
 			</strong><br/>
-			<a href="/sp500-in-m1">S&P500 in M1</a><br/>
+			<a href="/spx-in-m1">S&P500 in M1</a><br/>
 			<a href="/income-in-food">Avg US Income in Food</a><br/>
 			<a href="/income-in-home">Avg US Income in Avg US Home Price</a><br/>
-			<a href="/sp500-in-income">S&P500 in Avg US Income</a><br/>
+			<a href="/spx-in-income">S&P500 in Avg US Income</a><br/>
 
-			<a href="/sp500-in-btc?logarithmic=1">S&P500 in BTC</a><br/>
-			<a href="/sp500-in-oil?logarithmic=1">S&P500 in Oil</a><br/>
-			<a href="/sp500-in-gold?logarithmic=1">S&P500 in Gold</a><br/>
+			<a href="/spx-in-btc?logarithmic=1">S&P500 in BTC</a><br/>
+			<a href="/spx-in-oil?logarithmic=1">S&P500 in Oil</a><br/>
+			<a href="/spx-in-gold?logarithmic=1">S&P500 in Gold</a><br/>
 			<a href="/btc-in-m1">BTC in M1</a><br/>
 			<a href="/china-in-btc?logarithmic=1">China SSE in BTC</a><br/>
 			<a href="/food-in-btc?logarithmic=1">Food in BTC</a><br/>
@@ -2530,7 +2535,7 @@
 			<a href="/tsla-in-btc?logarithmic=1">TLSA in BTC</a><br/>
 			<a href="/gdp-in-btc?logarithmic=1">GDP in BTC</a><br/>
 
-			<a href="/sp500-in-bigmac">S&P500 in Big Macs</a><br/>
+			<a href="/spx-in-bigmac">S&P500 in Big Macs</a><br/>
 			<a href="/china-in-food">China SSE in Food</a><br/>
 			<a href="/china-in-food_and_home">S&P500 in Food + Avg US Home</a><br/>
 			
