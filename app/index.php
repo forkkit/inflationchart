@@ -76,14 +76,14 @@
 			'dji'=>'🇺🇸 DJI',
 			'nasdaq'=>'🤖 NASDAQ',
 			'gdp'=>'💰 US GDP',
-			'income'=>'💰 Avg US Income',
+			'income'=>'💰 AUS Income',
 			'cpi'=>'🛒 CPI',
 			'oil'=>'🛢 Oil',
 			'gold'=>'🏆 Gold',
 			'silver'=>'🥈 Silver',
 			'asia'=>'🌏 Asia ex-JP',
 			'china'=>'🇨🇳 China SSE',
-			'home'=>'🏡 Avg US Home',
+			'home'=>'🏡 US Home Price',
 			'food'=>'🥩 Food Price Index',
 			'bigmac'=>'🍔 Big Mac Index',
 			'btc'=>'🥇 BTC',
@@ -106,12 +106,12 @@
 			'oil'=>'🛢 Oil',
 			'gold'=>'🏆 Gold',
 			'silver'=>'🥈 Silver',
-			'home'=>'🏡 Avg US Home',
+			'home'=>'🏡 US Home Price',
 			'food'=>'🥩 Food Price Index',
 			'bigmac'=>'🍔 Big Mac Index',
 			'btc'=>'🥇 BTC',
 			'eth'=>'🏅 ETH',
-			'income'=>'💰 Avg US Income'
+			'income'=>'💰 US Income'
 		);
 		
 		$stock_selected=$_GET['stock'];
