@@ -1,8 +1,7 @@
 <?
 	
-	$config['telegramAdminChat']['bot_token']='704648289:AAFtE0fntKtatt8vvus1lpGbTo9Wrg2Zbas';
-	$config['telegramAdminChat']['chat_id']='-377848809'; /* admin group */
-	
+	require_once(__DIR__.'/../app/apiKeys.php');
+
 	// <router>
 		if(stripos($_GET['url'],'sp500')) {
 			header("HTTP/1.1 301 Moved Permanently");

@@ -1,5 +1,6 @@
 .DS_Store
 app
+app/apiKeys.php
 assets/*.psd
 data
 git.txt
