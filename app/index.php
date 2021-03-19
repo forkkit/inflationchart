@@ -984,7 +984,7 @@
 		<span><span class="mobile_line_break"></span><?/*<span class="slash"> / </span>*/?><span class="mobile_line_break"></span></span>
 			<div class="adjuster_selector_wrapper">
 				<div class="heading_above">
-					As measured in the price of
+					As measured in
 				</div>
 				<select class="adjuster_selector">
 					<?foreach($adjusters as $adjuster => $label) {?>
