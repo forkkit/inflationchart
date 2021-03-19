@@ -84,8 +84,8 @@
 			'asia'=>'🌏 Asia ex-JP',
 			'china'=>'🇨🇳 China SSE',
 			'home'=>'🏡 Avg US Home',
-			'food'=>'🥩 Food Price',
-			'bigmac'=>'🍔 Big Mac',
+			'food'=>'🥩 Food Price Index',
+			'bigmac'=>'🍔 Big Mac Index',
 			'btc'=>'🥇 BTC',
 			'eth'=>'🏅 ETH',
 			'tsla'=>'🚗 $TSLA'
@@ -107,8 +107,8 @@
 			'gold'=>'🏆 Gold',
 			'silver'=>'🥈 Silver',
 			'home'=>'🏡 Avg US Home',
-			'food'=>'🥩 Food',
-			'bigmac'=>'🍔 Big Mac',
+			'food'=>'🥩 Food Price Index',
+			'bigmac'=>'🍔 Big Mac Index',
 			'btc'=>'🥇 BTC',
 			'eth'=>'🏅 ETH',
 			'income'=>'💰 Avg US Income'
