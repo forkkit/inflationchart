@@ -416,7 +416,7 @@
 	// </make strings numbers>
 
 
-	$page['title']='💰'."M1 Chart: The stock market adjusted for the US-dollar money supply M1 (and more) (by @levelsio)";
+	$page['title']='💰'."Inflation Chart: The stock market adjusted for the US-dollar money supply M1 (and more) (by @levelsio)";
 	$page['description']="This chart shows the price of stock markets adjusted for inflation of the US dollar money supply in M1, M2 and the money base (MB).".'. Money printer goes brrrrrrrrr.';
 
 	// ob_start("sanitizeOutput");
@@ -1027,7 +1027,7 @@
 	</a>
 
 	<a href="https://inflationchart.com" class="logo">
-		M1 Chart
+		Inflation Chart
 	</a>
 	
 	<script>
