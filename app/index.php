@@ -75,7 +75,7 @@
 			'dji'=>'🇺🇸 DJI',
 			'nasdaq'=>'🤖 NASDAQ',
 			'gdp'=>'💰 US GDP',
-			'income'=>'💰 AUS Income',
+			'income'=>'💰 US Income',
 			'cpi'=>'🛒 CPI',
 			'oil'=>'🛢 Oil',
 			'gold'=>'🏆 Gold',
