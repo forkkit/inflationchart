@@ -92,7 +92,7 @@
 		);
 
 		$suffix=array(
-			'us10y'=>'%'
+			'us10y'=>'%',
 			'coffee'=>'$/lbs',
 		);
 
