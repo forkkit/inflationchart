@@ -358,7 +358,7 @@
 		if($_GET['action']=='screenshot') {
 			require_once(__DIR__.'/config.php');
 			$screenshotUrl='https://'.$_SERVER['SERVER_NAME'].$_GET['uri'].'&layout=screenshot&cache='.date('Y-m');
-			$url='https://api.apiflash.com/v1/urltoimage?quality=80&width=1250&height=667&format=jpeg&access_key='.$apiflash_key.'&url='.urlencode($screenshotUrl);
+			$url='https://api.apiflash.com/v1/urltoimage?quality=80&width=1250&height=667&format=jpeg&access_key='.$config['apiFlash']['key'].'&url='.urlencode($screenshotUrl);
 			$response=curl_get_contents($url);
 			if(!$response) {
 				echo "Can't connect to API Flash";
