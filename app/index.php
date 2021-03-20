@@ -93,6 +93,7 @@
 
 		$suffix=array(
 			'us10y'=>'%'
+			'coffee'=>'$/lbs',
 		);
 
 		$adjusters=array(
