@@ -80,6 +80,7 @@
 			'oil'=>'🛢 Oil',
 			'gold'=>'🏆 Gold',
 			'silver'=>'🥈 Silver',
+			'coffee'=>'☕️ Coffee',
 			'asia'=>'🌏 Asia ex-JP',
 			'china'=>'🇨🇳 China SSE',
 			'home'=>'🏡 US Home Price',
@@ -105,6 +106,7 @@
 			'oil'=>'🛢 Oil',
 			'gold'=>'🏆 Gold',
 			'silver'=>'🥈 Silver',
+			'coffee'=>'☕️ Coffee',
 			'home'=>'🏡 US Home Price',
 			'food'=>'🥩 Food Price Index',
 			'bigmac'=>'🍔 Big Mac Index',
@@ -112,6 +114,11 @@
 			'eth'=>'🏅 ETH',
 			'income'=>'💰 US Income'
 		);
+
+		$info=array(
+			'coffee'=>'Coffee price in USD per pound. Source: https://macrotrends.net',
+		);
+
 		
 		$stock_selected=$_GET['stock'];
 		$adjuster_selected=$_GET['adjuster'];
